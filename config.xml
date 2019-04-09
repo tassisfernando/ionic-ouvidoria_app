@@ -39,6 +39,11 @@
         <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
+        <hook src="hooks/patch-android-studio-check.js" type="before_plugin_install" />
+        <hook src="hooks/patch-android-studio-check.js" type="before_plugin_add" />
+        <hook src="hooks/patch-android-studio-check.js" type="before_build" />
+        <hook src="hooks/patch-android-studio-check.js" type="before_run" />
+        <hook src="hooks/patch-android-studio-check.js" type="before_plugin_rm" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -82,4 +87,6 @@
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^2.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
+    <plugin name="cordova-plugin-advanced-http" spec="2.0.1" />
+    <allow-navigation href="http://200.128.148.98:8100" />
 </widget>

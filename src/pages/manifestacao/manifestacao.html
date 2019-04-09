@@ -1,9 +1,3 @@
-<!--
-  Generated template for the ManifestacaoPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -14,92 +8,126 @@
   </ion-navbar>
 </ion-header>
 
-
-
 <ion-content padding>
   <ion-list>
+    <ion-item>
+      <ion-label>Gostaria de se Identificar?</ion-label>
+      <ion-toggle [(ngModel)]="toggle"></ion-toggle>
+    </ion-item>
+  </ion-list>
 
-    
-      <ion-item>
-          <ion-label>Gostaria de se Identificar?</ion-label>
-          <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
+  <ion-list *ngIf="toggle == true">
 
-    <ion-item >
+    <ion-item>
+      <ion-label fixed>Nome</ion-label>
+      <ion-input type="text" value=""></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>CPF/CNPJ</ion-label>
+      <ion-input type="text" value="" [brmasker]="{mask:'000.000.000-00', len:14,type:'num'}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>RG</ion-label>
+      <ion-input type="text" value="" [brmasker]="{mask:'AA-00.000.000', len:13}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Email</ion-label>
+      <ion-input type="email" valsue=""></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Telefone</ion-label>
+
+      <ion-input type="text" value="" [brmasker]="{phone: true}"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list>
+
+    <ion-item>
       <ion-label>Tipo</ion-label>
-      <ion-select [(ngModel)]="tipo" cancelText="Cancelar" okText="Ok" >
-        <ion-option value="denuncia">Denúncia</ion-option>
-        <ion-option value="reclamacao">Reclamação</ion-option>
-        <ion-option value="solicitacao">Solicitação</ion-option>
-        <ion-option value="sugestao">Sugestão</ion-option>
-        <ion-option value="elogio">Elogio</ion-option>
-        <ion-option value="simplifique">Simplifique</ion-option>
+      <ion-select [(ngModel)]="tipo" cancelText="Cancelar" okText="Ok">
+        <ion-option *ngFor="let tipo of tipos"   (ionSelect)="selectTipo($event, tipo)" value="{{tipo.idTipo}}">{{tipo.nmTipo}}</ion-option>
+
       </ion-select>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="ajuda">
+      <ion-icon ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas()"></ion-icon>
+    </ion-item>
+
+    <ion-item class="item">
       <ion-label>Secretaria</ion-label>
-      <ion-select  [(ngModel)]="secretaria" cancelText="Cancelar" okText="Ok">
-        <ion-option value="nes">Gabinete do Prefeito</ion-option>
-        <ion-option value="n64">Secretaria Municipal de Defesa Social,Trânsito e Transporte</ion-option>
-        <ion-option value="ps">Secretaria Municipal de Educação</ion-option>
-        <ion-option value="genesis">Secretaria Municipal da Saúde</ion-option>
-        <ion-option value="saturn">Secretaria de Obras</ion-option>
+      <ion-select [(ngModel)]="secretaria" cancelText="Cancelar" okText="Ok">
+        <ion-option *ngFor="let secretaria of secretarias" (ionSelect)="selectSecretaria($event, secretaria)" value="{{secretaria.idSecretaria}}">{{secretaria.nmSecretaria}}</ion-option>
       </ion-select>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="ajuda">
+      <ion-icon ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas()"></ion-icon>
+    </ion-item>
+
+    <ion-item class="item">
       <ion-label>Assunto</ion-label>
-      <ion-select disabled  [(ngModel)]="item" cancelText="Cancelar" okText="Ok">
-        <ion-option value="nes">NES</ion-option>
-        <ion-option value="n64">Nintendo64</ion-option>
-        <ion-option value="ps">PlayStation</ion-option>
-        <ion-option value="genesis">Sega Genesis</ion-option>
-        <ion-option value="saturn">Sega Saturn</ion-option>
-        <ion-option value="snes">SNES</ion-option>
+      <ion-select [(ngModel)]="item" cancelText="Cancelar" okText="Ok">
+        <ion-option *ngFor="let assunto of assuntos" (ionSelect)="selectAssunto($event, assunto)" value="{{assunto.idAssunto}}">{{assunto.nmAssunto}}</ion-option>
       </ion-select>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="ajuda">
+      <ion-icon ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas()"></ion-icon>
+    </ion-item>
+
+    <ion-item class="item">
       <ion-label>Unidade</ion-label>
-      <ion-select disabled  [(ngModel)]="unidade" cancelText="Cancelar" okText="Ok">
-        <ion-option value="nes">NES</ion-option>
-        <ion-option value="n64">Nintendo64</ion-option>
-        <ion-option value="ps">PlayStation</ion-option>
-        <ion-option value="genesis">Sega Genesis</ion-option>
-        <ion-option value="saturn">Sega Saturn</ion-option>
-        <ion-option value="snes">SNES</ion-option>
+      <ion-select [(ngModel)]="unidade" cancelText="Cancelar" okText="Ok" >
+        <ion-option *ngFor="let unidade of unidades" (ionSelect)="selectUnidade($event, unidade)" value="{{unidade.idUnidade}}">{{unidade.nmUnidade}}</ion-option>
       </ion-select>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Data</ion-label>
-      <ion-input disabled  type="date"></ion-input>
+    <ion-item class="ajuda">
+      <ion-icon ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas()"></ion-icon>
     </ion-item>
 
     <ion-item>
       <ion-label>Descrição</ion-label>
-      <ion-input disabled  type="text" value=""></ion-input>
+      <ion-input type="text" value=" "></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label>Anexos</ion-label>
-
+      <ion-label>Data</ion-label>
+      <ion-input type="text" value="" [brmasker]="{mask:'00/00/0000', len:10}"></ion-input>
     </ion-item>
-  </ion-list>
-  <button disabled ion-button icon-only>
-    <ion-icon name="ios-archive"></ion-icon>
-  </button>
- 
-    <button disabled ion-button icon-only>
-      <ion-icon name="md-camera"></ion-icon>
-    </button>
-  <button disabled ion-button icon-only>
-    <ion-icon name="md-map"></ion-icon>
-  </button>
 
-  <button ion-button round (click)="voltarPaginaInicial()">Cancelar</button>
-  <button ion-button round (click)="presentToast()">Enviar</button>
- <!-- <button ion-button round (click)="showAlert()">Enviar</button>-->
-  <!-- <button ion-button round (click)="showAlert()">Enviar</button> -->
+  
+
+    <ion-list>
+      <ion-list-header>
+        Anexos
+      </ion-list-header>
+
+      <button ion-button icon-only>
+        <ion-icon name="md-camera"></ion-icon>
+      </button>
+
+      <button ion-button icon-only>
+        <ion-icon name="md-map"></ion-icon>
+      </button>
+
+      <button ion-button icon-only>
+        <ion-icon name="ios-archive"></ion-icon>
+      </button>
+    </ion-list>
+
+  </ion-list>
+
+  <ion-list>
+    <button ion-button round (click)="voltarPaginaInicial()">Cancelar</button>
+    <button ion-button round (click)="showAlert()">Enviar</button>
+  </ion-list>
 </ion-content>
+

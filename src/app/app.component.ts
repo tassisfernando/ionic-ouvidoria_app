@@ -23,7 +23,7 @@ export class MyApp {
     this.pages = [
       { title: 'Início', component: HomePage },
       { title: 'Minhas Manifestações', component: MinhasManifestacoesPage },
-      {title: 'Configurações',component:HomePage}
+      {title: 'Configurações',component:HomePage} //MUDAR AQUI
     ];
 
   }

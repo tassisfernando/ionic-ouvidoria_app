@@ -11,3 +11,4 @@ import { ManifestacaoPage } from './manifestacao';
   ],
 })
 export class ManifestacaoPageModule {}
+

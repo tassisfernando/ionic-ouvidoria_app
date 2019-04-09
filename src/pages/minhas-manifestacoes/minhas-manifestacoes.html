@@ -19,11 +19,36 @@
 
 <ion-content padding>
     <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+   
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+         Assunto
+        </ion-col>
+        <ion-col>
+         Status
+        </ion-col>
+        <ion-col>
+          Tipo
+         </ion-col>
+      </ion-row>
+    </ion-grid>
+   
     <ion-list>
-      <ion-item *ngFor="let item of items">
-        {{ item }}
+      <ion-item *ngFor="let manifestacoess of manifestacoes">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              {{manifestacoess.idAssunto}}
+            </ion-col>
+            <ion-col >
+              {{manifestacoess.status}}
+            </ion-col>
+            <ion-col >
+              {{manifestacoess.idTipo}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
     </ion-list>
-
-
 </ion-content>
