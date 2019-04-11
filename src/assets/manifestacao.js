@@ -5,6 +5,8 @@ function MascaraTelefone(tel){
     return formataCampo(tel, '(00) 0000-0000', event);
 }
 
+
+
 //http://www.fabiobmed.com.br/excelente-codigo-para-mascara-e-validacao-de-cnpj-cpf-cep-data-e-telefone/
 function ValidarCPF(Objcpf){
     var cpf = Objcpf.value;

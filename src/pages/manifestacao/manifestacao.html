@@ -9,6 +9,7 @@
 </ion-header>
 
 <ion-content padding>
+
   <ion-list>
     <ion-item>
       <ion-label>Gostaria de se Identificar?</ion-label>
@@ -51,7 +52,7 @@
     <ion-item>
       <ion-label>Tipo</ion-label>
       <ion-select [(ngModel)]="tipo" cancelText="Cancelar" okText="Ok">
-        <ion-option *ngFor="let tipo of tipos"   (ionSelect)="selectTipo($event, tipo)" value="{{tipo.idTipo}}">{{tipo.nmTipo}}</ion-option>
+        <ion-option *ngFor="let tipo of tipos"  selected="{{isSelected(tipo)}}" (ionSelect)="selectTipo($event, tipo)" value="{{tipo.idTipo}}">{{tipo.nmTipo}}</ion-option>
 
       </ion-select>
     </ion-item>
@@ -129,5 +130,6 @@
     <button ion-button round (click)="voltarPaginaInicial()">Cancelar</button>
     <button ion-button round (click)="showAlert()">Enviar</button>
   </ion-list>
+
 </ion-content>
 

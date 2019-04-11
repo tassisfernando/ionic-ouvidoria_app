@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { ITipo } from '../../interfaces/ITipo';
+
 @Injectable()
 export class RestProvider {
 
@@ -10,8 +12,8 @@ export class RestProvider {
   }
 
   getTipos() {
-    return new Promise(resolve => {
-      this.http.get(this.apiUrl + '/tipos').subscribe(data => {
+    return new Promise<ITipo[]>(resolve => {
+      this.http.get<ITipo[]>(this.apiUrl + '/tipos').subscribe(data => {
         resolve(data);
         console.log(data);
       },
@@ -65,7 +67,7 @@ export class RestProvider {
     });
   }
 
-
+  //CRIAR UM GET MANIFESTAÇÃO PELO PROTOCOLO
   getMinhasManifestações() {
     return new Promise(resolve => {
       this.http.get(this.apiUrl + '/manifestacoes').subscribe(data => {

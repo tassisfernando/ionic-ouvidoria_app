@@ -87,10 +87,12 @@ router.get('/manifestacoes', (req, res) =>{
   execSQLQuery('SELECT * FROM tbmanifestacao', res);
 })
 
+//CRIAR UMA ROTA DE MANIFESTAÇÃO QUE RETORNA DE ACORDO COM O PROTOCOLO
+
 router.post('/criarmanifestacoes', (req, res) =>{
   const unidade =req.body.cdunidade;
   const assunto =req.body.cdassunto;
   const secretaria = req.body.cdsecretaria ;
   const tipo = req.body.cdtipo;
-  execSQLQuery(`INSERT INTO tbmanifestacao(idUnidade, idAssunto,idSecretaria,idTipo,Status) VALUES('${unidade}','${assunto}','${secretaria}','${tipo}','Aberto')`, res);
+  execSQLQuery(`INSERT INTO tbmanifestacao(idUnidade, idAssunto, idSecretaria, idTipo, Status) VALUES('${unidade}','${assunto}','${secretaria}','${tipo}','Aberto')`, res);
 });

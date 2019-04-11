@@ -36,7 +36,7 @@ export class HomePage {
   }
 
   buscaTipo(){
-
+    //ADICIONAR NO STORAGE O TIPO DE MANIFESTAÇÃO E SELECIONAR ELA NA PAGINA DE CRIAR MANIFESTAÇÃO
   }
 
 }

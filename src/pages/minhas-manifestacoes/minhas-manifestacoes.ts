@@ -19,6 +19,7 @@ export class MinhasManifestacoesPage {
 
   manifestacoes: any;
   assunto:any;
+
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
      public restProvider: RestProvider) {
@@ -26,6 +27,7 @@ export class MinhasManifestacoesPage {
   }
 
 
+  //VAI TER QUE SER GETMANIFESTAÇÕES POR PROTOCOLO, ENTÃO O FILTRO VAI TER QUE FUNCIONAR
   getManifestacoes() {
     this.restProvider.getMinhasManifestações()
       .then(data => {
@@ -37,9 +39,11 @@ export class MinhasManifestacoesPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MinhasManifestacoesPage');
-   
- 
   }
+
+  //IMPLEMENTAR O GET ITEMS PARA O SEARCHBAR FUNCIONAR
+
+
   teste(){
     switch(this.manifestacoes.idAssunto){
       case 1: 

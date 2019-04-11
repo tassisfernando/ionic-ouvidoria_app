@@ -8,13 +8,7 @@ import { AlertController } from 'ionic-angular';
 import { RestProvider } from '../../providers/rest/rest';
 
 import {HttpClient} from '@angular/common/http';
-
-/**
- * Generated class for the ManifestacaoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ITipo } from '../../interfaces/ITipo';
 
 @IonicPage()
 @Component({
@@ -24,10 +18,13 @@ import {HttpClient} from '@angular/common/http';
 
 export class ManifestacaoPage {
 
+  protocolos: number;
+
+  //CRIAR INTERFACES DEPOIS
   secretarias: any;
   assuntos: any;
   unidades : any;
-  tipos:any;
+  tipos:ITipo[];
   selectedItem: any;
 
   constructor(public navCtrl: NavController,
@@ -36,11 +33,11 @@ export class ManifestacaoPage {
     public alertCtrl: AlertController,
     public restProvider: RestProvider,
     public http:HttpClient) {
-    this.getTipos();
-    this.getSecretarias();
-    this.getAssuntos();
-    this.getUnidades();
-    this.selectedItem = navParams.get('item');
+      this.getTipos();
+      this.getSecretarias();
+      this.getAssuntos();
+      this.getUnidades();
+      this.selectedItem = navParams.get('item');
   }
 
   getTipos() {
@@ -96,12 +93,16 @@ export class ManifestacaoPage {
   }
 
   showAlert() {
+    this.protocolos = this.protocolos + 1; //incrementar o protocolo - CADA VEZ QUE ENTRA NA PÁGINA A VARIÁVEL ZERA
     const alert = this.alertCtrl.create({
       title: 'Manifestação Enviada com sucesso',
-      subTitle: 'A sua manifestção foi enviada e armazenada na aba "Minhas manifestações"! O seu número de protocolo é: ',
+      subTitle: 'A sua manifestção foi enviada e armazenada na aba "Minhas manifestações"! O seu número de protocolo é: '+this.protocolos,
       buttons: ['OK']
     });
     alert.present();
+    
+
+    //E A DESCRIÇÂO E DATA DA MANIFESTAÇÂO??
     this.criarManifestacao(this.cdtipo,this.cdsecretaria,this.cdassunto,this.cdunidade);
     this.voltarPaginaInicial();
   }
@@ -121,6 +122,17 @@ export class ManifestacaoPage {
   cdassunto:any;
   cdunidade:any;
 
+
+  //Selecionando o tipo passado por parâmetro
+  isSelected(tipo: ITipo){
+    if(tipo.idTipo == this.selectedItem){
+      console.log("Tipo selecionado: "+tipo.nmTipo);
+      return "true";
+    } else{
+      return "false";
+      console.log("Falso");
+    }
+  }
 
   selectTipo(event,tipo:any){
     console.log(tipo.idTipo);
