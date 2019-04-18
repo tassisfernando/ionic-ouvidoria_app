@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RestProvider } from '../../providers/rest/rest';
+import { IManifestacao } from '../../interfaces/IManifestacao';
+import { IAssunto } from '../../interfaces/IAssunto';
 
 
 /**
@@ -17,8 +19,8 @@ import { RestProvider } from '../../providers/rest/rest';
 })
 export class MinhasManifestacoesPage {
 
-  manifestacoes: any;
-  assunto:any;
+  manifestacoes: IManifestacao[];
+  assunto: IAssunto;
 
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
@@ -33,7 +35,6 @@ export class MinhasManifestacoesPage {
       .then(data => {
         this.manifestacoes = data;
         console.log(this.manifestacoes);
-        console.log(this.manifestacoes.idAssunto);
       });
   }
 
@@ -42,25 +43,25 @@ export class MinhasManifestacoesPage {
   }
 
   //IMPLEMENTAR O GET ITEMS PARA O SEARCHBAR FUNCIONAR
+  getItems(ev: any) {
+    // set val to the value of the searchbar
+    const val = ev.target.value;
 
-
-  teste(){
-    switch(this.manifestacoes.idAssunto){
-      case 1: 
-         this.assunto = "A";
-        break;
-        case 2: 
-         this.assunto = "B";
-        break;
-        case 3: 
-         this.assunto = "C";
-        break;
-        case 4: 
-        this.assunto = "C";
-       break;
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+        this.manifestacoes = this.manifestacoes.filter((manifestacao) => {
+        manifestacao = this.getManifestacaoPorProtocolo(parseInt(val));
+        return manifestacao;
+      })
     }
   }
 
-  
-
+  getManifestacaoPorProtocolo(protocolo: number){
+    this.restProvider.getManifestacaoPorProtocolo(protocolo)
+      .then(data => {
+        console.log(data);
+        return data;
+    });
+    return null;
+  }
 }

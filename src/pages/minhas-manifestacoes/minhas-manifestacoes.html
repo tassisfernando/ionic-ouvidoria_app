@@ -10,7 +10,7 @@
       <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-    <ion-title>MinhasManifestacoes</ion-title>
+    <ion-title>Minhas Manifestações</ion-title>
      
   </ion-navbar>
 
@@ -23,29 +23,35 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-         Assunto
+         Protocolo
         </ion-col>
         <ion-col>
          Status
         </ion-col>
         <ion-col>
           Tipo
-         </ion-col>
+        </ion-col>
+        <ion-col>
+          Descrição
+       </ion-col>
       </ion-row>
     </ion-grid>
    
     <ion-list>
-      <ion-item *ngFor="let manifestacoess of manifestacoes">
+      <ion-item *ngFor="let manifestacao of manifestacoes">
         <ion-grid>
           <ion-row>
             <ion-col>
-              {{manifestacoess.idAssunto}}
+              {{ manifestacao.idManifestacao }}
             </ion-col>
             <ion-col >
-              {{manifestacoess.status}}
+              {{ manifestacao.status }}
             </ion-col>
             <ion-col >
-              {{manifestacoess.idTipo}}
+              {{ manifestacao.idTipo }}
+            </ion-col>
+            <ion-col>
+              {{ manifestacao.observacao }}
             </ion-col>
           </ion-row>
         </ion-grid>

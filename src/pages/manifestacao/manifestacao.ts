@@ -8,7 +8,12 @@ import { AlertController } from 'ionic-angular';
 import { RestProvider } from '../../providers/rest/rest';
 
 import {HttpClient} from '@angular/common/http';
+
 import { ITipo } from '../../interfaces/ITipo';
+import { ISecretaria } from '../../interfaces/ISecretaria';
+import { IAssunto } from '../../interfaces/IAssunto';
+import { IUnidade } from '../../interfaces/IUnidade';
+import { IManifestacao } from '../../interfaces/IManifestacao';
 
 @IonicPage()
 @Component({
@@ -18,14 +23,12 @@ import { ITipo } from '../../interfaces/ITipo';
 
 export class ManifestacaoPage {
 
-  protocolos: number;
-
-  //CRIAR INTERFACES DEPOIS
-  secretarias: any;
-  assuntos: any;
-  unidades : any;
+  manifestacao: IManifestacao = { idassunto: 0, idtipo: 0, idunidade: 0, idsecretaria: 0, observacao: ''};
+  secretarias: ISecretaria[];
+  assuntos: IAssunto[];
+  unidades : IUnidade[];
   tipos:ITipo[];
-  selectedItem: any;
+  selectedItem: number;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -38,6 +41,7 @@ export class ManifestacaoPage {
       this.getAssuntos();
       this.getUnidades();
       this.selectedItem = navParams.get('item');
+      this.manifestacao.idtipo = this.selectedItem; 
   }
 
   getTipos() {
@@ -92,18 +96,37 @@ export class ManifestacaoPage {
     this.voltarPaginaInicial();
   }
 
-  showAlert() {
-    this.protocolos = this.protocolos + 1; //incrementar o protocolo - CADA VEZ QUE ENTRA NA PÁGINA A VARIÁVEL ZERA
-    const alert = this.alertCtrl.create({
-      title: 'Manifestação Enviada com sucesso',
-      subTitle: 'A sua manifestção foi enviada e armazenada na aba "Minhas manifestações"! O seu número de protocolo é: '+this.protocolos,
-      buttons: ['OK']
-    });
-    alert.present();
-    
+  criarManifestacao(){
+    this.restProvider.criarManifestacao(this.manifestacao)
+      .then(data => {
+        this.selectUltimaManifestacao();
+        console.log("Cadastrou!");
+      });
+  }
 
-    //E A DESCRIÇÂO E DATA DA MANIFESTAÇÂO??
-    this.criarManifestacao(this.cdtipo,this.cdsecretaria,this.cdassunto,this.cdunidade);
+  selectUltimaManifestacao(){
+    this.restProvider.getUltimaManifestacao().then(data => {
+      this.manifestacao.idManifestacao = data["0"]["MAX(idManifestacao)"]; //TA RETORNANDO UNDEFINED
+      this.showAlert();
+    });
+  }
+
+  showAlert() {
+    if(this.manifestacao.idManifestacao != 0){
+      const alert = this.alertCtrl.create({
+        title: 'Manifestação Enviada com sucesso',
+        subTitle: 'A sua manifestação foi enviada e armazenada na aba "Minhas manifestações"! O seu número de protocolo é: '+this.manifestacao.idManifestacao,
+        buttons: ['OK']
+      });
+      alert.present();
+    } else{
+      const alert = this.alertCtrl.create({
+        title: 'Erro ao cadastrar manifestação!',
+        subTitle: 'A sua manifestação não foi cadastrada por um erro técnico. Tente novamente mais tarde.',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
     this.voltarPaginaInicial();
   }
 
@@ -117,45 +140,35 @@ export class ManifestacaoPage {
     alert.present();
   }
 
-  cdtipo:any;
-  cdsecretaria:any;
-  cdassunto:any;
-  cdunidade:any;
-
-
   //Selecionando o tipo passado por parâmetro
   isSelected(tipo: ITipo){
     if(tipo.idTipo == this.selectedItem){
-      console.log("Tipo selecionado: "+tipo.nmTipo);
       return "true";
     } else{
       return "false";
-      console.log("Falso");
     }
   }
 
-  selectTipo(event,tipo:any){
+  selectTipo(event,tipo:ITipo){
     console.log(tipo.idTipo);
-    this.cdtipo=tipo.idTipo;
+    this.manifestacao.idtipo=tipo.idTipo;
   }
 
-  selectSecretaria(event,secretaria:any){
+  selectSecretaria(event,secretaria:ISecretaria){
     console.log(secretaria.idSecretaria);
-    this.cdsecretaria=secretaria.idSecretaria;
+    this.manifestacao.idsecretaria=secretaria.idSecretaria;
   }
 
-  selectAssunto(event,assunto:any){
+  selectAssunto(event,assunto:IAssunto){
     console.log(assunto.idAssunto);
-    this.cdassunto=assunto.idAssunto;
+    this.manifestacao.idassunto=assunto.idAssunto;
   }
 
-  selectUnidade(event,unidade:any){
+  selectUnidade(event,unidade:IUnidade){
     console.log(unidade.idUnidade);
-    this.cdunidade=unidade.idUnidade;
+    this.manifestacao.idunidade=unidade.idUnidade;
   }
 
-  criarManifestacao(idtipo:any,cdsecretaria:any,cdassunto:any,cdunidade:any){
-    this.restProvider.criarManifestacao(idtipo,cdsecretaria,cdassunto,cdunidade);
-  }
+ 
   
 }

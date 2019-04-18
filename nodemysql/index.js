@@ -77,7 +77,7 @@ router.get('/unidades', (req, res) =>{
   execSQLQuery('SELECT * FROM tbunidade', res);
 })
 
-router.get('/assuntos/:id?', (req, res) =>{
+router.get('/unidades/:id?', (req, res) =>{
   let filter = '';
   if(req.params.id) filter = ' WHERE idUnidade= ' + parseInt(req.params.id);
   execSQLQuery('SELECT * FROM tbunidade' + filter, res);
@@ -87,12 +87,23 @@ router.get('/manifestacoes', (req, res) =>{
   execSQLQuery('SELECT * FROM tbmanifestacao', res);
 })
 
-//CRIAR UMA ROTA DE MANIFESTAÇÃO QUE RETORNA DE ACORDO COM O PROTOCOLO
+router.get('/manifestacoes/ultima', (req, res) =>{
+  let sql = 'SELECT MAX(idManifestacao) FROM tbmanifestacao';
+  execSQLQuery(sql, res);
+})
+
+router.get('/manifestacoes/:protocolo?', (req, res) =>{
+  let filter = '';
+  if(req.params.protocolo) filter = ' WHERE idManifestacao= ' + parseInt(req.params.protocolo);
+  execSQLQuery('SELECT * FROM tbmanifestacao' + filter, res);
+})
 
 router.post('/criarmanifestacoes', (req, res) =>{
   const unidade =req.body.cdunidade;
   const assunto =req.body.cdassunto;
   const secretaria = req.body.cdsecretaria ;
   const tipo = req.body.cdtipo;
-  execSQLQuery(`INSERT INTO tbmanifestacao(idUnidade, idAssunto, idSecretaria, idTipo, Status) VALUES('${unidade}','${assunto}','${secretaria}','${tipo}','Aberto')`, res);
+  const observacao = req.body.observacao;0
+  let sql = `INSERT INTO tbmanifestacao(idEndereco, idAssunto, idSecretaria, idTipo, Status, Observacao) VALUES(${unidade},${assunto},${secretaria},${tipo},'Aberto','${observacao}')`;
+  execSQLQuery(sql, res);
 });

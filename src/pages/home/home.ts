@@ -24,7 +24,7 @@ export class HomePage {
    console.log("Entrou na Pagina Home")
   }
 
-  abrirPagina(x){
+  abrirPagina(x: number){
     this.navCtrl.push(ManifestacaoPage, {
       item: x
     });

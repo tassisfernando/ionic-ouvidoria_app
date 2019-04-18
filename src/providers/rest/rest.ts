@@ -2,6 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { ITipo } from '../../interfaces/ITipo';
+import { ISecretaria } from '../../interfaces/ISecretaria';
+import { IAssunto } from '../../interfaces/IAssunto';
+import { IUnidade } from '../../interfaces/IUnidade';
+import { IManifestacao } from '../../interfaces/IManifestacao';
 
 @Injectable()
 export class RestProvider {
@@ -24,8 +28,8 @@ export class RestProvider {
   }
 
   getSecretarias() {
-    return new Promise(resolve => {
-      this.http.get(this.apiUrl + '/secretarias').subscribe(data => {
+    return new Promise<ISecretaria[]>(resolve => {
+      this.http.get<ISecretaria[]>(this.apiUrl + '/secretarias').subscribe(data => {
         resolve(data);
       },
         err => {
@@ -35,8 +39,8 @@ export class RestProvider {
   }
 
   getAssuntos() {
-    return new Promise(resolve => {
-      this.http.get(this.apiUrl + '/assuntos').subscribe(data => {
+    return new Promise<IAssunto[]>(resolve => {
+      this.http.get<IAssunto[]>(this.apiUrl + '/assuntos').subscribe(data => {
         resolve(data);
       },
         err => {
@@ -45,20 +49,9 @@ export class RestProvider {
     });
   }
 
-
-  getManifestacoes() {
-    return new Promise(resolve => {
-      this.http.get(this.apiUrl + '/manifestacoes').subscribe(data => {
-        resolve(data);
-      },
-        err => {
-          console.log(err);
-        });
-    });
-  }
   getUnidades() {
-    return new Promise(resolve => {
-      this.http.get(this.apiUrl + '/unidades').subscribe(data => {
+    return new Promise<IUnidade[]>(resolve => {
+      this.http.get<IUnidade[]>(this.apiUrl + '/unidades').subscribe(data => {
         resolve(data);
       },
         err => {
@@ -67,10 +60,9 @@ export class RestProvider {
     });
   }
 
-  //CRIAR UM GET MANIFESTAÇÃO PELO PROTOCOLO
   getMinhasManifestações() {
-    return new Promise(resolve => {
-      this.http.get(this.apiUrl + '/manifestacoes').subscribe(data => {
+    return new Promise<IManifestacao[]>(resolve => {
+      this.http.get<IManifestacao[]>(this.apiUrl + '/manifestacoes').subscribe(data => {
         resolve(data);
       },
         err => {
@@ -79,17 +71,48 @@ export class RestProvider {
     });
   }
 
-  criarManifestacao( idtipo:any, cdsecretaria:any, cdassunto:any,cdunidade:any) {
-    return new Promise((resolve, reject) => {
-      var data = {
-        idtipo:idtipo,
-        cdsecretaria:cdsecretaria,
-        cdassunto:cdassunto,
-        cdunidade:cdunidade
+  getManifestacaoPorProtocolo(protocolo: number){
+    return new Promise<IManifestacao>(resolve => {
+      this.http.get<IManifestacao>(this.apiUrl + '/manifestacoes/'+protocolo)
+    });
+  }
+
+  getUltimaManifestacao(){
+    return new Promise(resolve => {
+      this.http.get(this.apiUrl + '/manifestacoes/ultima').subscribe(data => {
+        resolve(data);
+      },
+        err => {
+          console.log(err);
+        });
+    });
+  }
+
+  /*criarManifestacao(manifestacao: IManifestacao) {
+      let data = {
+        cdtipo: manifestacao.idtipo,
+        cdsecretaria: manifestacao.idsecretaria,
+        cdassunto: manifestacao.idassunto,
+        cdunidade: manifestacao.idunidade,
+        observacao: manifestacao.observacao,
       };
-      this.http.post(this.apiUrl + '/criarmanifestacoes', data).
+      return this.http.post<IManifestacao>(this.apiUrl + '/criarmanifestacoes', data);
+  }*/
+
+
+  criarManifestacao(manifestacao: IManifestacao) {
+    return new Promise<IManifestacao>((resolve, reject) => {
+      var data = {
+        cdtipo: manifestacao.idtipo,
+        cdsecretaria: manifestacao.idsecretaria,
+        cdassunto: manifestacao.idassunto,
+        cdunidade: manifestacao.idunidade,
+        observacao: manifestacao.observacao,
+      };
+      this.http.post<IManifestacao>(this.apiUrl + '/criarmanifestacoes', data).
         subscribe((result: any) => {
           resolve(result.json);
+          console.log(result)
         },
           (error) => {
             reject(error.json);

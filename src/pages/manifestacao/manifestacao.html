@@ -36,7 +36,7 @@
 
     <ion-item>
       <ion-label fixed>Email</ion-label>
-      <ion-input type="email" valsue=""></ion-input>
+      <ion-input type="email" value=""></ion-input>
     </ion-item>
 
     <ion-item>
@@ -51,7 +51,7 @@
 
     <ion-item>
       <ion-label>Tipo</ion-label>
-      <ion-select [(ngModel)]="tipo" cancelText="Cancelar" okText="Ok">
+      <ion-select [(ngModel)]="manifestacao.idTipo" cancelText="Cancelar" okText="Ok">
         <ion-option *ngFor="let tipo of tipos"  selected="{{isSelected(tipo)}}" (ionSelect)="selectTipo($event, tipo)" value="{{tipo.idTipo}}">{{tipo.nmTipo}}</ion-option>
 
       </ion-select>
@@ -63,7 +63,7 @@
 
     <ion-item class="item">
       <ion-label>Secretaria</ion-label>
-      <ion-select [(ngModel)]="secretaria" cancelText="Cancelar" okText="Ok">
+      <ion-select [(ngModel)]="manifestacao.idSecretaria" cancelText="Cancelar" okText="Ok">
         <ion-option *ngFor="let secretaria of secretarias" (ionSelect)="selectSecretaria($event, secretaria)" value="{{secretaria.idSecretaria}}">{{secretaria.nmSecretaria}}</ion-option>
       </ion-select>
     </ion-item>
@@ -74,7 +74,7 @@
 
     <ion-item class="item">
       <ion-label>Assunto</ion-label>
-      <ion-select [(ngModel)]="item" cancelText="Cancelar" okText="Ok">
+      <ion-select [(ngModel)]="manifestacao.idAssunto" cancelText="Cancelar" okText="Ok">
         <ion-option *ngFor="let assunto of assuntos" (ionSelect)="selectAssunto($event, assunto)" value="{{assunto.idAssunto}}">{{assunto.nmAssunto}}</ion-option>
       </ion-select>
     </ion-item>
@@ -85,7 +85,7 @@
 
     <ion-item class="item">
       <ion-label>Unidade</ion-label>
-      <ion-select [(ngModel)]="unidade" cancelText="Cancelar" okText="Ok" >
+      <ion-select [(ngModel)]="manifestacao.idUnidade" cancelText="Cancelar" okText="Ok" >
         <ion-option *ngFor="let unidade of unidades" (ionSelect)="selectUnidade($event, unidade)" value="{{unidade.idUnidade}}">{{unidade.nmUnidade}}</ion-option>
       </ion-select>
     </ion-item>
@@ -96,7 +96,7 @@
 
     <ion-item>
       <ion-label>Descrição</ion-label>
-      <ion-input type="text" value=" "></ion-input>
+      <ion-input type="text" [(ngModel)]="manifestacao.observacao" value=""></ion-input>
     </ion-item>
 
     <ion-item>
@@ -128,7 +128,7 @@
 
   <ion-list>
     <button ion-button round (click)="voltarPaginaInicial()">Cancelar</button>
-    <button ion-button round (click)="showAlert()">Enviar</button>
+    <button ion-button round (click)="criarManifestacao()">Enviar</button>
   </ion-list>
 
 </ion-content>
