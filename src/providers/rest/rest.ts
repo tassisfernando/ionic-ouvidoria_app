@@ -6,6 +6,7 @@ import { ISecretaria } from '../../interfaces/ISecretaria';
 import { IAssunto } from '../../interfaces/IAssunto';
 import { IUnidade } from '../../interfaces/IUnidade';
 import { IManifestacao } from '../../interfaces/IManifestacao';
+import { IManifestante } from '../../interfaces/IManifestante';
 
 @Injectable()
 export class RestProvider {
@@ -108,6 +109,7 @@ export class RestProvider {
         cdassunto: manifestacao.idassunto,
         cdunidade: manifestacao.idunidade,
         observacao: manifestacao.observacao,
+        hash: manifestacao.hash
       };
       this.http.post<IManifestacao>(this.apiUrl + '/criarmanifestacoes', data).
         subscribe((result: any) => {
@@ -119,6 +121,79 @@ export class RestProvider {
             console.log(error);
           })
     });
+  }
+
+  criarManifestacaoManifestante(manifestacao: IManifestacao, idManifestante: number) {
+    return new Promise<IManifestacao>((resolve, reject) => {
+      var data = {
+        cdtipo: manifestacao.idtipo,
+        cdsecretaria: manifestacao.idsecretaria,
+        cdassunto: manifestacao.idassunto,
+        cdunidade: manifestacao.idunidade,
+        observacao: manifestacao.observacao,
+        hash: manifestacao.hash,
+        idManifestante: idManifestante
+      };
+      this.http.post<IManifestacao>(this.apiUrl + '/criarmanifestacoes/manifestante', data).
+        subscribe((result: any) => {
+          resolve(result.json);
+          console.log(result)
+        },
+          (error) => {
+            reject(error.json);
+            console.log(error);
+          })
+    });
+  }
+
+
+  criarManifestante(manifestante: IManifestante) {
+    return new Promise<IManifestante>((resolve, reject) => {
+      var data = {
+        nmManifestante: manifestante.nmManifestante,
+        email: manifestante.email,
+        cpf_cnpj: manifestante.cpf_cnpj,
+        rg: manifestante.rg,
+      };
+      this.http.post<IManifestante>(this.apiUrl + '/criarmanifestante', data).
+        subscribe((result: any) => {
+          resolve(result.json);
+          console.log(result)
+        },
+          (error) => {
+            reject(error.json);
+            console.log(error);
+          })
+    });
+  }
+
+  getUltimoManifestante(){
+    return new Promise(resolve => {
+      this.http.get(this.apiUrl + '/manifestante/ultima').subscribe(data => {
+        resolve(data);
+      },
+        err => {
+          console.log(err);
+        });
+    });
+  }
+
+  criarHash(hash: string, idManifestacao: number) {
+    return new Promise((resolve, reject) => {
+      var data = {
+        hash: hash,
+        idManifestacao: idManifestacao
+      }; 
+      this.http.put(this.apiUrl + '/criarhash', data).
+        subscribe((result: any) => {
+          resolve(result.json);
+          console.log(result)
+        },
+          (error) => {
+            reject(error.json);
+            console.log(error);  
+        })
+    })
   }
 
 }

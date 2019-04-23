@@ -2,7 +2,7 @@ export interface IManifestacao{
     idManifestacao?: number;
     observacao?: string;
     data?: Date;
-    protocolo?: number;
+    hash?: string;
     idtipo?:number;
     idsecretaria?:number;
     idassunto?:number;

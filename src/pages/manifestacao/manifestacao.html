@@ -21,22 +21,22 @@
 
     <ion-item>
       <ion-label fixed>Nome</ion-label>
-      <ion-input type="text" value=""></ion-input>
+      <ion-input [(ngModel)]="manifestante.nmManifestante" type="text" value=""></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label fixed>CPF/CNPJ</ion-label>
-      <ion-input type="text" value="" [brmasker]="{mask:'000.000.000-00', len:14,type:'num'}"></ion-input>
+      <ion-input [(ngModel)]="manifestante.cpf_cnpj" type="text" value="" [brmasker]="{mask:'000.000.000-00', len:14,type:'num'}"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label fixed>RG</ion-label>
-      <ion-input type="text" value="" [brmasker]="{mask:'AA-00.000.000', len:13}"></ion-input>
+      <ion-input [(ngModel)]="manifestante.rg" type="text" value="" [brmasker]="{mask:'AA-00.000.000', len:13}"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label fixed>Email</ion-label>
-      <ion-input type="email" value=""></ion-input>
+      <ion-input [(ngModel)]="manifestante.email" type="email" value=""></ion-input>
     </ion-item>
 
     <ion-item>

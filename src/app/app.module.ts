@@ -5,13 +5,11 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {ManifestacaoPage} from '../pages/manifestacao/manifestacao';
-import {CadastroPage} from '../pages/cadastro/cadastro'
+import {CadastroPage} from '../pages/cadastro/cadastro';
+import { MinhasManifestacoesPage } from '../pages/minhas-manifestacoes/minhas-manifestacoes';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { MinhasManifestacoesPage } from '../pages/minhas-manifestacoes/minhas-manifestacoes';
-
-
 
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';

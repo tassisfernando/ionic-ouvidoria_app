@@ -15,6 +15,10 @@ import { IAssunto } from '../../interfaces/IAssunto';
 import { IUnidade } from '../../interfaces/IUnidade';
 import { IManifestacao } from '../../interfaces/IManifestacao';
 
+import {Md5} from 'ts-md5/dist/md5';
+import { IManifestante } from '../../interfaces/IManifestante';
+
+
 @IonicPage()
 @Component({
   selector: 'page-manifestacao',
@@ -23,12 +27,14 @@ import { IManifestacao } from '../../interfaces/IManifestacao';
 
 export class ManifestacaoPage {
 
-  manifestacao: IManifestacao = { idassunto: 0, idtipo: 0, idunidade: 0, idsecretaria: 0, observacao: ''};
+  manifestacao: IManifestacao = { idassunto: 0, idtipo: 0, idunidade: 0, idsecretaria: 0, observacao: '', hash: ''};
+  manifestante: IManifestante = { nmManifestante: '', email: '', cpf_cnpj: '', rg: '' };
   secretarias: ISecretaria[];
   assuntos: IAssunto[];
   unidades : IUnidade[];
   tipos:ITipo[];
   selectedItem: number;
+  toggle: boolean;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -42,6 +48,8 @@ export class ManifestacaoPage {
       this.getUnidades();
       this.selectedItem = navParams.get('item');
       this.manifestacao.idtipo = this.selectedItem; 
+
+      this.toggle = false;
   }
 
   getTipos() {
@@ -97,16 +105,51 @@ export class ManifestacaoPage {
   }
 
   criarManifestacao(){
-    this.restProvider.criarManifestacao(this.manifestacao)
-      .then(data => {
-        this.selectUltimaManifestacao();
-        console.log("Cadastrou!");
-      });
+    this.manifestacao.hash = Md5.hashStr(this.manifestacao.observacao).toString();
+
+    if(this.toggle){
+      this.postManifestante();
+    } else{
+      this.postManifestacao();
+    }
   }
+
+  postManifestante(){
+    this.restProvider.criarManifestante(this.manifestante)
+        .then(data => {
+          this.selectUltimoManifestante();
+          console.log("Cadastrou Manifestante!");
+    });
+  }
+
+  selectUltimoManifestante(){
+    this.restProvider.getUltimoManifestante().then(data => {
+      this.manifestante.idManifestante = data["0"]["MAX(idManifestante)"];
+      console.log("Cheguei aqui  "+this.manifestante.idManifestante);
+      this.postManifestacaoManifestante();
+    });
+  }
+
+  postManifestacao(){
+    this.restProvider.criarManifestacao(this.manifestacao)
+        .then(data => {
+          this.selectUltimaManifestacao();
+          console.log("Cadastrou Manifestacao!");
+    });
+  }
+
+  postManifestacaoManifestante(){
+    this.restProvider.criarManifestacaoManifestante(this.manifestacao, this.manifestante.idManifestante)
+        .then(data => {
+          this.selectUltimaManifestacao();
+          console.log("Cadastrou Manifestacao!");
+    });
+  }
+
 
   selectUltimaManifestacao(){
     this.restProvider.getUltimaManifestacao().then(data => {
-      this.manifestacao.idManifestacao = data["0"]["MAX(idManifestacao)"]; //TA RETORNANDO UNDEFINED
+      this.manifestacao.idManifestacao = data["0"]["MAX(idManifestacao)"];
       this.showAlert();
     });
   }
@@ -115,10 +158,11 @@ export class ManifestacaoPage {
     if(this.manifestacao.idManifestacao != 0){
       const alert = this.alertCtrl.create({
         title: 'Manifestação Enviada com sucesso',
-        subTitle: 'A sua manifestação foi enviada e armazenada na aba "Minhas manifestações"! O seu número de protocolo é: '+this.manifestacao.idManifestacao,
+        subTitle: 'A sua manifestação foi enviada e armazenada na aba "Minhas manifestações"! O seu número de protocolo é: '+this.manifestacao.hash,
         buttons: ['OK']
       });
       alert.present();
+      this.manifestacao.idManifestacao = 0;
     } else{
       const alert = this.alertCtrl.create({
         title: 'Erro ao cadastrar manifestação!',
