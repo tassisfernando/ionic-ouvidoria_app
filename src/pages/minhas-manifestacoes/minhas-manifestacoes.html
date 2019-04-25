@@ -23,13 +23,10 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-         Protocolo
+         Id
         </ion-col>
         <ion-col>
          Status
-        </ion-col>
-        <ion-col>
-          Tipo
         </ion-col>
         <ion-col>
           Descrição
@@ -37,7 +34,7 @@
       </ion-row>
     </ion-grid>
    
-    <ion-list>
+    <ion-list *ngIf="found == true">
       <ion-item *ngFor="let manifestacao of manifestacoes">
         <ion-grid>
           <ion-row>
@@ -47,14 +44,23 @@
             <ion-col >
               {{ manifestacao.status }}
             </ion-col>
-            <ion-col >
-              {{ manifestacao.idTipo }}
-            </ion-col>
             <ion-col>
               {{ manifestacao.observacao }}
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
+    </ion-list>
+
+    <ion-list *ngIf="found == false">
+        <ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                Nada encontrado...
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
     </ion-list>
 </ion-content>

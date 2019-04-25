@@ -124,7 +124,7 @@ router.post('/criarmanifestacoes/manifestante', (req, res) =>{
   const observacao = req.body.observacao;
   const hash = req.body.hash;
   const manifestante = req.body.idManifestante;
-  let sql = `INSERT INTO tbmanifestacao(idManifestante, idEndereco, hash, dtInclusao, idAssunto, idSecretaria, idTipo, Status, Observacao, Origem) VALUES(${manifestante},${unidade},'${hash}',now(),${assunto},${secretaria},${tipo},'Aberto','${observacao}', 'App')`;
+  let sql = `INSERT INTO tbmanifestacao(idManifestante, idEndereco, hash, dtInclusao, dtEdicao, idAssunto, idSecretaria, idTipo, Status, Observacao, Origem) VALUES(${manifestante},${unidade},'${hash}',now(),now(),${assunto},${secretaria},${tipo},'Aberto','${observacao}', 'App')`;
   execSQLQuery(sql, res);
 });
 

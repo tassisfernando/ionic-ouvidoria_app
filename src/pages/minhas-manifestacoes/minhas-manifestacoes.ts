@@ -21,11 +21,13 @@ export class MinhasManifestacoesPage {
 
   manifestacoes: IManifestacao[];
   assunto: IAssunto;
+  found: boolean;
 
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
      public restProvider: RestProvider) {
     this.getManifestacoes();
+    this.found = false;
   }
 
 
@@ -44,15 +46,25 @@ export class MinhasManifestacoesPage {
 
   //IMPLEMENTAR O GET ITEMS PARA O SEARCHBAR FUNCIONAR
   getItems(ev: any) {
+    // Reset items back to all of the items
+    //this.getManifestacoes();
+
     // set val to the value of the searchbar
     const val = ev.target.value;
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
-        this.manifestacoes = this.manifestacoes.filter((manifestacao) => {
-        manifestacao = this.getManifestacaoPorProtocolo(parseInt(val));
-        return manifestacao;
-      })
+      this.manifestacoes = this.manifestacoes.filter((manifestacao) => {
+        return (manifestacao.idManifestacao.toString().toLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
+      if(this.manifestacoes.length > 0){
+        this.found = true;
+      }else{
+        this.found = false;
+      }
+    } else{
+      this.getManifestacoes();
+      this.found = false;
     }
   }
 
