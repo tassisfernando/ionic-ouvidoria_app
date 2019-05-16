@@ -15,8 +15,9 @@ import { IAssunto } from '../../interfaces/IAssunto';
 import { IUnidade } from '../../interfaces/IUnidade';
 import { IManifestacao } from '../../interfaces/IManifestacao';
 
-import {Md5} from 'ts-md5/dist/md5';
+//import {Md5} from 'ts-md5/dist/md5';
 import { IManifestante } from '../../interfaces/IManifestante';
+import { IEndereco } from '../../interfaces/IEndereco';
 
 
 @IonicPage()
@@ -27,14 +28,18 @@ import { IManifestante } from '../../interfaces/IManifestante';
 
 export class ManifestacaoPage {
 
-  manifestacao: IManifestacao = { idassunto: 0, idtipo: 0, idunidade: 0, idsecretaria: 0, observacao: '', hash: ''};
-  manifestante: IManifestante = { nmManifestante: '', email: '', cpf_cnpj: '', rg: '' };
+  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' } };
+  manifestante: IManifestante = { nmManifestante: '', email: '', cpf_cnpj: '', rg: '', telefone: '' };
+  endereco: IEndereco = { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' };
   secretarias: ISecretaria[];
   assuntos: IAssunto[];
   unidades : IUnidade[];
   tipos:ITipo[];
   selectedItem: number;
   toggle: boolean;
+  email: boolean;
+  hasEndereco: boolean;
+  hasUnidade: boolean;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -44,12 +49,13 @@ export class ManifestacaoPage {
     public http:HttpClient) {
       this.getTipos();
       this.getSecretarias();
-      this.getAssuntos();
-      this.getUnidades();
       this.selectedItem = navParams.get('item');
-      this.manifestacao.idtipo = this.selectedItem; 
+      this.manifestacao.idTipo = this.selectedItem; 
 
       this.toggle = false;
+      this.email = false;
+      this.hasEndereco = false;
+      this.hasEndereco = false;
   }
 
   getTipos() {
@@ -68,25 +74,7 @@ export class ManifestacaoPage {
       });
   }
 
-  getAssuntos() {
-    this.restProvider.getAssuntos()
-      .then(data => {
-        this.assuntos = data;
-        console.log(this.assuntos);
-      });
-  }
-
-  getUnidades() {
-    this.restProvider.getUnidades()
-      .then(data => {
-        this.unidades = data;
-        console.log(this.unidades);
-      });
-  }
-
-
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ManifestacaoPage');
     console.log(this.selectedItem);
   }
 
@@ -94,7 +82,7 @@ export class ManifestacaoPage {
     this.navCtrl.setRoot(HomePage);
   }
 
-  presentToast() {
+  /*presentToast() {
     const toast = this.toastCtrl.create({
       message: 'Manifestação Enviada com Sucesso',
       duration: 3000
@@ -102,19 +90,26 @@ export class ManifestacaoPage {
     toast.present();
 
     this.voltarPaginaInicial();
-  }
+  }*/
 
   criarManifestacao(){
-    this.manifestacao.hash = Md5.hashStr(this.manifestacao.observacao).toString();
-
-    if(this.toggle){
-      this.postManifestante();
-    } else{
-      this.postManifestacao();
-    }
+    //teste se há manifestante
+      if((this.toggle) || (this.manifestante.nmManifestante != '')){
+        this.manifestacao.tbmanifestante = this.manifestante;
+      }
+      if((this.hasEndereco) || (this.endereco.logradouro != '')){
+        this.manifestacao.tbendereco = this.endereco;
+      }
+      this.restProvider.criarManifestacao(this.manifestacao).then(data => {
+        console.log("cadastrou", data);
+        this.manifestacao = data;
+        console.log(this.manifestacao.hash);
+        this.showAlert();
+      });
+      
   }
 
-  postManifestante(){
+  /*postManifestante(){
     this.restProvider.criarManifestante(this.manifestante)
         .then(data => {
           this.selectUltimoManifestante();
@@ -152,7 +147,7 @@ export class ManifestacaoPage {
       this.manifestacao.idManifestacao = data["0"]["MAX(idManifestacao)"];
       this.showAlert();
     });
-  }
+  }*/
 
   showAlert() {
     if(this.manifestacao.idManifestacao != 0){
@@ -195,22 +190,29 @@ export class ManifestacaoPage {
 
   selectTipo(event,tipo:ITipo){
     console.log(tipo.idTipo);
-    this.manifestacao.idtipo=tipo.idTipo;
+    this.manifestacao.idTipo=tipo.idTipo;
   }
 
   selectSecretaria(event,secretaria:ISecretaria){
     console.log(secretaria.idSecretaria);
-    this.manifestacao.idsecretaria=secretaria.idSecretaria;
+    this.manifestacao.idSecretaria=secretaria.idSecretaria;
+    this.assuntos = secretaria.tbassunto;
+    this.unidades = secretaria.tbunidade;
   }
 
   selectAssunto(event,assunto:IAssunto){
     console.log(assunto.idAssunto);
-    this.manifestacao.idassunto=assunto.idAssunto;
+    this.manifestacao.idAssunto=assunto.idAssunto;
   }
 
   selectUnidade(event,unidade:IUnidade){
     console.log(unidade.idUnidade);
-    this.manifestacao.idunidade=unidade.idUnidade;
+    this.restProvider.getEndereco(unidade.idUnidade).then(data => {
+      console.log(data);
+      this.manifestacao.tbendereco.idEndereco = data["0"]["idEndereco"];
+      this.hasUnidade = true;
+      console.log(this.manifestacao.tbendereco.idEndereco)
+    });
   }
 
  

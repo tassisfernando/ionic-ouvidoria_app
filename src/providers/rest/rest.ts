@@ -7,11 +7,13 @@ import { IAssunto } from '../../interfaces/IAssunto';
 import { IUnidade } from '../../interfaces/IUnidade';
 import { IManifestacao } from '../../interfaces/IManifestacao';
 import { IManifestante } from '../../interfaces/IManifestante';
+import { IEndereco } from '../../interfaces/IEndereco';
+
 
 @Injectable()
 export class RestProvider {
 
-  apiUrl = 'http://localhost:3000';
+  apiUrl = 'http://localhost:8000/api';
 
   constructor(public http: HttpClient) {
   }
@@ -20,7 +22,6 @@ export class RestProvider {
     return new Promise<ITipo[]>(resolve => {
       this.http.get<ITipo[]>(this.apiUrl + '/tipos').subscribe(data => {
         resolve(data);
-        console.log(data);
       },
         err => {
           console.log(err);
@@ -72,12 +73,14 @@ export class RestProvider {
     });
   }
 
+  //Não estou usando
   getManifestacaoPorProtocolo(protocolo: number){
     return new Promise<IManifestacao>(resolve => {
       this.http.get<IManifestacao>(this.apiUrl + '/manifestacoes/'+protocolo)
     });
   }
 
+  //Não estou usando
   getUltimaManifestacao(){
     return new Promise(resolve => {
       this.http.get(this.apiUrl + '/manifestacoes/ultima').subscribe(data => {
@@ -103,17 +106,10 @@ export class RestProvider {
 
   criarManifestacao(manifestacao: IManifestacao) {
     return new Promise<IManifestacao>((resolve, reject) => {
-      var data = {
-        cdtipo: manifestacao.idtipo,
-        cdsecretaria: manifestacao.idsecretaria,
-        cdassunto: manifestacao.idassunto,
-        cdunidade: manifestacao.idunidade,
-        observacao: manifestacao.observacao,
-        hash: manifestacao.hash
-      };
-      this.http.post<IManifestacao>(this.apiUrl + '/criarmanifestacoes', data).
-        subscribe((result: any) => {
-          resolve(result.json);
+      var data = manifestacao;
+      this.http.post<IManifestacao>(this.apiUrl + '/manifestacoes', data).
+        subscribe((result: IManifestacao) => { //MUDEI AQUI "TIREI O ANY  "
+          resolve(result); //MUDEI AQUI "TIREI O .JSON"
           console.log(result)
         },
           (error) => {
@@ -123,18 +119,18 @@ export class RestProvider {
     });
   }
 
+  //Não estou usando
   criarManifestacaoManifestante(manifestacao: IManifestacao, idManifestante: number) {
     return new Promise<IManifestacao>((resolve, reject) => {
       var data = {
-        cdtipo: manifestacao.idtipo,
-        cdsecretaria: manifestacao.idsecretaria,
-        cdassunto: manifestacao.idassunto,
-        cdunidade: manifestacao.idunidade,
+        idtipo: manifestacao.idTipo,
+        idsecretaria: manifestacao.idSecretaria,
+        idassunto: manifestacao.idAssunto,
+        idendereco: manifestacao.tbendereco.idEndereco,
         observacao: manifestacao.observacao,
-        hash: manifestacao.hash,
         idManifestante: idManifestante
       };
-      this.http.post<IManifestacao>(this.apiUrl + '/criarmanifestacoes/manifestante', data).
+      this.http.post<IManifestacao>(this.apiUrl + '/manifestacaos/', data).
         subscribe((result: any) => {
           resolve(result.json);
           console.log(result)
@@ -146,7 +142,7 @@ export class RestProvider {
     });
   }
 
-
+  //Não estou usando
   criarManifestante(manifestante: IManifestante) {
     return new Promise<IManifestante>((resolve, reject) => {
       var data = {
@@ -167,6 +163,7 @@ export class RestProvider {
     });
   }
 
+  //Não estou usando
   getUltimoManifestante(){
     return new Promise(resolve => {
       this.http.get(this.apiUrl + '/manifestante/ultima').subscribe(data => {
@@ -178,6 +175,7 @@ export class RestProvider {
     });
   }
 
+  //Não estou usando
   criarHash(hash: string, idManifestacao: number) {
     return new Promise((resolve, reject) => {
       var data = {
@@ -196,4 +194,15 @@ export class RestProvider {
     })
   }
 
+  
+  getEndereco(idUnidade: number){
+    return new Promise<IEndereco>(resolve => {
+      this.http.get<IEndereco>(this.apiUrl + '/unidades/endereco/'+idUnidade).subscribe(data => {
+        resolve(data);
+      },
+        err => {
+          console.log(err);
+        });
+    });
+  }
 }

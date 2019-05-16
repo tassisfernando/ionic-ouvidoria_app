@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Manifestacao</ion-title>
+    <ion-title>Manifestação</ion-title>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -20,29 +20,29 @@
   <ion-list *ngIf="toggle == true">
 
     <ion-item>
-      <ion-label fixed>Nome</ion-label>
+      <ion-label stacked>Nome</ion-label>
       <ion-input [(ngModel)]="manifestante.nmManifestante" type="text" value=""></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label fixed>CPF/CNPJ</ion-label>
+      <ion-label stacked>CPF/CNPJ</ion-label>
       <ion-input [(ngModel)]="manifestante.cpf_cnpj" type="text" value="" [brmasker]="{mask:'000.000.000-00', len:14,type:'num'}"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label fixed>RG</ion-label>
+      <ion-label stacked>RG</ion-label>
       <ion-input [(ngModel)]="manifestante.rg" type="text" value="" [brmasker]="{mask:'AA-00.000.000', len:13}"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label fixed>Email</ion-label>
+      <ion-label stacked>Email</ion-label>
       <ion-input [(ngModel)]="manifestante.email" type="email" value=""></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label fixed>Telefone</ion-label>
+      <ion-label stacked>Telefone</ion-label>
 
-      <ion-input type="text" value="" [brmasker]="{phone: true}"></ion-input>
+      <ion-input [(ngModel)]="manifestante.telefone" type="text" value="" [brmasker]="{phone: true}"></ion-input>
     </ion-item>
 
   </ion-list>
@@ -50,7 +50,7 @@
   <ion-list>
 
     <ion-item>
-      <ion-label>Tipo</ion-label>
+      <ion-label stacked>Tipo</ion-label>
       <ion-select [(ngModel)]="manifestacao.idTipo" cancelText="Cancelar" okText="Ok">
         <ion-option *ngFor="let tipo of tipos"  selected="{{isSelected(tipo)}}" (ionSelect)="selectTipo($event, tipo)" value="{{tipo.idTipo}}">{{tipo.nmTipo}}</ion-option>
 
@@ -62,7 +62,7 @@
     </ion-item>
 
     <ion-item class="item">
-      <ion-label>Secretaria</ion-label>
+      <ion-label stacked>Secretaria</ion-label>
       <ion-select [(ngModel)]="manifestacao.idSecretaria" cancelText="Cancelar" okText="Ok">
         <ion-option *ngFor="let secretaria of secretarias" (ionSelect)="selectSecretaria($event, secretaria)" value="{{secretaria.idSecretaria}}">{{secretaria.nmSecretaria}}</ion-option>
       </ion-select>
@@ -73,7 +73,7 @@
     </ion-item>
 
     <ion-item class="item">
-      <ion-label>Assunto</ion-label>
+      <ion-label stacked>Assunto</ion-label>
       <ion-select [(ngModel)]="manifestacao.idAssunto" cancelText="Cancelar" okText="Ok">
         <ion-option *ngFor="let assunto of assuntos" (ionSelect)="selectAssunto($event, assunto)" value="{{assunto.idAssunto}}">{{assunto.nmAssunto}}</ion-option>
       </ion-select>
@@ -83,48 +83,99 @@
       <ion-icon ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas()"></ion-icon>
     </ion-item>
 
-    <ion-item class="item">
-      <ion-label>Unidade</ion-label>
-      <ion-select [(ngModel)]="manifestacao.idUnidade" cancelText="Cancelar" okText="Ok" >
+    <ion-item class="item" *ngIf="hasEndereco == false">
+      <ion-label stacked>Unidade</ion-label>
+      <ion-select cancelText="Cancelar" okText="Ok" >
         <ion-option *ngFor="let unidade of unidades" (ionSelect)="selectUnidade($event, unidade)" value="{{unidade.idUnidade}}">{{unidade.nmUnidade}}</ion-option>
       </ion-select>
     </ion-item>
+
+    <ion-item class="ajuda" *ngIf="hasEndereco == false">
+      <ion-icon ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas()"></ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="hasUnidade != true">
+      <ion-label>Endereço diferente da Unidade</ion-label>
+      <ion-toggle [(ngModel)]="hasEndereco"></ion-toggle>
+    </ion-item>
+
+    <ion-list *ngIf="hasEndereco == true">
+
+      <button ion-button icon-only>
+        <ion-icon name="md-locate"></ion-icon>
+      </button>
+
+      <ion-item>
+        <ion-label stacked>CEP</ion-label>
+        <ion-input [(ngModel)]="endereco.cep" type="text" value="" [brmasker]="{mask:'00000000', len:8}"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <a href="http://www.buscacep.correios.com.br/sistemas/buscacep/">Buscar CEP</a>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Logradouro</ion-label>
+        <ion-input [(ngModel)]="endereco.logradouro" type="text" value=""></ion-input>
+      </ion-item>
+  
+      <ion-item> 
+        <ion-label stacked>Bairro</ion-label>
+        <ion-input [(ngModel)]="endereco.bairro" type="text" value=""></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label stacked>Número</ion-label>
+        <ion-input [(ngModel)]="endereco.numero" type="number" value=""></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label stacked>Complemento</ion-label>
+        <ion-input [(ngModel)]="endereco.complemento" type="text" value=""></ion-input>
+      </ion-item>
+    </ion-list>
 
     <ion-item class="ajuda">
       <ion-icon ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas()"></ion-icon>
     </ion-item>
 
     <ion-item>
-      <ion-label>Descrição</ion-label>
+      <ion-label stacked>Descrição</ion-label>
       <ion-input type="text" [(ngModel)]="manifestacao.observacao" value=""></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Data</ion-label>
-      <ion-input type="text" value="" [brmasker]="{mask:'00/00/0000', len:10}"></ion-input>
+    <ion-item class="ajuda">
+      <ion-icon ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas()"></ion-icon>
     </ion-item>
 
-  
+    <ion-item *ngIf="toggle == false">
+      <ion-label>Deseja informar um e-mail?</ion-label>
+      <ion-toggle [(ngModel)]="email"></ion-toggle>
+    </ion-item>
 
-    <ion-list>
-      <ion-list-header>
-        Anexos
-      </ion-list-header>
-
-      <button ion-button icon-only>
-        <ion-icon name="md-camera"></ion-icon>
-      </button>
-
-      <button ion-button icon-only>
-        <ion-icon name="md-map"></ion-icon>
-      </button>
-
-      <button ion-button icon-only>
-        <ion-icon name="ios-archive"></ion-icon>
-      </button>
-    </ion-list>
-
+    <ion-item class="ajuda" *ngIf="toggle == false">
+        <ion-icon ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas()"></ion-icon>
+      </ion-item>
+     
+    <ion-item *ngIf="email == true && toggle == false">
+      <ion-label stacked>E-mail</ion-label>
+      <ion-input type="email" [(ngModel)]="manifestacao.emailAnonimo" placeholder="Informe seu e-mail"></ion-input>
+    </ion-item>
   </ion-list>
+
+  <ion-list id="icons">
+    <ion-list-header>
+      Anexos
+    </ion-list-header>
+
+    <button ion-button icon-only>
+      <ion-icon name="md-camera"></ion-icon>
+    </button>
+
+    <button ion-button icon-only>
+        <ion-icon name="ios-archive"></ion-icon>
+    </button>
+</ion-list>
 
   <ion-list>
     <button ion-button round (click)="voltarPaginaInicial()">Cancelar</button>

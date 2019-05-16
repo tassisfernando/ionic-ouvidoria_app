@@ -4,4 +4,6 @@ export interface IManifestante{
     email?: string;
     cpf_cnpj?: string;
     rg?: string;
+    idManifestacao?: number;
+    telefone: string;
 }
