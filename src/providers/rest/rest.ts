@@ -14,8 +14,13 @@ import { IEndereco } from '../../interfaces/IEndereco';
 export class RestProvider {
 
   apiUrl = 'http://localhost:8000/api';
+  apiCep = 'https://viacep.com.br/ws/';
 
   constructor(public http: HttpClient) {
+  }
+
+  getEnderecoPorCep(cep: string):any{
+    return this.http.get(this.apiCep +cep+'/json/');
   }
 
   getTipos() {

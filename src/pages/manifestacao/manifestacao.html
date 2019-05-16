@@ -107,7 +107,7 @@
 
       <ion-item>
         <ion-label stacked>CEP</ion-label>
-        <ion-input [(ngModel)]="endereco.cep" type="text" value="" [brmasker]="{mask:'00000000', len:8}"></ion-input>
+        <ion-input [(ngModel)]="endereco.cep" (ionBlur)="getEnderecoPorCep()" type="text" value="" [brmasker]="{mask:'00000000', len:8}"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -116,22 +116,22 @@
 
       <ion-item>
         <ion-label stacked>Logradouro</ion-label>
-        <ion-input [(ngModel)]="endereco.logradouro" type="text" value=""></ion-input>
-      </ion-item>
-  
-      <ion-item> 
-        <ion-label stacked>Bairro</ion-label>
-        <ion-input [(ngModel)]="endereco.bairro" type="text" value=""></ion-input>
+        <ion-input [(ngModel)]="endereco.logradouro" readonly="" name="logradouro" id="logradouro" type="text" value=""></ion-input>
       </ion-item>
   
       <ion-item>
         <ion-label stacked>Número</ion-label>
-        <ion-input [(ngModel)]="endereco.numero" type="number" value=""></ion-input>
+        <ion-input [(ngModel)]="endereco.numero" name="numero" id="numero" type="number" value=""></ion-input>
       </ion-item>
   
       <ion-item>
         <ion-label stacked>Complemento</ion-label>
-        <ion-input [(ngModel)]="endereco.complemento" type="text" value=""></ion-input>
+        <ion-input [(ngModel)]="endereco.complemento" name="complemento" id="complemento" type="text" value=""></ion-input>
+      </ion-item>
+
+      <ion-item> 
+        <ion-label stacked>Bairro</ion-label>
+        <ion-input [(ngModel)]="endereco.bairro" name="bairro" readonly="" id="bairro" type="text" value=""></ion-input>
       </ion-item>
     </ion-list>
 
@@ -177,10 +177,12 @@
     </button>
 </ion-list>
 
-  <ion-list>
-    <button ion-button round (click)="voltarPaginaInicial()">Cancelar</button>
-    <button ion-button round (click)="criarManifestacao()">Enviar</button>
-  </ion-list>
+<ion-list>
+  <button ion-button round (click)="voltarPaginaInicial()">Cancelar</button>
+  <button ion-button round (click)="criarManifestacao()">Enviar</button>
+</ion-list>
 
 </ion-content>
+
+
 

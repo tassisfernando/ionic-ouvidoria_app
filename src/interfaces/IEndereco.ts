@@ -9,4 +9,6 @@ export interface IEndereco{
     dtEdicao?: Date;
     idUsuario?: number;
     idUnidade?: number;
+    mapa?: string;
+
 }

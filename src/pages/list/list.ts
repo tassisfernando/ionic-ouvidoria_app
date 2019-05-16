@@ -1,37 +1,56 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+declare var google;
+
+
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html'
 })
 export class ListPage {
-  selectedItem: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  map: any;
+  mapa: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
 
-    // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+  constructor(public navCtrl: NavController, public navParams: NavParams) { 
+    this.mapa = this.getEndereco();
   }
 
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ListPage, {
-      item: item
+  ionViewDidLoad() {
+
+    this.mapa = this.getEndereco();
+
+    const position = new google.maps.LatLng(-21.763409, -43.349034);
+ 
+    const mapOptions = {
+      zoom: 18,
+      center: position,
+      disableDefaultUI: true
+    }
+ 
+    this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+ 
+    const marker = new google.maps.Marker({
+      position: position,
+      map: this.map,
+ 
+      //Titulo
+      title: 'Minha posição',
+ 
+      //Animção
+      //animation: google.maps.Animation.DROP, // BOUNCE
+ 
+      //Icone
+      //icon: 'assets/imgs/pessoa.png'
     });
+  }
+
+  getEndereco() {
+    return 'Avenida Jovino Augusto da Silva' + ', ' + '72' + ' - ' + 'Bromélias' + ', ' + 'Timóteo' + ' - ' + 'MG';
+  }
+ 
+  getMapa() {
+    return 'https://maps.googleapis.com/maps/api/staticmap?zoom=15&size=400x400&markers=color:red|' + this.getEndereco() + 'AIzaSyDHw5MqJSOxnLvLYmnluEYqS6WSAvtGXOw';
   }
 }

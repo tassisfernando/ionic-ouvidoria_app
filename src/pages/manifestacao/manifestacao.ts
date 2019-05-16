@@ -19,6 +19,7 @@ import { IManifestacao } from '../../interfaces/IManifestacao';
 import { IManifestante } from '../../interfaces/IManifestante';
 import { IEndereco } from '../../interfaces/IEndereco';
 
+declare var google;
 
 @IonicPage()
 @Component({
@@ -30,7 +31,7 @@ export class ManifestacaoPage {
 
   manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' } };
   manifestante: IManifestante = { nmManifestante: '', email: '', cpf_cnpj: '', rg: '', telefone: '' };
-  endereco: IEndereco = { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' };
+  endereco: IEndereco = { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: ''};
   secretarias: ISecretaria[];
   assuntos: IAssunto[];
   unidades : IUnidade[];
@@ -40,6 +41,7 @@ export class ManifestacaoPage {
   email: boolean;
   hasEndereco: boolean;
   hasUnidade: boolean;
+
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -58,6 +60,10 @@ export class ManifestacaoPage {
       this.hasEndereco = false;
   }
 
+  ionViewDidLoad() {
+    console.log(this.selectedItem);
+  }
+
   getTipos() {
     this.restProvider.getTipos()
       .then(data => {
@@ -72,10 +78,6 @@ export class ManifestacaoPage {
         this.secretarias = data;
         console.log(this.secretarias);
       });
-  }
-
-  ionViewDidLoad() {
-    console.log(this.selectedItem);
   }
 
   voltarPaginaInicial() {
@@ -100,6 +102,8 @@ export class ManifestacaoPage {
       if((this.hasEndereco) || (this.endereco.logradouro != '')){
         this.manifestacao.tbendereco = this.endereco;
       }
+
+      console.log(this.manifestacao);
       this.restProvider.criarManifestacao(this.manifestacao).then(data => {
         console.log("cadastrou", data);
         this.manifestacao = data;
@@ -215,6 +219,13 @@ export class ManifestacaoPage {
     });
   }
 
- 
-  
+  getEnderecoPorCep(){
+    this.restProvider.getEnderecoPorCep(this.endereco.cep).subscribe(
+      data => {
+        this.endereco.logradouro = data["logradouro"];
+        this.endereco.bairro = data["bairro"];
+        console.log(data);
+      }
+    )
+  }
 }

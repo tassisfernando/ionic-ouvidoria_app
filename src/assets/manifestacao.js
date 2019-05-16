@@ -1,3 +1,5 @@
+
+
 function MascaraTelefone(tel){  
     if(mascaraInteiro(tel)==false){
             event.returnValue = false;
@@ -28,3 +30,4 @@ function ValidarCPF(Objcpf){
     if(digitoGerado!=digitoDigitado)        
             alert('CPF Invalido!');         
 }
+
