@@ -18,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrMaskerModule} from 'brmasker-ionic-3';
 import { RestProvider } from '../providers/rest/rest';
 
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Geolocation } from '@ionic-native/geolocation/';
 
 @NgModule({
   declarations: [

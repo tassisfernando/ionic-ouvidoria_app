@@ -18,8 +18,9 @@ import { IManifestacao } from '../../interfaces/IManifestacao';
 //import {Md5} from 'ts-md5/dist/md5';
 import { IManifestante } from '../../interfaces/IManifestante';
 import { IEndereco } from '../../interfaces/IEndereco';
+import { Geolocation } from '@ionic-native/geolocation';
+import { Platform } from 'ionic-angular';
 
-declare var google;
 
 @IonicPage()
 @Component({
@@ -41,6 +42,7 @@ export class ManifestacaoPage {
   email: boolean;
   hasEndereco: boolean;
   hasUnidade: boolean;
+  location: Coordinates;
 
 
   constructor(public navCtrl: NavController,
@@ -48,7 +50,9 @@ export class ManifestacaoPage {
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public restProvider: RestProvider,
-    public http:HttpClient) {
+    public http:HttpClient,
+    private geolocation: Geolocation,
+    private platform: Platform) {
       this.getTipos();
       this.getSecretarias();
       this.selectedItem = navParams.get('item');
@@ -227,5 +231,24 @@ export class ManifestacaoPage {
         console.log(data);
       }
     )
+  }
+
+  getLocation(){
+    this.geolocation.getCurrentPosition()
+      .then((resp) => {
+        //manipular as coordenadas aqui
+        this.location = resp.coords;
+        this.restProvider.getLocation(this.location).subscribe(
+          data => {
+            console.log(data);
+            //this.endereco.logradouro = data["results"]["0"]["formatted_address"];
+          }
+        )
+        
+      }).catch((error) => {
+        //exibir um alert com os erros
+        console.log('Erro ao recuperar sua posição', error);
+      });
+
   }
 }

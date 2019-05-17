@@ -101,7 +101,7 @@
 
     <ion-list *ngIf="hasEndereco == true">
 
-      <button ion-button icon-only>
+      <button (click)="getLocation()" ion-button icon-only>
         <ion-icon name="md-locate"></ion-icon>
       </button>
 
