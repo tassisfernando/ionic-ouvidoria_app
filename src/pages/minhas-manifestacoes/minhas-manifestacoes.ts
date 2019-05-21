@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { RestProvider } from '../../providers/rest/rest';
+import { ManifestacaoProvider } from '../../providers/manifestacao/manifestacao';
 import { IManifestacao } from '../../interfaces/IManifestacao';
 import { IAssunto } from '../../interfaces/IAssunto';
 
@@ -25,7 +25,7 @@ export class MinhasManifestacoesPage {
 
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
-     public restProvider: RestProvider) {
+     public manifestacaoProvider: ManifestacaoProvider) {
     this.getManifestacoes();
     this.found = false;
   }
@@ -33,7 +33,7 @@ export class MinhasManifestacoesPage {
 
   //VAI TER QUE SER GETMANIFESTAÇÕES POR PROTOCOLO, ENTÃO O FILTRO VAI TER QUE FUNCIONAR
   getManifestacoes() {
-    this.restProvider.getMinhasManifestações()
+    this.manifestacaoProvider.getMinhasManifestações()
       .then(data => {
         this.manifestacoes = data;
         console.log(this.manifestacoes);
@@ -70,7 +70,7 @@ export class MinhasManifestacoesPage {
   }
 
   getManifestacaoPorProtocolo(protocolo: number){
-    this.restProvider.getManifestacaoPorProtocolo(protocolo)
+    this.manifestacaoProvider.getManifestacaoPorProtocolo(protocolo)
       .then(data => {
         console.log(data);
         return data;
