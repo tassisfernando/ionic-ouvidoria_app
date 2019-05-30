@@ -12,7 +12,7 @@ export class ServicesProvider {
 
   apiCep = 'https://viacep.com.br/ws/';
   apiGeoCode = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
-  key = '&key=AIzaSyDHw5MqJSOxnLvLYmnluEYqS6WSAvtGXOw';
+  key = '&key=AIzaSyAcm3zQqelJL9GQ8OmjOnXqtvThsP1roDk';
 
   constructor(public http: HttpClient) { }
 

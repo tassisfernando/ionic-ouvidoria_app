@@ -7,6 +7,8 @@ import { HomePage } from '../pages/home/home';
 import {ManifestacaoPage} from '../pages/manifestacao/manifestacao';
 import {CadastroPage} from '../pages/cadastro/cadastro';
 import { MinhasManifestacoesPage } from '../pages/minhas-manifestacoes/minhas-manifestacoes';
+import { ValidacaoTestePage } from '../pages/validacao-teste/validacao-teste'; //tirar depois
+import { ReactiveFormsValidationPage } from '../pages/reactive-forms-validation/reactive-forms-validation'; //tirar depois
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -32,6 +34,8 @@ import { Geolocation } from '@ionic-native/geolocation/';
     ManifestacaoPage,
     MinhasManifestacoesPage,
     CadastroPage,
+    ValidacaoTestePage, //tirar depoiss
+    ReactiveFormsValidationPage //tirar depois
   ],
   imports: [
     BrowserModule,
@@ -47,6 +51,8 @@ import { Geolocation } from '@ionic-native/geolocation/';
     ManifestacaoPage,
     MinhasManifestacoesPage,
     CadastroPage,
+    ValidacaoTestePage, //tirar depoiss
+    ReactiveFormsValidationPage //tirar depois
   ],
   providers: [
     StatusBar,

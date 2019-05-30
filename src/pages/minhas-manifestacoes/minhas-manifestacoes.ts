@@ -4,13 +4,7 @@ import { ManifestacaoProvider } from '../../providers/manifestacao/manifestacao'
 import { IManifestacao } from '../../interfaces/IManifestacao';
 import { IAssunto } from '../../interfaces/IAssunto';
 
-
-/**
- * Generated class for the MinhasManifestacoesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -25,6 +19,7 @@ export class MinhasManifestacoesPage {
 
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
+     public alertCtrl: AlertController,
      public manifestacaoProvider: ManifestacaoProvider) {
     this.getManifestacoes();
     this.found = false;
@@ -35,7 +30,9 @@ export class MinhasManifestacoesPage {
   getManifestacoes() {
     this.manifestacaoProvider.getMinhasManifestações()
       .then(data => {
-        this.manifestacoes = data;
+        if(data){
+          this.manifestacoes = data;
+        } 
         console.log(this.manifestacoes);
       });
   }
@@ -54,19 +51,22 @@ export class MinhasManifestacoesPage {
     const val = ev.target.value;
 
     // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.manifestacoes = this.manifestacoes.filter((manifestacao) => {
-        return (manifestacao.hash.toString().toLowerCase().indexOf(val.toLowerCase()) > -1);
-      });
-      if(this.manifestacoes.length > 0){
-        this.found = true;
-      }else{
+    if(this.manifestacoes){
+      if (val && val.trim() != '') {
+        this.manifestacoes = this.manifestacoes.filter((manifestacao) => {
+          if(manifestacao.hash)
+            return (manifestacao.hash.toString().toLowerCase().indexOf(val.toLowerCase()) > -1);
+        });
+        if(this.manifestacoes.length > 0){
+          this.found = true;
+        }else{
+          this.found = false;
+        }
+      } else{
+        this.getManifestacoes();
         this.found = false;
       }
-    } else{
-      this.getManifestacoes();
-      this.found = false;
-    }
+    } 
   }
 
   getManifestacaoPorProtocolo(protocolo: number){
@@ -76,5 +76,14 @@ export class MinhasManifestacoesPage {
         return data;
     });
     return null;
+  }
+
+  showAlert(title: string, subTitle: string) {
+    const alert = this.alertCtrl.create({
+      title: title,
+      subTitle: subTitle,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 }

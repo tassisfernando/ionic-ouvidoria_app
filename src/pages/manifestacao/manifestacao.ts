@@ -138,9 +138,13 @@ export class ManifestacaoPage {
     //teste se há manifestante
       if((this.toggle) || (this.manifestante.nmManifestante != '')){
         this.manifestacao.tbmanifestante = this.manifestante;
+      } else{
+        this.manifestacao.tbmanifestante = null;
       }
       if((this.hasEndereco) || (this.endereco.logradouro != '')){
         this.manifestacao.tbendereco = this.endereco;
+      }else{
+        this.manifestacao.tbendereco = null;
       }
 
       console.log(this.manifestacao);
@@ -201,17 +205,23 @@ export class ManifestacaoPage {
         this.servicesProvider.getLocation(this.location).subscribe(
           data => {
             console.log(data);
-            //PEGANDO OS DADOS DO JSON DATA
+            //PEGANDO OS DADOS DO JSON DATA -- TRATAR ERROS DEPOIS // VERIFICAR SE A CIDADE É TIMÓTEO
             this.endereco.logradouro = data["results"]["0"]["address_components"]["1"]["long_name"];
-            this.endereco.bairro = data["results"]["0"]["address_components"]["3"]["long_name"];
+            this.endereco.bairro = data["results"]["0"]["address_components"]["2"]["long_name"];
             this.endereco.numero = data["results"]["0"]["address_components"]["0"]["long_name"];
             this.endereco.cep = data["results"]["0"]["address_components"]["6"]["long_name"];
+
+            this.getCepCorreto(); //PARA NAO FICAR COM O CEP COM - (EX.: "35162-067")
           }
         )
       }).catch((error) => {
         //exibir um alert com os erros
         console.log('Erro ao recuperar sua posição', error);
       });
+  }
+
+  getCepCorreto(){
+    this.endereco.cep.replace("-", "");
   }
 
 

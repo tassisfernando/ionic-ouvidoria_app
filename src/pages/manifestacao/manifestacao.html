@@ -41,7 +41,6 @@
 
     <ion-item>
       <ion-label stacked>Telefone</ion-label>
-
       <ion-input [(ngModel)]="manifestante.telefone" type="text" value="" [brmasker]="{phone: true}"></ion-input>
     </ion-item>
 
@@ -107,7 +106,7 @@
 
       <ion-item>
         <ion-label stacked>CEP</ion-label>
-        <ion-input [(ngModel)]="endereco.cep" (ionBlur)="getEnderecoPorCep()" type="text" value="" [brmasker]="{mask:'00000000', len:8}"></ion-input>
+        <ion-input [(ngModel)]="endereco.cep" (ionBlur)="getEnderecoPorCep()" type="text" value="" placeholder="35180005" [brmasker]="{mask:'00000000', len:8}"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -186,4 +185,3 @@
 
 
 
-  
