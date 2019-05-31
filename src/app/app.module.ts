@@ -25,6 +25,7 @@ import { TipoProvider } from '../providers/tipo/tipo';
 import { SecretariaProvider } from '../providers/secretaria/secretaria';
 import { EnderecoProvider } from '../providers/endereco/endereco';
 
+import { Network } from  '@ionic-native/network'; //TIRAR O NGX SE DER MERDA
 import { Geolocation } from '@ionic-native/geolocation/';
 
 @NgModule({
@@ -64,7 +65,8 @@ import { Geolocation } from '@ionic-native/geolocation/';
     ServicesProvider,
     TipoProvider,
     SecretariaProvider,
-    EnderecoProvider
+    EnderecoProvider,
+    Network
   ]
 })
 export class AppModule {}

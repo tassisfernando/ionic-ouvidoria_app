@@ -84,9 +84,15 @@ export class ManifestacaoPage {
   getTipos() {
     this.tipoProvider.getTipos()
       .then(data => {
-        this.tipos = data;
-        console.log(this.tipos);
-      });
+        if(data){
+          this.tipos = data;
+          console.log(this.tipos);
+        }
+      }).catch((err)=>{
+        this.criarAlert('Erro de conexão', 'Erro ao conectar com o banco de dados. Tente novamente mais tarde.', ['OK']);
+        this.voltarPaginaInicial();
+      }
+    );
   }
 
   selectTipo(event,tipo:ITipo){
@@ -99,6 +105,8 @@ export class ManifestacaoPage {
       .then(data => {
         this.secretarias = data;
         console.log(this.secretarias);
+      }).catch((err) => {
+        this.criarAlert('Erro inesperado', 'Houve um erro inesperado de conexão. Tente novamente mais tarde.', ['OK'])
       });
   }
 
@@ -143,8 +151,6 @@ export class ManifestacaoPage {
       }
       if((this.hasEndereco) || (this.endereco.logradouro != '')){
         this.manifestacao.tbendereco = this.endereco;
-      }else{
-        this.manifestacao.tbendereco = null;
       }
 
       console.log(this.manifestacao);
@@ -153,6 +159,8 @@ export class ManifestacaoPage {
         this.manifestacao = data;
         console.log(this.manifestacao.hash);
         this.showAlert();
+      }).catch((err)=>{
+        this.criarAlert('Erro', `Erro ao cadastrar manifestação. ${err}` , ['OK'])
       });
       
   }
@@ -190,8 +198,12 @@ export class ManifestacaoPage {
   getEnderecoPorCep(){
     this.servicesProvider.getEnderecoPorCep(this.endereco.cep).subscribe(
       data => {
-        this.endereco.logradouro = data["logradouro"];
-        this.endereco.bairro = data["bairro"];
+        if(data["localidade"] == "Timóteo"){
+          this.endereco.logradouro = data["logradouro"];
+          this.endereco.bairro = data["bairro"];
+        } else{
+          this.criarAlert('Endereço inválido!', 'Informe um endereço da cidade de Timóteo.', ['OK']);
+        }
         console.log(data);
       }
     )
@@ -205,23 +217,44 @@ export class ManifestacaoPage {
         this.servicesProvider.getLocation(this.location).subscribe(
           data => {
             console.log(data);
-            //PEGANDO OS DADOS DO JSON DATA -- TRATAR ERROS DEPOIS // VERIFICAR SE A CIDADE É TIMÓTEO
-            this.endereco.logradouro = data["results"]["0"]["address_components"]["1"]["long_name"];
-            this.endereco.bairro = data["results"]["0"]["address_components"]["2"]["long_name"];
-            this.endereco.numero = data["results"]["0"]["address_components"]["0"]["long_name"];
-            this.endereco.cep = data["results"]["0"]["address_components"]["6"]["long_name"];
 
-            this.getCepCorreto(); //PARA NAO FICAR COM O CEP COM - (EX.: "35162-067")
+            if(data["status"] == "OK"){
+              if(data["results"]["0"]["address_components"]["3"]["long_name"] == "Timóteo"){
+                //PEGANDO OS DADOS DO JSON DATA -- TRATAR ERROS DEPOIS // VERIFICAR SE A CIDADE É TIMÓTEO
+                this.endereco.logradouro = data["results"]["0"]["address_components"]["1"]["long_name"];
+                this.endereco.bairro = data["results"]["0"]["address_components"]["2"]["long_name"];
+                this.endereco.numero = data["results"]["0"]["address_components"]["0"]["long_name"];
+                this.endereco.cep = data["results"]["0"]["address_components"]["6"]["long_name"];
+  
+                this.getCepCorreto(); //PARA NAO FICAR COM O CEP COM - (EX.: "35162-067")
+              } else{
+                this.criarAlert('Localização inválida!', 'Você precisa estar em Timóteo parar utilizar esse recurso.', ['OK']);
+              }
+            } else{
+              this.criarAlert('Erro inesperado', 'Erro ao recuperar sua localização. Tente novamente mais tarde', ['OK']);
+            }
           }
         )
       }).catch((error) => {
         //exibir um alert com os erros
+        this.criarAlert('Erro inesperado', 'Erro ao recuperar sua localização', ['OK']);
         console.log('Erro ao recuperar sua posição', error);
       });
   }
 
   getCepCorreto(){
     this.endereco.cep.replace("-", "");
+  }
+
+  criarAlert(title: string, subTitle: string, buttons: string[]) {
+    
+      const alert = this.alertCtrl.create({
+        title: title,
+        subTitle: subTitle,
+        buttons: buttons
+      });
+      alert.present();
+    } 
   }
 
 
@@ -276,4 +309,4 @@ export class ManifestacaoPage {
       this.showAlert();
     });
   }*/
-}
+

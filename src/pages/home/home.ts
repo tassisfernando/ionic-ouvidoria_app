@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {ManifestacaoPage} from '../manifestacao/manifestacao';
 import { MinhasManifestacoesPage } from '../minhas-manifestacoes/minhas-manifestacoes';
-
-
-
+import { Network } from  '@ionic-native/network';
 
 @Component({
   selector: 'page-home',
@@ -14,14 +12,9 @@ export class HomePage {
 
   tipo:any;
   
-
-  constructor(public navCtrl: NavController) {
-
-  }
-
-
+  constructor(public navCtrl: NavController) { }
+            
   ionViewDidEnter(){
-   console.log("Entrou na Pagina Home")
   }
 
   abrirPagina(x: number){
