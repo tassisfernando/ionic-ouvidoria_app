@@ -160,7 +160,7 @@ export class ManifestacaoPage {
         console.log(this.manifestacao.hash);
         this.showAlert();
       }).catch((err)=>{
-        this.criarAlert('Erro', `Erro ao cadastrar manifestação. ${err}` , ['OK'])
+        this.criarAlert('Erro', `A sua manifestação não foi cadastrada por um erro técnico. Tente novamente mais tarde.` , ['OK'])
       });
       
   }
@@ -198,15 +198,21 @@ export class ManifestacaoPage {
   getEnderecoPorCep(){
     this.servicesProvider.getEnderecoPorCep(this.endereco.cep).subscribe(
       data => {
-        if(data["localidade"] == "Timóteo"){
-          this.endereco.logradouro = data["logradouro"];
-          this.endereco.bairro = data["bairro"];
+        if(!data["erro"]){
+          if(data["localidade"] == "Timóteo"){
+            this.endereco.logradouro = data["logradouro"];
+            this.endereco.bairro = data["bairro"];
+          } else{
+            this.endereco.cep = "";
+            this.criarAlert('Endereço inválido!', 'Informe um endereço da cidade de Timóteo.', ['OK']);
+          }
+          console.log(data);
         } else{
-          this.criarAlert('Endereço inválido!', 'Informe um endereço da cidade de Timóteo.', ['OK']);
+          this.criarAlert('Endereço inválido!', 'Informe um endereço de CEP existente.', ['OK']);
         }
-        console.log(data);
-      }
-    )
+      }, error => {
+        this.criarAlert('Endereço inválido!', 'Informe um endereço de CEP existente.', ['OK']);
+    });
   }
 
   getLocation(){
@@ -219,14 +225,19 @@ export class ManifestacaoPage {
             console.log(data);
 
             if(data["status"] == "OK"){
-              if(data["results"]["0"]["address_components"]["3"]["long_name"] == "Timóteo"){
-                //PEGANDO OS DADOS DO JSON DATA -- TRATAR ERROS DEPOIS // VERIFICAR SE A CIDADE É TIMÓTEO
-                this.endereco.logradouro = data["results"]["0"]["address_components"]["1"]["long_name"];
-                this.endereco.bairro = data["results"]["0"]["address_components"]["2"]["long_name"];
-                this.endereco.numero = data["results"]["0"]["address_components"]["0"]["long_name"];
-                this.endereco.cep = data["results"]["0"]["address_components"]["6"]["long_name"];
-  
-                this.getCepCorreto(); //PARA NAO FICAR COM O CEP COM - (EX.: "35162-067")
+              if(data["results"]["0"]["address_components"]["3"]["long_name"]){
+                if(data["results"]["0"]["address_components"]["3"]["long_name"] == "Timóteo"){
+                  //PEGANDO OS DADOS DO JSON DATA -- TRATAR ERROS DEPOIS // VERIFICAR SE A CIDADE É TIMÓTEO
+                  this.endereco.logradouro = data["results"]["0"]["address_components"]["1"]["long_name"];
+                  this.endereco.bairro = data["results"]["0"]["address_components"]["2"]["long_name"];
+                  this.endereco.numero = data["results"]["0"]["address_components"]["0"]["long_name"];
+                  if(data["results"]["0"]["address_components"]["6"]["long_name"])
+                    this.endereco.cep = data["results"]["0"]["address_components"]["6"]["long_name"];
+    
+                  this.getCepCorreto(); //PARA NAO FICAR COM O CEP COM - (EX.: "35162-067")
+                } else{
+                  this.criarAlert('Localização inválida!', 'Você precisa estar em Timóteo parar utilizar esse recurso.', ['OK']);
+                }
               } else{
                 this.criarAlert('Localização inválida!', 'Você precisa estar em Timóteo parar utilizar esse recurso.', ['OK']);
               }
