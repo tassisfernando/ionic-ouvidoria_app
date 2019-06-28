@@ -89,4 +89,8 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-advanced-http" spec="2.0.1" />
     <allow-navigation href="http://200.128.148.98:8100" />
+    <config-file parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
+        <string>You can take photos</string>
+    </config-file>
+    <allow-navigation href="http://200.128.146.234:8100" />
 </widget>

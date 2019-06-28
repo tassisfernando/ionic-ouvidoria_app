@@ -26,7 +26,7 @@
 
     <ion-item>
       <ion-label stacked>CPF/CNPJ</ion-label>
-      <ion-input [(ngModel)]="manifestante.cpf_cnpj" type="text" value="" [brmasker]="{mask:'000.000.000-00', len:14,type:'num'}"></ion-input>
+      <ion-input [(ngModel)]="manifestante.cpf_cnpj" type="text" value="" [brmasker]="{mask:'000.000.000-00', len:14, type:'num'}"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -117,18 +117,18 @@
         <ion-label stacked>Logradouro</ion-label>
         <ion-input [(ngModel)]="endereco.logradouro" readonly="" name="logradouro" id="logradouro" type="text" value=""></ion-input>
       </ion-item>
-  
+
       <ion-item>
         <ion-label stacked>Número</ion-label>
         <ion-input [(ngModel)]="endereco.numero" name="numero" id="numero" type="number" value=""></ion-input>
       </ion-item>
-  
+
       <ion-item>
         <ion-label stacked>Complemento</ion-label>
         <ion-input [(ngModel)]="endereco.complemento" name="complemento" id="complemento" type="text" value=""></ion-input>
       </ion-item>
 
-      <ion-item> 
+      <ion-item>
         <ion-label stacked>Bairro</ion-label>
         <ion-input [(ngModel)]="endereco.bairro" name="bairro" readonly="" id="bairro" type="text" value=""></ion-input>
       </ion-item>
@@ -155,7 +155,7 @@
     <ion-item class="ajuda" *ngIf="toggle == false">
         <ion-icon ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas()"></ion-icon>
       </ion-item>
-     
+
     <ion-item *ngIf="email == true && toggle == false">
       <ion-label stacked>E-mail</ion-label>
       <ion-input type="email" [(ngModel)]="manifestacao.emailAnonimo" placeholder="Informe seu e-mail"></ion-input>
@@ -167,13 +167,17 @@
       Anexos
     </ion-list-header>
 
-    <button ion-button icon-only>
+    <button ion-button (click)="abreCamera()" icon-only>
       <ion-icon name="md-camera"></ion-icon>
     </button>
 
     <button ion-button icon-only>
         <ion-icon name="ios-archive"></ion-icon>
     </button>
+
+    <ion-item>
+      <img src="{{base64Image}}" alt="Foto">
+    </ion-item>
 </ion-list>
 
 <ion-list>

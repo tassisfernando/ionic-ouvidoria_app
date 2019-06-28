@@ -12,6 +12,9 @@ import { ReactiveFormsValidationPage } from '../pages/reactive-forms-validation/
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Network } from  '@ionic-native/network'; //TIRAR O NGX SE DER MERDA
+import { Geolocation } from '@ionic-native/geolocation/';
+import { Camera } from '@ionic-native/camera';
 
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,8 +28,6 @@ import { TipoProvider } from '../providers/tipo/tipo';
 import { SecretariaProvider } from '../providers/secretaria/secretaria';
 import { EnderecoProvider } from '../providers/endereco/endereco';
 
-import { Network } from  '@ionic-native/network'; //TIRAR O NGX SE DER MERDA
-import { Geolocation } from '@ionic-native/geolocation/';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,6 @@ import { Geolocation } from '@ionic-native/geolocation/';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
     RestProvider,
     Geolocation,
     ManifestacaoProvider,
@@ -66,7 +66,9 @@ import { Geolocation } from '@ionic-native/geolocation/';
     TipoProvider,
     SecretariaProvider,
     EnderecoProvider,
-    Network
+    Network,
+    Camera,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
 export class AppModule {}

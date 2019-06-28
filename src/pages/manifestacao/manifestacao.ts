@@ -19,11 +19,11 @@ import { ISecretaria } from '../../interfaces/ISecretaria';
 import { IAssunto } from '../../interfaces/IAssunto';
 import { IUnidade } from '../../interfaces/IUnidade';
 import { IManifestacao } from '../../interfaces/IManifestacao';
-
-//import {Md5} from 'ts-md5/dist/md5';
 import { IManifestante } from '../../interfaces/IManifestante';
 import { IEndereco } from '../../interfaces/IEndereco';
+
 import { Geolocation } from '@ionic-native/geolocation';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 @IonicPage()
 @Component({
@@ -46,6 +46,7 @@ export class ManifestacaoPage {
   hasEndereco: boolean;
   hasUnidade: boolean;
   location: Coordinates;
+  base64Image: string;
 
 
   constructor(public navCtrl: NavController,
@@ -53,19 +54,20 @@ export class ManifestacaoPage {
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public restProvider: RestProvider,
-    public http:HttpClient,
+    public http: HttpClient,
     private geolocation: Geolocation,
     private manifestacaoProvider: ManifestacaoProvider,
     private servicesProvider: ServicesProvider,
     private tipoProvider: TipoProvider,
     private secretariaProvider: SecretariaProvider,
-    private enderecoProvider: EnderecoProvider) {
-      
+    private enderecoProvider: EnderecoProvider,
+    private camera: Camera) {
+
       this.getTipos();
       this.getSecretarias();
 
       this.selectedItem = navParams.get('item');
-      this.manifestacao.idTipo = this.selectedItem; 
+      this.manifestacao.idTipo = this.selectedItem;
 
       this.toggle = false;
       this.email = false;
@@ -162,7 +164,7 @@ export class ManifestacaoPage {
       }).catch((err)=>{
         this.criarAlert('Erro', `A sua manifestação não foi cadastrada por um erro técnico. Tente novamente mais tarde.` , ['OK'])
       });
-      
+
   }
 
   showAlert() {
@@ -233,7 +235,7 @@ export class ManifestacaoPage {
                   this.endereco.numero = data["results"]["0"]["address_components"]["0"]["long_name"];
                   if(data["results"]["0"]["address_components"]["6"]["long_name"])
                     this.endereco.cep = data["results"]["0"]["address_components"]["6"]["long_name"];
-    
+
                   this.getCepCorreto(); //PARA NAO FICAR COM O CEP COM - (EX.: "35162-067")
                 } else{
                   this.criarAlert('Localização inválida!', 'Você precisa estar em Timóteo parar utilizar esse recurso.', ['OK']);
@@ -258,14 +260,31 @@ export class ManifestacaoPage {
   }
 
   criarAlert(title: string, subTitle: string, buttons: string[]) {
-    
+
       const alert = this.alertCtrl.create({
         title: title,
         subTitle: subTitle,
         buttons: buttons
       });
       alert.present();
-    } 
+    }
+
+    abreCamera(){
+      const options: CameraOptions = {
+        quality: 100,
+        destinationType: this.camera.DestinationType.FILE_URI,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE
+      }
+
+      this.camera.getPicture(options).then((imageData) => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        this.base64Image = 'data:image/jpeg;base64,' + imageData;
+       }, (err) => {
+        // Handle error
+       });
+    }
   }
 
 
