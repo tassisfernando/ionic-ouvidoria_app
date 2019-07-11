@@ -4,9 +4,11 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import {ManifestacaoPage} from '../pages/manifestacao/manifestacao';
-import {CadastroPage} from '../pages/cadastro/cadastro';
 import { MinhasManifestacoesPage } from '../pages/minhas-manifestacoes/minhas-manifestacoes';
+import { UsuarioPage } from '../pages/usuario/usuario';
+import { LocalInfoPage } from './../pages/local-info/local-info';
+import {ManifestacaoPage} from '../pages/manifestacao/manifestacao'; //Tirar depois
+import {CadastroPage} from '../pages/cadastro/cadastro'; //tirar depois
 import { ValidacaoTestePage } from '../pages/validacao-teste/validacao-teste'; //tirar depois
 import { ReactiveFormsValidationPage } from '../pages/reactive-forms-validation/reactive-forms-validation'; //tirar depois
 
@@ -33,11 +35,13 @@ import { EnderecoProvider } from '../providers/endereco/endereco';
   declarations: [
     MyApp,
     HomePage,
-    ManifestacaoPage,
     MinhasManifestacoesPage,
-    CadastroPage,
-    ValidacaoTestePage, //tirar depoiss
-    ReactiveFormsValidationPage //tirar depois
+    UsuarioPage,
+    LocalInfoPage,
+    ManifestacaoPage, //tirar depois
+    ValidacaoTestePage, //tirar depois
+    ReactiveFormsValidationPage, //tirar depois
+    CadastroPage, //Tirar depois
   ],
   imports: [
     BrowserModule,
@@ -50,9 +54,11 @@ import { EnderecoProvider } from '../providers/endereco/endereco';
   entryComponents: [
     MyApp,
     HomePage,
-    ManifestacaoPage,
     MinhasManifestacoesPage,
-    CadastroPage,
+    UsuarioPage,
+    LocalInfoPage,
+    ManifestacaoPage, //tirar depois
+    CadastroPage, //tirar depois
     ValidacaoTestePage, //tirar depoiss
     ReactiveFormsValidationPage //tirar depois
   ],

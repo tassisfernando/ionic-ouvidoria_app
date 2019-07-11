@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-navbar>
+    <h5>Nova manifestação - Passo 1 de 3</h5>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h2>Dados do usuário</h2>
+  <hr>
+
+  <ion-list>
+    <form [formGroup]="form">
+
+      <ion-item>
+          <ion-label stacked>Nome:*</ion-label>
+          <ion-input [(ngModel)]="usuario.nmManifestante" formControlName="nome" placeholder="Informe seu nome..." type="text"></ion-input>
+      </ion-item>
+
+      <ion-item class="error" *ngIf="!form.controls.nome.valid  && (form.controls.nome.dirty || submitAttempt)">
+          Informe no mínimo 3 e apenas letras!
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="label" stacked>CPF:*</ion-label>
+        <ion-input [(ngModel)]="usuario.cpf_cnpj" formControlName="cpf" type="text" placeholder="000.000.000-00" [brmasker]="{len:11}"></ion-input>
+      </ion-item>
+
+      <ion-item class="error" *ngIf="!form.controls.cpf.valid  && (form.controls.cpf.dirty || submitAttempt)">
+          Informe um CPF válido!
+      </ion-item>
+
+      <ion-item>
+          <ion-label class="label" stacked>RG:*</ion-label>
+          <ion-input [(ngModel)]="usuario.rg" formControlName="rg" type="text" placeholder="XX-00.000.000" [brmasker]="{len:10}"></ion-input>
+      </ion-item>
+
+      <ion-item class="error" *ngIf="!form.controls.rg.valid  && (form.controls.rg.dirty || submitAttempt)">
+          Informe um RG válido!
+      </ion-item>
+
+      <ion-item>
+          <ion-label class="label" stacked>E-mail:*</ion-label>
+          <ion-input [(ngModel)]="usuario.email" formControlName="email" type="email" placeholder="Informe seu e-mail..."></ion-input>
+      </ion-item>
+
+      <ion-item class="error" *ngIf="!form.controls.email.valid  && (form.controls.email.dirty || submitAttempt)">
+          Informe um e-mail válido!
+      </ion-item>
+
+      <ion-item>
+          <ion-label class="label" stacked>Telefone:*</ion-label>
+          <ion-input [(ngModel)]="usuario.telefone" formControlName="telefone" type="text" [brmasker]="{len:11}" placeholder="0000-0000"></ion-input>
+      </ion-item>
+
+      <ion-item class="error" *ngIf="!form.controls.telefone.valid  && (form.controls.telefone.dirty || submitAttempt)">
+          Padrão: (00) 0000-0000!
+      </ion-item>
+
+
+      <ion-list class="listButton">
+          <button [disabled]="!form.valid"  id="large-button" expand="full" (click)="save()" ion-button large>Próximo</button>
+      </ion-list>
+    </form>
+  </ion-list>
+</ion-content>

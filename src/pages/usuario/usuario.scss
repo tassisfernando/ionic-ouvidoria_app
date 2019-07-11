@@ -1,0 +1,58 @@
+page-usuario {
+  .invalid {
+      border: 1px solid #ea6153;
+  }
+  .error{
+      color: #ea6153;
+  }
+}
+
+p {
+  font-size: 0.8em;
+  color: #e96151;
+}
+
+ion-header ion-navbar h5 {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin-top: 10px;
+  margin-left: 2%;
+  text-align: left;
+  vertical-align: middle;
+  color: #990A0D;
+  font-size: 17px;
+}
+
+h2 {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  color: #21186B;
+}
+
+.label{
+  padding-top: 8%;
+}
+
+.listButton{
+  padding-top: 15%;
+}
+
+#large-button{
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+
+  background-color: #21186B;
+
+  position: relative;
+  bottom: 0;
+  top: 100%;
+
+  text-transform: none;
+}
+
+ion-list{
+  padding: 0;
+}
+
+

@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
+import { UsuarioPage } from './../pages/usuario/usuario';
 import { MinhasManifestacoesPage } from '../pages/minhas-manifestacoes/minhas-manifestacoes';
 import { ValidacaoTestePage } from '../pages/validacao-teste/validacao-teste';  //Tirar depois
 import { ReactiveFormsValidationPage } from '../pages/reactive-forms-validation/reactive-forms-validation';  //Tirar depois
@@ -24,6 +25,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Início', component: HomePage },
+      { title: 'Manifestação não anônima', component: UsuarioPage },
       { title: 'Minhas Manifestações', component: MinhasManifestacoesPage },
       { title: 'Configurações',component:HomePage}, //MUDAR AQUI
       { title: 'Validações', component:ValidacaoTestePage }, //TIRAR DEPOIS

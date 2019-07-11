@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+
 import {ManifestacaoPage} from '../manifestacao/manifestacao';
 import { MinhasManifestacoesPage } from '../minhas-manifestacoes/minhas-manifestacoes';
+import { UsuarioPage } from './../usuario/usuario';
+import { LocalInfoPage } from './../local-info/local-info';
+
 import { Network } from  '@ionic-native/network';
 
 @Component({
@@ -11,9 +15,9 @@ import { Network } from  '@ionic-native/network';
 export class HomePage {
 
   tipo:any;
-  
+
   constructor(public navCtrl: NavController) { }
-            
+
   ionViewDidEnter(){
   }
 
@@ -24,12 +28,15 @@ export class HomePage {
     console.log(x);
   }
 
+  abrirUsuarioPage(){
+    this.navCtrl.push(UsuarioPage);
+  }
+
   abrirManifestacaoPage(){
     this.navCtrl.push(MinhasManifestacoesPage);
   }
 
-  buscaTipo(){
-    //ADICIONAR NO STORAGE O TIPO DE MANIFESTAÇÃO E SELECIONAR ELA NA PAGINA DE CRIAR MANIFESTAÇÃO
+  abrirLocalInfoPage(){
+    this.navCtrl.push(LocalInfoPage, {usuario: null});
   }
-
 }

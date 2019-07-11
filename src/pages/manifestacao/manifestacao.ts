@@ -187,7 +187,6 @@ export class ManifestacaoPage {
     this.voltarPaginaInicial();
   }
 
-
   showDuvidas() {
     const alert = this.alertCtrl.create({
       title: 'Descrição',

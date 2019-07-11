@@ -1,59 +1,52 @@
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+      <ion-icon style="color: #990A0D;" name="menu"></ion-icon>
     </button>
-    <ion-title>Início</ion-title>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <h5 style="color: #990A0D; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Ouvidoria App</h5>
+        </ion-col>
+        <ion-col>
+          <img id="logo" src="../../assets/imgs/brasao.png" alt="logo">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>
     <ion-grid>
       <ion-row>
         <ion-col>
-          <button id="botaoBonito" ion-button icon-start class="bloco-Amarelo" (click)="abrirPagina(3)">
+          <button id="botaoBonito" color="default" large block ion-button icon-start (click)="abrirUsuarioPage()">
             <ion-icon name="ios-megaphone"></ion-icon>
-            Denúncia
-          </button>
-        </ion-col>
-        <ion-col>
-          <button id="botaoBonito" ion-button icon-start class="bloco-Vermelho" (click)="abrirPagina(5)">
-            <ion-icon name="md-thumbs-down"></ion-icon>
-            Reclamação
+            Manifestação não-anônima
           </button>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
-          <button id="botaoBonito" ion-button icon-start class="bloco-Rosa" (click)="abrirPagina(6)">
-            <ion-icon name="ios-paper-plane"></ion-icon>
-            Solicitação
-          </button>
-        </ion-col>
-        <ion-col>
-          <button id="botaoBonito" ion-button icon-start class="bloco-Violeta" (click)="abrirPagina(7)">
-            <ion-icon name="ios-information-circle"></ion-icon>
-            Sugestão
-          </button>
-        </ion-col>
+          <ion-col>
+            <button id="botaoBonito" color="default" large block ion-button icon-start (click)="abrirLocalInfoPage()">
+              <ion-icon name="eye-off"></ion-icon>
+              Manifestação anônima
+            </button>
+          </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
-          <button id="botaoBonito" ion-button icon-start class="bloco-Verde" (click)="abrirPagina(4)">
-            <ion-icon name="md-thumbs-up"></ion-icon>
-            Elogio
-          </button>
-        </ion-col>
-        <ion-col>
-          <button id="botaoBonito" ion-button icon-start class="bloco-AzulClaro" (click)="abrirPagina(2)">
-            <ion-icon name="ios-bulb"></ion-icon>
-            Crítica
-          </button>
-        </ion-col>
+          <ion-col>
+            <button id="botaoBonito" color="default" large block ion-button icon-start (click)="abrirManifestacaoPage()">
+              <ion-icon name="paper"></ion-icon>
+              Minhas Manifestações
+            </button>
+          </ion-col>
       </ion-row>
     </ion-grid>
-    <button ion-button full color="dark" (click)="abrirManifestacaoPage()">Minhas Manifestações</button>
 
-  </h2>  
+    <ion-list>
+      <ion-list-header>
+        <h2 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; color: #990A0D;">Notificações</h2>
+      </ion-list-header>
+    </ion-list>
 </ion-content>
