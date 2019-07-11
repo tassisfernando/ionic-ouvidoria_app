@@ -1,18 +1,79 @@
-<!--
-  Generated template for the LocalInfoPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>LocalInfoPage</ion-title>
+      <h5 *ngIf="usuario != null">Nova manifestação - Passo 2 de 3</h5>
+      <h5 *ngIf="usuario == null" style="font-size: 13px; text-align: left;">Nova manifestação anônima - Passo 1 de 2</h5>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+    <form [formGroup]="formOne">
+      <ion-list>
+        <ion-item-divider>
+          <h4>Informações gerais</h4>
+        </ion-item-divider>
 
+        <ion-item-group>
+            <ion-item>
+                <ion-label stacked>Tipo</ion-label>
+                <ion-select formControlName="tipo" [(ngModel)]="manifestacao.idTipo" cancelText="Cancelar" okText="Ok">
+                    <ion-option *ngFor="let tipo of tipos" (ionSelect)="selectTipo($event, tipo)" value="{{tipo.idTipo}}">{{tipo.nmTipo}}</ion-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item class="ajuda">
+                <ion-icon class="icone-ajuda" ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas('tipo')"></ion-icon>
+              </ion-item>
+
+              <ion-item class="error" *ngIf="!formOne.controls.tipo.valid  && (formOne.controls.tipo.dirty || submitAttempt)">
+                  Você precisa informar um tipo!
+              </ion-item>
+
+              <ion-item class="item">
+                  <ion-label stacked>Secretaria</ion-label>
+                  <ion-select formControlName="secretaria" [(ngModel)]="manifestacao.idSecretaria" cancelText="Cancelar" okText="Ok">
+                    <ion-option *ngFor="let secretaria of secretarias" (ionSelect)="selectSecretaria($event, secretaria)" value="{{secretaria.idSecretaria}}">{{secretaria.nmSecretaria}}</ion-option>
+                  </ion-select>
+              </ion-item>
+
+              <ion-item class="ajuda">
+                  <ion-icon class="icone-ajuda" ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas('secretaria')"></ion-icon>
+              </ion-item>
+
+              <ion-item class="error" *ngIf="!formOne.controls.secretaria.valid  && (formOne.controls.secretaria.dirty || submitAttempt)">
+                  Você precisa informar uma secretaria!
+              </ion-item>
+
+              <ion-item class="item">
+                  <ion-label stacked>Assunto</ion-label>
+                  <ion-select formControlName="assunto" [(ngModel)]="manifestacao.idAssunto" cancelText="Cancelar" okText="Ok">
+                    <ion-option *ngFor="let assunto of assuntos" (ionSelect)="selectAssunto($event, assunto)" value="{{assunto.idAssunto}}">{{assunto.nmAssunto}}</ion-option>
+                  </ion-select>
+              </ion-item>
+
+              <ion-item class="ajuda">
+                  <ion-icon class="icone-ajuda" ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas('assunto')"></ion-icon>
+              </ion-item>
+
+              <ion-item class="error" *ngIf="!formOne.controls.assunto.valid  && (formOne.controls.assunto.dirty || submitAttempt)">
+                  Você precisa informar um assunto!
+              </ion-item>
+        </ion-item-group>
+
+
+        <ion-item-divider>
+          <h4>Local de Ocorrência</h4>
+        </ion-item-divider>
+
+        <ion-item class="listButton">
+          <button [disabled]="!formOne.valid"  id="large-button" expand="full" (click)="save()" ion-button large>Próximo</button>
+        </ion-item>
+
+      </ion-list>
+    </form>
 </ion-content>

@@ -17,7 +17,6 @@ import { CpfValidator } from  '../../assets/validators/cpf';
 export class UsuarioPage {
 
   public form: FormGroup;
-
   private submitAttempt: boolean = false;
 
   private usuario: IManifestante = { nmManifestante: '', email: '', cpf_cnpj: '', rg: '', telefone: '' };
@@ -28,8 +27,8 @@ export class UsuarioPage {
       nome: ['', Validators.compose([Validators.minLength(3), Validators.required])],
       cpf: ['', Validators.compose([CpfValidator.isValidCpf, Validators.required])],
       rg: ['', Validators.compose([Validators.minLength(10), Validators.maxLength(10), Validators.required])],
-      email: ['', Validators.compose([Validators.minLength(5), Validators.pattern('^[A-Z0-9a-z\._%±]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,4}$'), Validators.required])],
-      telefone: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(11), Validators.required])]
+      email: ['', Validators.compose([Validators.minLength(5), Validators.email, Validators.required])],
+      telefone: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(15), Validators.required])]
     });
   }
 
