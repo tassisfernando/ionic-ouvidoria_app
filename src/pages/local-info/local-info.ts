@@ -1,3 +1,6 @@
+import { Geolocation } from '@ionic-native/geolocation';
+import { IEndereco } from './../../interfaces/IEndereco';
+import { ServicesProvider } from './../../providers/services/services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
@@ -5,6 +8,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 
 import { SecretariaProvider } from './../../providers/secretaria/secretaria';
 import { TipoProvider } from './../../providers/tipo/tipo';
+import { EnderecoProvider } from '../../providers/endereco/endereco';
 
 import { IUnidade } from './../../interfaces/IUnidade';
 import { IAssunto } from './../../interfaces/IAssunto';
@@ -38,12 +42,20 @@ export class LocalInfoPage {
   secretarias: ISecretaria[];
   assuntos: IAssunto[];
   unidades : IUnidade[];
+  endereco: IEndereco = { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: ''};
+
+  hasUnidade: boolean = true;
+  hasEndereco: boolean = false;
+  location: Coordinates;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public alertCtrl: AlertController,
               public tipoProvider: TipoProvider,
               public secretariaProvider: SecretariaProvider,
-              public formBuilder: FormBuilder) {
+              public enderecoProvider: EnderecoProvider,
+              public servicesProvider: ServicesProvider,
+              public formBuilder: FormBuilder,
+              private geolocation: Geolocation,) {
 
     this.usuario = navParams.get('usuario');
 
@@ -53,8 +65,18 @@ export class LocalInfoPage {
       assunto: ['', Validators.compose([Validators.min(1), Validators.required])],
     });
 
+    this.formEnd = formBuilder.group({
+      cep: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(8), Validators.required])],
+      logradouro: ['', Validators.required],
+      numero: ['', Validators.min(1)],
+      bairro: ['', Validators.required],
+      complemento: ['', ],
+    });
+
     this.getTipos();
     this.getSecretarias();
+    this.hasUnidade = true;
+    this.hasEndereco = false;
 
     console.log(this.usuario);
   }
@@ -102,6 +124,16 @@ export class LocalInfoPage {
     this.manifestacao.idAssunto=assunto.idAssunto;
   }
 
+  selectUnidade(event,unidade:IUnidade){
+    console.log(unidade.idUnidade);
+    this.enderecoProvider.getEndereco(unidade.idUnidade).then(data => {
+      console.log(data);
+      this.manifestacao.tbendereco.idEndereco = data["0"]["idEndereco"];
+      this.hasUnidade = true;
+      console.log(this.manifestacao.tbendereco.idEndereco)
+    });
+  }
+
   criarAlert(title: string, subTitle: string, buttons: string[]) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -109,24 +141,6 @@ export class LocalInfoPage {
       buttons: buttons
     });
     alert.present();
-  }
-
-  save(){
-    this.submitAttempt = true;
-
-    console.log(this.usuario);
-
-    //se tiver erro em algum dos dois formulário não salva
-    if(!this.formOne.valid || !this.formEnd.valid){
-        console.log("Erro nos dados!");
-        console.log(this.formOne.value);
-    }
-    else {
-        console.log("Dados certos!")
-        console.log(this.formOne.value);
-        //passar para a outra página
-        this.navCtrl.push(LocalInfoPage, {usuario: this.usuario});
-    }
   }
 
   showDuvidas(duvida: string){
@@ -137,17 +151,141 @@ export class LocalInfoPage {
       texto = "O tipo da manifestação define genericamente seu propósito: criticar, elogiar, denunciar etc.";
     } else if ( duvida == "secretaria" ) {
       texto = "A secretaria é o órgão da prefeitura sobre o qual você quer dizer algo.";
-    } else if( duvida == "assunto" ) {
+    } else if ( duvida == "assunto" ) {
       texto = "O assunto especifica qual será o foco da sua manifestação, de acordo com a secretaria escolhida."
+    } else if ( duvida == "unidade" ){
+      texto = "É a unidade de algum setor da prefeitura, como postos de saúde, escolas e a própria prefeitura."
     }
 
     this.criarAlert("Ajuda", texto, ['OK']);
 
   }
 
+  exibirEndForm(){
+    if(!this.hasEndereco){
+      this.hasEndereco = true;
+      this.hasUnidade = false;
+      this.manifestacao.tbendereco.idEndereco = 0;
+    }
+    else{
+      this.hasEndereco = false;
+    }
+  }
+
+  getLocation(){
+    this.geolocation.getCurrentPosition()
+      .then((resp) => {
+        //manipular as coordenadas aqui
+        this.location = resp.coords;
+        this.servicesProvider.getLocation(this.location).subscribe(
+          data => {
+            console.log(data);
+
+            if(data["status"] == "OK"){
+              if(data["results"]["0"]["address_components"]["3"]["long_name"]){
+                if(data["results"]["0"]["address_components"]["3"]["long_name"] == "Timóteo"){
+                  //PEGANDO OS DADOS DO JSON DATA -- TRATAR ERROS DEPOIS // VERIFICAR SE A CIDADE É TIMÓTEO
+                  this.endereco.logradouro = data["results"]["0"]["address_components"]["1"]["long_name"];
+                  this.endereco.bairro = data["results"]["0"]["address_components"]["2"]["long_name"];
+                  this.endereco.numero = data["results"]["0"]["address_components"]["0"]["long_name"];
+                  if(data["results"]["0"]["address_components"]["6"]["long_name"])
+                    this.endereco.cep = data["results"]["0"]["address_components"]["6"]["long_name"];
+
+                  this.getCepCorreto(); //PARA NAO FICAR COM O CEP COM - (EX.: "35162-067")
+                } else{
+                  this.criarAlert('Localização inválida!', 'Você precisa estar em Timóteo parar utilizar esse recurso.', ['OK']);
+                }
+              } else{
+                this.criarAlert('Localização inválida!', 'Você precisa estar em Timóteo parar utilizar esse recurso.', ['OK']);
+              }
+            } else{
+              this.criarAlert('Erro inesperado', 'Erro ao recuperar sua localização. Tente novamente mais tarde', ['OK']);
+            }
+          }
+        )
+      }).catch((error) => {
+        //exibir um alert com os erros
+        this.criarAlert('Erro inesperado', 'Erro ao recuperar sua localização', ['OK']);
+        console.log('Erro ao recuperar sua posição', error);
+      });
+  }
+
+  getEnderecoPorCep(){
+    this.servicesProvider.getEnderecoPorCep(this.endereco.cep).subscribe(
+      data => {
+        if(!data["erro"]){
+          if(data["localidade"] == "Timóteo"){
+            this.endereco.logradouro = data["logradouro"];
+            this.endereco.bairro = data["bairro"];
+          } else{
+            this.endereco.cep = "";
+            this.criarAlert('Endereço inválido!', 'Informe um endereço da cidade de Timóteo.', ['OK']);
+          }
+          console.log(data);
+        } else{
+          this.criarAlert('Endereço inválido!', 'Informe um endereço de CEP existente.', ['OK']);
+        }
+      }, error => {
+        this.criarAlert('Endereço inválido!', 'Informe um endereço de CEP existente.', ['OK']);
+    });
+  }
+
+  getCepCorreto(){
+    this.endereco.cep.replace(/\D+/g, '');
+  }
 
   voltarPaginaInicial() {
     this.navCtrl.setRoot(HomePage);
+  }
+
+  isEnabled(){
+    if(this.manifestacao.tbendereco.idEndereco != 0){ //se foi informada alguma unidade
+      if(this.formOne.valid)
+        return false;
+      else{
+        return true;
+      }
+    } else{
+      if(this.formOne.valid && this.formEnd.valid){
+        return false;
+      } else{
+        return true;
+      }
+    }
+  }
+
+  save(){
+    this.submitAttempt = true;
+
+    console.log(this.usuario);
+
+    //verificando se foi informada alguma unidade
+    if(this.hasUnidade){
+      //se sim, verifica apenas o primeiro formulario
+      if(!this.formOne.valid){
+        console.log("Erro nos dados!");
+        console.log(this.formOne.value);
+      } else{
+        console.log("Dados certos!")
+        console.log(this.formOne.value);
+
+        //passar para a outra página
+        //this.navCtrl.push(PAGE, {usuario: this.usuario, manifestacao: this.manifestacao});
+      }
+    } else{ //senao, verifica os dois forms
+      if(!this.formOne.valid || !this.formEnd.valid){
+        console.log("Erro nos dados!");
+        console.log(this.formOne.value);
+      }
+      else {
+        console.log("Dados certos!")
+        console.log(this.formOne.value);
+
+        //passar para a outra página
+        //this.navCtrl.push(PAGE, {usuario: this.usuario, manifestacao: this.manifestacao});
+      }
+    }
+
   }
 
   ionViewDidLoad() {

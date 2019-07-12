@@ -2,7 +2,7 @@
 
   <ion-navbar>
       <h5 *ngIf="usuario != null">Nova manifestação - Passo 2 de 3</h5>
-      <h5 *ngIf="usuario == null" style="font-size: 13px; text-align: left;">Nova manifestação anônima - Passo 1 de 2</h5>
+      <h5 *ngIf="usuario == null" style="font-size: 15px; text-align: left;">Nova manifestação anônima - Passo 1 de 2</h5>
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
@@ -20,14 +20,16 @@
 
         <ion-item-group>
             <ion-item>
-                <ion-label stacked>Tipo</ion-label>
+                <ion-label stacked>Tipo*</ion-label>
                 <ion-select formControlName="tipo" [(ngModel)]="manifestacao.idTipo" cancelText="Cancelar" okText="Ok">
                     <ion-option *ngFor="let tipo of tipos" (ionSelect)="selectTipo($event, tipo)" value="{{tipo.idTipo}}">{{tipo.nmTipo}}</ion-option>
                 </ion-select>
               </ion-item>
 
               <ion-item class="ajuda">
-                <ion-icon class="icone-ajuda" ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas('tipo')"></ion-icon>
+                <button ion-button icon-only clear (click)="showDuvidas('tipo')">
+                    <ion-icon class="icone-ajuda" ios="ios-help" md="md-help" isActive="true"></ion-icon>
+                </button>
               </ion-item>
 
               <ion-item class="error" *ngIf="!formOne.controls.tipo.valid  && (formOne.controls.tipo.dirty || submitAttempt)">
@@ -35,29 +37,33 @@
               </ion-item>
 
               <ion-item class="item">
-                  <ion-label stacked>Secretaria</ion-label>
+                  <ion-label stacked>Secretaria*</ion-label>
                   <ion-select formControlName="secretaria" [(ngModel)]="manifestacao.idSecretaria" cancelText="Cancelar" okText="Ok">
                     <ion-option *ngFor="let secretaria of secretarias" (ionSelect)="selectSecretaria($event, secretaria)" value="{{secretaria.idSecretaria}}">{{secretaria.nmSecretaria}}</ion-option>
                   </ion-select>
               </ion-item>
 
               <ion-item class="ajuda">
-                  <ion-icon class="icone-ajuda" ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas('secretaria')"></ion-icon>
+                  <button ion-button icon-only clear (click)="showDuvidas('secretaria')">
+                      <ion-icon class="icone-ajuda" ios="ios-help" md="md-help" isActive="true"></ion-icon>
+                  </button>
               </ion-item>
 
-              <ion-item class="error" *ngIf="!formOne.controls.secretaria.valid  && (formOne.controls.secretaria.dirty || submitAttempt)">
+              <ion-item class="error" *ng If="!formOne.controls.secretaria.valid  && (formOne.controls.secretaria.dirty || submitAttempt)">
                   Você precisa informar uma secretaria!
               </ion-item>
 
               <ion-item class="item">
-                  <ion-label stacked>Assunto</ion-label>
+                  <ion-label stacked>Assunto*</ion-label>
                   <ion-select formControlName="assunto" [(ngModel)]="manifestacao.idAssunto" cancelText="Cancelar" okText="Ok">
                     <ion-option *ngFor="let assunto of assuntos" (ionSelect)="selectAssunto($event, assunto)" value="{{assunto.idAssunto}}">{{assunto.nmAssunto}}</ion-option>
                   </ion-select>
               </ion-item>
 
               <ion-item class="ajuda">
-                  <ion-icon class="icone-ajuda" ios="ios-help" md="md-help" isActive="true" (click)="showDuvidas('assunto')"></ion-icon>
+                  <button ion-button icon-only clear (click)="showDuvidas('assunto')">
+                      <ion-icon class="icone-ajuda" ios="ios-help" md="md-help" isActive="true"></ion-icon>
+                  </button>
               </ion-item>
 
               <ion-item class="error" *ngIf="!formOne.controls.assunto.valid  && (formOne.controls.assunto.dirty || submitAttempt)">
@@ -70,8 +76,91 @@
           <h4>Local de Ocorrência</h4>
         </ion-item-divider>
 
+        <ion-item-group>
+
+          <ion-item class="item" *ngIf="hasEndereco == false">
+            <ion-label stacked>Unidade</ion-label>
+            <ion-select cancelText="Cancelar" okText="Ok" >
+              <ion-option *ngFor="let unidade of unidades" (ionSelect)="selectUnidade($event, unidade)" value="{{unidade.idUnidade}}">{{unidade.nmUnidade}}</ion-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item class="ajuda" *ngIf="hasEndereco == false">
+              <button ion-button icon-only clear (click)="showDuvidas('unidade')">
+                  <ion-icon class="icone-ajuda" ios="ios-help" md="md-help" isActive="true"></ion-icon>
+              </button>
+          </ion-item>
+
+          <ion-item *ngIf="hasEndereco == false">
+            <button class="clear-button" (click)="exibirEndForm()" ion-button outline>Em vez disso, informar um endereço</button>
+          </ion-item>
+
+          <form [formGroup]="formEnd">
+            <ion-list *ngIf="hasEndereco == true">
+
+              <ion-item>
+                <button class="clear-button" (click)="exibirEndForm()" ion-button outline>Em vez disso, selecionar uma unidade</button>
+              </ion-item>
+
+              <ion-item>
+                <button (click)="getLocation()" ion-button block class="locate-button">
+                  <ion-icon name="md-locate"></ion-icon>
+                  Recuperar localização atual
+                </button>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label stacked>CEP*</ion-label>
+                  <ion-input formControlName="cep" [(ngModel)]="endereco.cep" (ionBlur)="getEnderecoPorCep()" type="text" placeholder="00000-00" [brmasker]="{mask:'00000000', len:8}"></ion-input>
+              </ion-item>
+
+              <ion-item class="cep-button">
+                  <a href="http://www.buscacep.correios.com.br/sistemas/buscacep/">Esqueci meu CEP</a>
+              </ion-item>
+
+              <ion-item class="error" *ngIf="!formEnd.controls.cep.valid  && (formEnd.controls.cep.dirty || submitAttempt)">
+                  Informe um CEP válido!
+              </ion-item>
+
+              <ion-item>
+                  <ion-label stacked>Logradouro*</ion-label>
+                  <ion-input formControlName="logradouro" [(ngModel)]="endereco.logradouro" readonly="" name="logradouro" id="logradouro" type="text"></ion-input>
+              </ion-item>
+
+              <ion-item class="error" *ngIf="!formEnd.controls.logradouro.valid  && (formEnd.controls.logradouro.dirty || submitAttempt)">
+                  Você precisa informar um logradouro!
+              </ion-item>
+
+              <ion-item>
+                <ion-label stacked>Número</ion-label>
+                <ion-input formControlName="numero" min="0" [(ngModel)]="endereco.numero" name="numero" id="numero" type="number"></ion-input>
+              </ion-item>
+
+              <ion-item class="error" *ngIf="!formEnd.controls.numero.valid  && (formEnd.controls.numero.dirty || submitAttempt)">
+                    Informe um número válido!
+              </ion-item>
+
+              <ion-item>
+                <ion-label stacked>Complemento</ion-label>
+                <ion-input formControlName="complemento"[(ngModel)]="endereco.complemento" name="complemento" id="complemento" type="text"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label stacked>Bairro*</ion-label>
+                <ion-input formControlName="bairro" [(ngModel)]="endereco.bairro" name="bairro" readonly="" id="bairro" type="text" ></ion-input>
+              </ion-item>
+
+              <ion-item class="error" *ngIf="!formEnd.controls.numero.valid  && (formEnd.controls.numero.dirty || submitAttempt)">
+                  Você precisa informar um bairro!
+            </ion-item>
+
+              </ion-list>
+            </form>
+
+        </ion-item-group>
+
         <ion-item class="listButton">
-          <button [disabled]="!formOne.valid"  id="large-button" expand="full" (click)="save()" ion-button large>Próximo</button>
+          <button [disabled]="isEnabled()" id="large-button" (click)="save()" ion-button full large>Próximo</button>
         </ion-item>
 
       </ion-list>

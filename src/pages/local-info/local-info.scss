@@ -39,6 +39,7 @@ p {
 
 .icone-ajuda{
   padding-top: 8%;
+  color: black;
 }
 
 ion-header ion-navbar h5 {
@@ -48,7 +49,7 @@ ion-header ion-navbar h5 {
   text-align: left;
   vertical-align: middle;
   color: #990A0D;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 h2 {
@@ -67,7 +68,7 @@ h4{
 }
 
 .listButton{
-  padding-top: 5%;
+  padding-top: 2%;
 }
 
 #large-button{
@@ -83,6 +84,33 @@ h4{
   top: 100%;
 
   text-transform: none;
+}
+
+.clear-button{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-transform: none;
+  color: #21186B;
+
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
+}
+
+.cep-button{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-transform: none;
+  color: #21186B;
+}
+
+.locate-button{
+  background-color: #21186B;
+  width: 100%;
+  height: 15%;
+  text-transform: none;
+
+  color: #F6CFD0;
+  vertical-align: middle;
+
 }
 
 ion-list{

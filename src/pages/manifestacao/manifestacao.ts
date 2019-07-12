@@ -72,7 +72,6 @@ export class ManifestacaoPage {
       this.toggle = false;
       this.email = false;
       this.hasEndereco = false;
-      this.hasEndereco = false;
   }
 
   ionViewDidLoad() {
@@ -118,7 +117,6 @@ export class ManifestacaoPage {
     this.assuntos = secretaria.tbassunto;
     this.unidades = secretaria.tbunidade;
   }
-
 
   //Selecionando o tipo passado por parâmetro
   isSelected(tipo: ITipo){
