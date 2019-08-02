@@ -16,7 +16,7 @@
 
       <ion-item>
           <ion-label stacked>Nome:*</ion-label>
-          <ion-input [(ngModel)]="usuario.nmManifestante" formControlName="nome" placeholder="Informe seu nome..." type="text"></ion-input>
+          <ion-input [(ngModel)]="usuario.nmManifestante" autofocus="true" formControlName="nome" placeholder="Informe seu nome..." type="text"></ion-input>
       </ion-item>
 
       <ion-item class="error" *ngIf="!form.controls.nome.valid  && (form.controls.nome.dirty || submitAttempt)">

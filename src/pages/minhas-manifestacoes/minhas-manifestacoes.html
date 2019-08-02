@@ -11,7 +11,7 @@
           <ion-icon name="menu"></ion-icon>
         </button>
     <ion-title>Minhas Manifestações</ion-title>
-     
+
   </ion-navbar>
 
 </ion-header>
@@ -19,7 +19,7 @@
 
 <ion-content padding>
     <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-   
+
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -33,7 +33,7 @@
        </ion-col>
       </ion-row>
     </ion-grid>
-   
+
     <ion-list *ngIf="found == true">
       <ion-item *ngFor="let manifestacao of manifestacoes">
         <ion-grid>
@@ -45,7 +45,7 @@
               {{ manifestacao.status }}
             </ion-col>
             <ion-col>
-              {{ manifestacao.observacao }}
+              {{ manifestacao.descricao }}
             </ion-col>
           </ion-row>
         </ion-grid>

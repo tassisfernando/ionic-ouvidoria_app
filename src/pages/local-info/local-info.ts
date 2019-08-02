@@ -1,14 +1,15 @@
 import { Geolocation } from '@ionic-native/geolocation';
-import { IEndereco } from './../../interfaces/IEndereco';
-import { ServicesProvider } from './../../providers/services/services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { SecretariaProvider } from './../../providers/secretaria/secretaria';
 import { TipoProvider } from './../../providers/tipo/tipo';
 import { EnderecoProvider } from '../../providers/endereco/endereco';
+import { ServicesProvider } from './../../providers/services/services';
+
+import { AnexoPage } from './../anexo/anexo';
+import { HomePage } from './../home/home';
 
 import { IUnidade } from './../../interfaces/IUnidade';
 import { IAssunto } from './../../interfaces/IAssunto';
@@ -16,6 +17,7 @@ import { ISecretaria } from './../../interfaces/ISecretaria';
 import { ITipo } from './../../interfaces/ITipo';
 import { IManifestacao } from './../../interfaces/IManifestacao';
 import { IManifestante } from './../../interfaces/IManifestante';
+import { IEndereco } from './../../interfaces/IEndereco';
 
 /**
  * Generated class for the LocalInfoPage page.
@@ -37,7 +39,7 @@ export class LocalInfoPage {
 
 
   usuario: IManifestante;
-  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' } };
+  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, descricao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' } };
   tipos: ITipo[];
   secretarias: ISecretaria[];
   assuntos: IAssunto[];
@@ -46,6 +48,7 @@ export class LocalInfoPage {
 
   hasUnidade: boolean = true;
   hasEndereco: boolean = false;
+
   location: Coordinates;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -270,7 +273,7 @@ export class LocalInfoPage {
         console.log(this.formOne.value);
 
         //passar para a outra página
-        //this.navCtrl.push(PAGE, {usuario: this.usuario, manifestacao: this.manifestacao});
+        this.navCtrl.push(AnexoPage, {usuario: this.usuario, manifestacao: this.manifestacao});
       }
     } else{ //senao, verifica os dois forms
       if(!this.formOne.valid || !this.formEnd.valid){
@@ -282,7 +285,7 @@ export class LocalInfoPage {
         console.log(this.formOne.value);
 
         //passar para a outra página
-        //this.navCtrl.push(PAGE, {usuario: this.usuario, manifestacao: this.manifestacao});
+        this.navCtrl.push(AnexoPage, {usuario: this.usuario, manifestacao: this.manifestacao});
       }
     }
 

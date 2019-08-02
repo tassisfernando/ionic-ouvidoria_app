@@ -1,0 +1,67 @@
+<ion-header>
+
+  <ion-navbar>
+      <h5 *ngIf="usuario != null">Nova manifestação - Passo 3 de 3</h5>
+      <h5 *ngIf="usuario == null" style="font-size: 15px; text-align: left;">Nova manifestação anônima - Passo 2 de 2</h5>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <form [formGroup]="form">
+      <ion-list>
+        <ion-item-divider>
+            <h4>Informações gerais</h4>
+        </ion-item-divider>
+
+        <ion-item-group>
+            <ion-item>
+                <ion-label stacked>Descrição:*</ion-label>
+                <ion-textarea [(ngModel)]="manifestacao.descricao" auto-grow="true" autofocus="true" formControlName="descricao" placeholder="Informe mais detalhes sobre sua manifestação..." type="text"></ion-textarea>
+            </ion-item>
+
+            <ion-item class="error" *ngIf="!form.controls.descricao.valid  && (form.controls.descricao.dirty || submitAttempt)">
+                Você precisa informar uma descrição!
+            </ion-item>
+
+            <ion-item class="ajuda">
+                <button ion-button icon-only clear (click)="showDuvidas('descricao')">
+                    <ion-icon class="icone-ajuda" ios="ios-help" md="md-help" isActive="true"></ion-icon>
+                </button>
+            </ion-item>
+        </ion-item-group>
+
+        <ion-item-divider>
+            <h4>Anexo</h4>
+        </ion-item-divider>
+
+        <ion-item-group>
+            <ion-item>
+                <h3>Adicione um arquivo, se quiser:</h3>
+            </ion-item>
+
+            <ion-item class="ajuda">
+                <button ion-button icon-only clear (click)="showDuvidas('anexo')">
+                    <ion-icon class="icone-ajuda" ios="ios-help" md="md-help" isActive="true"></ion-icon>
+                </button>
+            </ion-item>
+
+            <ion-item class="icon-bt">
+                <button class="icon-button" icon-start ion-button (click)="abreCamera()">
+                      <ion-icon name="md-camera"></ion-icon>
+                  </button>
+
+                <button class="icon-button" ion-button>
+                      <ion-icon name="ios-archive"></ion-icon>
+                </button>
+            </ion-item>
+
+        </ion-item-group>
+
+      </ion-list>
+    </form>
+</ion-content>

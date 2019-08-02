@@ -42,7 +42,7 @@ export class ManifestacaoProvider {
     });
   }
 
-  
+
   //Não estou usando
   getManifestacaoPorProtocolo(protocolo: number){
     return new Promise<IManifestacao>(resolve => {
@@ -70,7 +70,7 @@ export class ManifestacaoProvider {
         idsecretaria: manifestacao.idSecretaria,
         idassunto: manifestacao.idAssunto,
         idendereco: manifestacao.tbendereco.idEndereco,
-        observacao: manifestacao.observacao,
+        descricao: manifestacao.descricao,
         idManifestante: idManifestante
       };
       this.http.post<IManifestacao>(this.apiUrl + '/manifestacaos/', data).
