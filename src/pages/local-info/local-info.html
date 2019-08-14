@@ -55,7 +55,7 @@
 
               <ion-item class="item">
                   <ion-label stacked>Assunto*</ion-label>
-                  <ion-select formControlName="assunto" [(ngModel)]="manifestacao.idAssunto" cancelText="Cancelar" okText="Ok">
+                  <ion-select  formControlName="assunto" [(ngModel)]="manifestacao.idAssunto" cancelText="Cancelar" okText="Ok">
                     <ion-option *ngFor="let assunto of assuntos" (ionSelect)="selectAssunto($event, assunto)" value="{{assunto.idAssunto}}">{{assunto.nmAssunto}}</ion-option>
                   </ion-select>
               </ion-item>
@@ -66,9 +66,9 @@
                   </button>
               </ion-item>
 
-              <ion-item class="error" *ngIf="!formOne.controls.assunto.valid  && (formOne.controls.assunto.dirty || submitAttempt)">
+              <!-- <ion-item class="error" *ngIf="!formOne.controls.assunto.valid  && (formOne.controls.assunto.dirty || submitAttempt)">
                   Você precisa informar um assunto!
-              </ion-item>
+              </ion-item> -->
         </ion-item-group>
 
 
@@ -111,7 +111,7 @@
 
               <ion-item>
                   <ion-label stacked>CEP*</ion-label>
-                  <ion-input formControlName="cep" [(ngModel)]="endereco.cep" (ionBlur)="getEnderecoPorCep()" type="text" placeholder="00000-00" [brmasker]="{mask:'00000000', len:8}"></ion-input>
+                  <ion-input formControlName="cep" [(ngModel)]="endereco.cep" (ionBlur)="getEnderecoPorCep()" type="text" placeholder="00000-000" [brmasker]="{mask:'00000000', len:8}"></ion-input>
               </ion-item>
 
               <ion-item class="cep-button">
@@ -159,9 +159,9 @@
 
         </ion-item-group>
 
-        <ion-item class="listButton">
-          <button [disabled]="isEnabled()" id="large-button" (click)="save()" ion-button full large>Próximo</button>
-        </ion-item>
+        <ion-list class="list-Button">
+                <button [disabled]="isEnabled()" id="large-button" (click)="save()" ion-button full large>Próximo</button>
+        </ion-list>
 
       </ion-list>
     </form>

@@ -25,11 +25,11 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Início', component: HomePage },
+      { title: 'Início', component: HomePage},
       { title: 'Manifestação não anônima', component: UsuarioPage },
       { title: 'Manifestação anônima', component: LocalInfoPage },
       { title: 'Minhas Manifestações', component: MinhasManifestacoesPage },
-      { title: 'Configurações',component:HomePage}, //MUDAR AQUI
+      { title: 'Configurações',component:HomePage},
     ];
 
   }

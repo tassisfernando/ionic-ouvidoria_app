@@ -3,7 +3,7 @@ import { IEndereco } from "./IEndereco";
 
 export interface IManifestacao{
     idManifestacao?: number;
-    descricao?: string;
+    observacao?: string;
     hash?: string;
     idTipo?:number;
     idSecretaria?:number;

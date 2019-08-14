@@ -4,6 +4,13 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 
 import { IManifestacao } from './../../interfaces/IManifestacao';
 import { IManifestante } from './../../interfaces/IManifestante';
+import { IAssunto } from './../../interfaces/IAssunto';
+import { IUnidade } from './../../interfaces/IUnidade';
+import { ITipo } from './../../interfaces/ITipo';
+import { ISecretaria } from './../../interfaces/ISecretaria';
+import { IEndereco } from './../../interfaces/IEndereco';
+
+import { FinalizarManifestacaoPage } from './../finalizar-manifestacao/finalizar-manifestacao';
 
 @IonicPage()
 @Component({
@@ -16,21 +23,32 @@ export class AnexoPage {
   public form: FormGroup;
 
   usuario: IManifestante;
-  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, descricao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' } };
+  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' } };
+  secretaria: ISecretaria;
+  tipo: ITipo;
+  unidade: IUnidade;
+  assunto: IAssunto;
+  endereco: IEndereco;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public formBuilder: FormBuilder,
               public alertCtrl: AlertController,
   ) {
 
-    this.usuario = navParams.get('usuario');
-    this.manifestacao = navParams.get('manifestacao');
-
-    console.log(this.manifestacao, this.usuario);
-
     this.form = formBuilder.group({
       descricao: ['', Validators.compose([Validators.minLength(3), Validators.required])]
     });
+
+    this.usuario = navParams.get('usuario');
+    this.manifestacao = navParams.get('manifestacao');
+    this.secretaria = navParams.get('secretaria');
+    this.tipo = navParams.get('tipo');
+    this.unidade = navParams.get('unidade');
+    this.assunto = navParams.get('assunto');
+    this.endereco = navParams.get('endereco');
+
+    console.log(this.manifestacao, this.usuario);
+
   }
 
   ionViewDidLoad() {
@@ -58,6 +76,27 @@ export class AnexoPage {
     alert.present();
   }
 
+  isEnabled(){
+    return this.form.invalid;
+  }
 
+  save(){
 
+    this.submitAttempt = true;
+
+    console.log("Manifestação: ",this.manifestacao);
+    console.log("Usuário: ", this.usuario);
+
+    if(this.form.valid){
+      console.log("Dados certos!");
+
+      //passar para a outra página
+      this.navCtrl.push(FinalizarManifestacaoPage, { manifestacao: this.manifestacao, usuario: this.usuario, tipo: this.tipo, assunto: this.assunto, secretaria: this.secretaria, unidade: this.unidade, endereco: this.endereco });
+    } else{
+      console.log("Algo deu errado!");
+      console.log(this.form.value);
+
+      this.criarAlert("Erro", "Aconteceu um erro inesperado. Tente novamente mais tarde.", ['OK'])
+    }
+  }
 }

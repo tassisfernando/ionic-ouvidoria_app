@@ -26,7 +26,7 @@ export class UsuarioPage {
     this.form = formBuilder.group({
       nome: ['', Validators.compose([Validators.minLength(3), Validators.required])],
       cpf: ['', Validators.compose([CpfValidator.isValidCpf, Validators.required])],
-      rg: ['', Validators.compose([Validators.minLength(10), Validators.maxLength(10), Validators.required])],
+      rg: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(10), Validators.required])],
       email: ['', Validators.compose([Validators.minLength(5), Validators.email, Validators.required])],
       telefone: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(15), Validators.required])]
     });

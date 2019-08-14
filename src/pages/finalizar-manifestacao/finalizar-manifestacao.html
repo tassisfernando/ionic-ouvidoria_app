@@ -1,0 +1,101 @@
+<ion-header>
+
+  <ion-navbar>
+      <h5 *ngIf="usuario != null">Finalizar manifestação</h5>
+      <h5 *ngIf="usuario == null" style="font-size: 15px; text-align: left;">Finalizar manifestação anônima</h5>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item-divider>
+      <h4>Informações gerais</h4>
+    </ion-item-divider>
+
+    <ion-item-group>
+        <ion-item>
+            <ion-label stacked>Tipo:*</ion-label>
+            <ion-input [(ngModel)]="tipo.nmTipo" disabled type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Secretaria:*</ion-label>
+            <ion-input [(ngModel)]="secretaria.nmSecretaria" disabled type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assunto">
+            <ion-label stacked>Assunto:*</ion-label>
+            <ion-input [(ngModel)]="assunto.nmAssunto" disabled type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Descrição:*</ion-label>
+            <ion-input [(ngModel)]="manifestacao.observacao" disabled type="text"></ion-input>
+        </ion-item>
+    </ion-item-group>
+
+    <ion-item-divider>
+        <h4>Anexo</h4>
+    </ion-item-divider>
+
+    <ion-item-group>
+        <ion-item>
+            <p>Nenhum arquivo selecionado...</p>
+        </ion-item>
+    </ion-item-group>
+
+    <ion-item-divider>
+        <h4>Local de ocorrência</h4>
+    </ion-item-divider>
+
+    <ion-item-group>
+      <ion-item>
+          <p> {{ this.endereco.logradouro }}, {{ this.endereco.numero }} - {{ this.endereco.bairro }} </p>
+
+          <ion-label *ngIf="unidade" stacked>Unidade:*</ion-label>
+          <ion-input *ngIf="unidade" [(ngModel)]="unidade.nmUnidade" disabled type="text"></ion-input>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-divider *ngIf="!usuario">
+      <h4>Contato</h4>
+    </ion-item-divider>
+
+    <ion-item-group *ngIf="!usuario">
+      <ion-item>
+          <ion-label>Enviar notificações por e-mail</ion-label>
+          <ion-checkbox [(ngModel)]="hasEmail" color="dark"></ion-checkbox>
+      </ion-item>
+
+      <form [formGroup]="form">
+        <ion-item *ngIf="hasEmail">
+            <ion-input placeholder="Digite seu e-mail" formControlName="emailAnonimo" type="text" [(ngModel)]="manifestacao.emailAnonimo"></ion-input>
+
+            <ion-item class="error" *ngIf="!form.controls.emailAnonimo.valid  && (form.controls.emailAnonimo.dirty || submitAttempt)">
+                E-mail inválido!
+            </ion-item>
+        </ion-item>
+
+        <ion-list class="list-Button">
+          <ion-item>
+              <button [disabled]="isEnabled()" id="large-button" (click)="save()" ion-button full large>Finalizar</button>
+          </ion-item>
+        </ion-list>
+    </form>
+    </ion-item-group>
+
+    <ion-list *ngIf="usuario" class="list-Button">
+      <ion-item>
+          <button [disabled]="isEnabled()" id="large-button" (click)="save()" ion-button full large>Finalizar</button>
+      </ion-item>
+    </ion-list>
+
+  </ion-list>
+
+</ion-content>

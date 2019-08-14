@@ -70,7 +70,7 @@ export class ManifestacaoProvider {
         idsecretaria: manifestacao.idSecretaria,
         idassunto: manifestacao.idAssunto,
         idendereco: manifestacao.tbendereco.idEndereco,
-        descricao: manifestacao.descricao,
+        descricao: manifestacao.observacao,
         idManifestante: idManifestante
       };
       this.http.post<IManifestacao>(this.apiUrl + '/manifestacaos/', data).
@@ -84,4 +84,5 @@ export class ManifestacaoProvider {
           })
     });
   }
+
 }

@@ -8,6 +8,7 @@ import { MinhasManifestacoesPage } from '../pages/minhas-manifestacoes/minhas-ma
 import { UsuarioPage } from '../pages/usuario/usuario';
 import { LocalInfoPage } from './../pages/local-info/local-info';
 import { AnexoPage } from './../pages/anexo/anexo';
+import { FinalizarManifestacaoPage } from './../pages/finalizar-manifestacao/finalizar-manifestacao';
 import {ManifestacaoPage} from '../pages/manifestacao/manifestacao'; //Tirar depois
 import {CadastroPage} from '../pages/cadastro/cadastro'; //tirar depois
 import { ValidacaoTestePage } from '../pages/validacao-teste/validacao-teste'; //tirar depois
@@ -40,6 +41,7 @@ import { EnderecoProvider } from '../providers/endereco/endereco';
     UsuarioPage,
     LocalInfoPage,
     AnexoPage,
+    FinalizarManifestacaoPage,
     ManifestacaoPage, //tirar depois
     ValidacaoTestePage, //tirar depois
     ReactiveFormsValidationPage, //tirar depois
@@ -60,6 +62,7 @@ import { EnderecoProvider } from '../providers/endereco/endereco';
     UsuarioPage,
     LocalInfoPage,
     AnexoPage,
+    FinalizarManifestacaoPage,
     ManifestacaoPage, //tirar depois
     CadastroPage, //tirar depois
     ValidacaoTestePage, //tirar depoiss

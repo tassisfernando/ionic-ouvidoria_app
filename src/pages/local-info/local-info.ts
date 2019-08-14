@@ -38,12 +38,21 @@ export class LocalInfoPage {
   public submitAttempt: boolean = false;
 
 
-  usuario: IManifestante;
-  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, descricao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' } };
+  usuario: IManifestante;                                         //MUDAR AQUI PARA 0 DEPOIS
+  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 27, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' } };
+
   tipos: ITipo[];
+  tipo: ITipo;
+
   secretarias: ISecretaria[];
+  secretaria: ISecretaria;
+
   assuntos: IAssunto[];
+  assunto: IAssunto;
+
   unidades : IUnidade[];
+  unidade: IUnidade;
+
   endereco: IEndereco = { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: ''};
 
   hasUnidade: boolean = true;
@@ -65,7 +74,7 @@ export class LocalInfoPage {
     this.formOne = formBuilder.group({
       tipo: ['', Validators.compose([Validators.min(1), Validators.required])],
       secretaria: ['', Validators.compose([Validators.min(1), Validators.required])],
-      assunto: ['', Validators.compose([Validators.min(1), Validators.required])],
+      assunto: ['', ], //MUDAR AQUI DEPOIS (MIN E REQUIRED)
     });
 
     this.formEnd = formBuilder.group({
@@ -112,11 +121,15 @@ export class LocalInfoPage {
   //SELECIONANDO ITEM DA
   selectTipo(event,tipo:ITipo){
     console.log(tipo.idTipo);
+
+    this.tipo = tipo;
     this.manifestacao.idTipo=tipo.idTipo;
   }
 
   selectSecretaria(event,secretaria:ISecretaria){
     console.log(secretaria.idSecretaria);
+
+    this.secretaria = secretaria;
     this.manifestacao.idSecretaria=secretaria.idSecretaria;
     this.assuntos = secretaria.tbassunto;
     this.unidades = secretaria.tbunidade;
@@ -124,14 +137,23 @@ export class LocalInfoPage {
 
   selectAssunto(event,assunto:IAssunto){
     console.log(assunto.idAssunto);
+
+    this.assunto = assunto;
     this.manifestacao.idAssunto=assunto.idAssunto;
   }
 
   selectUnidade(event,unidade:IUnidade){
     console.log(unidade.idUnidade);
+
+    this.unidade = unidade;
+
     this.enderecoProvider.getEndereco(unidade.idUnidade).then(data => {
       console.log(data);
       this.manifestacao.tbendereco.idEndereco = data["0"]["idEndereco"];
+      this.endereco.bairro = data["0"]["bairro"];
+      this.endereco.logradouro = data["0"]["logradouro"];
+      this.endereco.numero = data["0"]["numero"];
+
       this.hasUnidade = true;
       console.log(this.manifestacao.tbendereco.idEndereco)
     });
@@ -168,6 +190,7 @@ export class LocalInfoPage {
     if(!this.hasEndereco){
       this.hasEndereco = true;
       this.hasUnidade = false;
+      this.unidade = null;
       this.manifestacao.tbendereco.idEndereco = 0;
     }
     else{
@@ -273,9 +296,11 @@ export class LocalInfoPage {
         console.log(this.formOne.value);
 
         //passar para a outra página
-        this.navCtrl.push(AnexoPage, {usuario: this.usuario, manifestacao: this.manifestacao});
+        this.navCtrl.push(AnexoPage, { usuario: this.usuario, manifestacao: this.manifestacao, tipo: this.tipo, assunto: this.assunto, secretaria: this.secretaria, unidade: this.unidade, endereco: this.endereco });
       }
     } else{ //senao, verifica os dois forms
+      this.manifestacao.tbendereco = this.endereco;
+
       if(!this.formOne.valid || !this.formEnd.valid){
         console.log("Erro nos dados!");
         console.log(this.formOne.value);
@@ -285,7 +310,7 @@ export class LocalInfoPage {
         console.log(this.formOne.value);
 
         //passar para a outra página
-        this.navCtrl.push(AnexoPage, {usuario: this.usuario, manifestacao: this.manifestacao});
+        this.navCtrl.push(AnexoPage, { usuario: this.usuario, manifestacao: this.manifestacao, tipo: this.tipo, assunto: this.assunto, secretaria: this.secretaria, unidade: this.unidade, endereco: this.endereco });
       }
     }
 
