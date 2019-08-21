@@ -9,25 +9,37 @@ import { IAssunto } from '../../interfaces/IAssunto';
 
 import { AlertController } from 'ionic-angular';
 
+/**
+ * Generated class for the ManifestacoesFechadasPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
 @IonicPage()
 @Component({
-  selector: 'page-minhas-manifestacoes',
-  templateUrl: 'minhas-manifestacoes.html',
+  selector: 'page-manifestacoes-fechadas',
+  templateUrl: 'manifestacoes-fechadas.html',
 })
-export class MinhasManifestacoesPage {
-
+export class ManifestacoesFechadasPage {
   manifestacoes: IManifestacao[];
   manifestacoesStorage: IManifestacao[];
   assunto: IAssunto;
   found: boolean;
 
   constructor(public navCtrl: NavController,
-     public navParams: NavParams,
-     public alertCtrl: AlertController,
-     public manifestacaoProvider: ManifestacaoProvider,
-     public storageProvider: StorageProvider) {
-    this.found = false;
-  }
+    public navParams: NavParams,
+    public alertCtrl: AlertController,
+    public manifestacaoProvider: ManifestacaoProvider,
+    public storageProvider: StorageProvider) {
+   this.found = false;
+ }
+
+
+ ionViewDidLoad() {
+  this.getManifestacoesStorage();
+  this.getManifestacoes();
+}
 
   getManifestacoesStorage(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
@@ -48,12 +60,6 @@ export class MinhasManifestacoesPage {
       }).catch((err) => {
         this.showAlert('Erro de conexão', 'Estamos com problemas de conexão com o servidor. Tente novamente mais tarde.')
       });
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MinhasManifestacoesPage');
-    this.getManifestacoesStorage();
-    this.getManifestacoes();
   }
 
   //IMPLEMENTAR O GET ITEMS PARA O SEARCHBAR FUNCIONAR
@@ -97,15 +103,5 @@ export class MinhasManifestacoesPage {
       buttons: ['OK']
     });
     alert.present();
-  }
-
-  //Não estou usando
-  getManifestacaoPorProtocolo(protocolo: number){
-    this.manifestacaoProvider.getManifestacaoPorProtocolo(protocolo)
-      .then(data => {
-        console.log(data);
-        return data;
-    });
-    return null;
   }
 }

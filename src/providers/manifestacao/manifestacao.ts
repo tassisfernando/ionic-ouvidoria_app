@@ -27,6 +27,17 @@ export class ManifestacaoProvider {
     });
   }
 
+  getManifestacaoPorStatus(status: string) {
+    return new Promise<IManifestacao[]>(resolve => {
+      this.http.get<IManifestacao[]>(this.apiUrl + '/manifestacoes/'+status).subscribe(data => {
+        resolve(data);
+      },
+        err => {
+          console.log(err);
+        });
+    });
+  }
+
   criarManifestacao(manifestacao: IManifestacao) {
     return new Promise<IManifestacao>((resolve, reject) => {
       var data = manifestacao;

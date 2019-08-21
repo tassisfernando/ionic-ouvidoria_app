@@ -11,10 +11,11 @@ import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-minhas-manifestacoes',
-  templateUrl: 'minhas-manifestacoes.html',
+  selector: 'page-manifestacoes-abertas',
+  templateUrl: 'manifestacoes-abertas.html',
 })
-export class MinhasManifestacoesPage {
+
+export class ManifestacoesAbertasPage {
 
   manifestacoes: IManifestacao[];
   manifestacoesStorage: IManifestacao[];
@@ -109,3 +110,6 @@ export class MinhasManifestacoesPage {
     return null;
   }
 }
+
+
+

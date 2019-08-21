@@ -5,6 +5,8 @@ import {ManifestacaoPage} from '../manifestacao/manifestacao';
 import { MinhasManifestacoesPage } from '../minhas-manifestacoes/minhas-manifestacoes';
 import { UsuarioPage } from './../usuario/usuario';
 import { LocalInfoPage } from './../local-info/local-info';
+import { TabsPage } from './../tabs/tabs';
+
 
 import { Network } from  '@ionic-native/network';
 
@@ -33,7 +35,7 @@ export class HomePage {
   }
 
   abrirManifestacaoPage(){
-    this.navCtrl.push(MinhasManifestacoesPage);
+    this.navCtrl.push(TabsPage);
   }
 
   abrirLocalInfoPage(){

@@ -13,6 +13,7 @@ import { IEndereco } from './../../interfaces/IEndereco';
 import { HomePage } from './../home/home';
 
 import { ManifestacaoProvider } from './../../providers/manifestacao/manifestacao';
+import { StorageProvider } from './../../providers/storage/storage';
 
 @IonicPage()
 @Component({
@@ -25,6 +26,7 @@ export class FinalizarManifestacaoPage {
   public form: FormGroup;
 
   usuario: IManifestante;
+  manifestacoesStorage: IManifestacao[] = [];
   manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' } };
   secretaria: ISecretaria;
   tipo: ITipo;
@@ -36,7 +38,8 @@ export class FinalizarManifestacaoPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
               private manifestacaoProvider: ManifestacaoProvider,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              private storageProvider: StorageProvider) {
 
     this.form = formBuilder.group({
       emailAnonimo: ['', Validators.email]
@@ -78,6 +81,19 @@ export class FinalizarManifestacaoPage {
     this.manifestacaoProvider.criarManifestacao(this.manifestacao).then(data => {
       console.log("cadastrou", data);
       this.manifestacao = data;
+
+      this.storageProvider.getStorage('manifestacoes').then((data) => {
+        if(data){
+          this.manifestacoesStorage = data;
+          this.manifestacoesStorage.push(this.manifestacao);
+        } else{
+          this.manifestacoesStorage.push(this.manifestacao);
+        }
+
+        console.log('Storage', data);
+        this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
+      });
+
       console.log(this.manifestacao.hash);
       this.criarAlert('Sucesso', `A sua manifestação foi enviada e armazenada na aba "Minhas manifestações"! O seu número de protocolo é: `+this.manifestacao.hash, ['OK']);
       this.voltarPaginaInicial();

@@ -4,11 +4,16 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { MinhasManifestacoesPage } from '../pages/minhas-manifestacoes/minhas-manifestacoes';
 import { UsuarioPage } from '../pages/usuario/usuario';
 import { LocalInfoPage } from './../pages/local-info/local-info';
 import { AnexoPage } from './../pages/anexo/anexo';
 import { FinalizarManifestacaoPage } from './../pages/finalizar-manifestacao/finalizar-manifestacao';
+import { TabsPage } from './../pages/tabs/tabs';
+import { ManifestacoesAndamentoPage } from './../pages/manifestacoes-andamento/manifestacoes-andamento';
+import { ManifestacoesFechadasPage } from './../pages/manifestacoes-fechadas/manifestacoes-fechadas';
+import { ManifestacoesAbertasPage } from './../pages/manifestacoes-abertas/manifestacoes-abertas';
+
+import { MinhasManifestacoesPage } from '../pages/minhas-manifestacoes/minhas-manifestacoes'; //tirar depois
 import {ManifestacaoPage} from '../pages/manifestacao/manifestacao'; //Tirar depois
 import {CadastroPage} from '../pages/cadastro/cadastro'; //tirar depois
 import { ValidacaoTestePage } from '../pages/validacao-teste/validacao-teste'; //tirar depois
@@ -19,6 +24,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from  '@ionic-native/network'; //TIRAR O NGX SE DER MERDA
 import { Geolocation } from '@ionic-native/geolocation/';
 import { Camera } from '@ionic-native/camera';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -31,17 +37,22 @@ import { ServicesProvider } from '../providers/services/services';
 import { TipoProvider } from '../providers/tipo/tipo';
 import { SecretariaProvider } from '../providers/secretaria/secretaria';
 import { EnderecoProvider } from '../providers/endereco/endereco';
+import { StorageProvider } from '../providers/storage/storage';
 
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    MinhasManifestacoesPage,
+    ManifestacoesAbertasPage,
+    ManifestacoesFechadasPage,
+    ManifestacoesAndamentoPage,
     UsuarioPage,
     LocalInfoPage,
     AnexoPage,
     FinalizarManifestacaoPage,
+    TabsPage,
+    MinhasManifestacoesPage, //tirar depois
     ManifestacaoPage, //tirar depois
     ValidacaoTestePage, //tirar depois
     ReactiveFormsValidationPage, //tirar depois
@@ -52,17 +63,22 @@ import { EnderecoProvider } from '../providers/endereco/endereco';
     BrMaskerModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    MinhasManifestacoesPage,
     UsuarioPage,
     LocalInfoPage,
     AnexoPage,
     FinalizarManifestacaoPage,
+    TabsPage,
+    ManifestacoesAbertasPage,
+    ManifestacoesFechadasPage,
+    ManifestacoesAndamentoPage,
+    MinhasManifestacoesPage, //tirar depois
     ManifestacaoPage, //tirar depois
     CadastroPage, //tirar depois
     ValidacaoTestePage, //tirar depoiss
@@ -81,6 +97,7 @@ import { EnderecoProvider } from '../providers/endereco/endereco';
     Network,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    StorageProvider,
   ]
 })
 export class AppModule {}
