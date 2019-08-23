@@ -12,6 +12,7 @@ import { TabsPage } from './../pages/tabs/tabs';
 import { ManifestacoesAndamentoPage } from './../pages/manifestacoes-andamento/manifestacoes-andamento';
 import { ManifestacoesFechadasPage } from './../pages/manifestacoes-fechadas/manifestacoes-fechadas';
 import { ManifestacoesAbertasPage } from './../pages/manifestacoes-abertas/manifestacoes-abertas';
+import { DetalheManifestacaoPage } from './../pages/detalhe-manifestacao/detalhe-manifestacao';
 
 import { MinhasManifestacoesPage } from '../pages/minhas-manifestacoes/minhas-manifestacoes'; //tirar depois
 import {ManifestacaoPage} from '../pages/manifestacao/manifestacao'; //Tirar depois
@@ -52,6 +53,7 @@ import { StorageProvider } from '../providers/storage/storage';
     AnexoPage,
     FinalizarManifestacaoPage,
     TabsPage,
+    DetalheManifestacaoPage,
     MinhasManifestacoesPage, //tirar depois
     ManifestacaoPage, //tirar depois
     ValidacaoTestePage, //tirar depois
@@ -78,6 +80,7 @@ import { StorageProvider } from '../providers/storage/storage';
     ManifestacoesAbertasPage,
     ManifestacoesFechadasPage,
     ManifestacoesAndamentoPage,
+    DetalheManifestacaoPage,
     MinhasManifestacoesPage, //tirar depois
     ManifestacaoPage, //tirar depois
     CadastroPage, //tirar depois

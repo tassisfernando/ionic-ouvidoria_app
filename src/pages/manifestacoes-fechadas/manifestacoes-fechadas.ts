@@ -7,6 +7,8 @@ import { StorageProvider } from './../../providers/storage/storage';
 import { IManifestacao } from '../../interfaces/IManifestacao';
 import { IAssunto } from '../../interfaces/IAssunto';
 
+import { DetalheManifestacaoPage } from './../detalhe-manifestacao/detalhe-manifestacao';
+
 import { AlertController } from 'ionic-angular';
 
 /**
@@ -93,7 +95,7 @@ export class ManifestacoesFechadasPage {
   }
 
   abreManifestacao(manifestacao: IManifestacao){
-    //this.navCtrl.push(DetalhePage, { manifestacao: manifestacao });
+    this.navCtrl.push(DetalheManifestacaoPage, { manifestacao: manifestacao });
   }
 
   showAlert(title: string, subTitle: string) {

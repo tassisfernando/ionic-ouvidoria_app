@@ -1,0 +1,75 @@
+<ion-header>
+    <ion-navbar>
+        <h5 *ngIf="usuario != null">Manifestação não anônima</h5>
+        <h5 *ngIf="usuario == null" style="font-size: 15px; text-align: left;">Manifestação anônima</h5>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    </ion-navbar>
+</ion-header>
+
+  <ion-content padding>
+
+    <ion-list>
+      <ion-item-divider>
+        <h4>Informações gerais</h4>
+      </ion-item-divider>
+
+      <ion-item-group>
+          <ion-item>
+              <ion-label stacked>Tipo:*</ion-label>
+              <ion-input [(ngModel)]="tipo.nmTipo" disabled type="text"></ion-input>
+          </ion-item>
+
+          <ion-item>
+              <ion-label stacked>Secretaria:*</ion-label>
+              <ion-input [(ngModel)]="secretaria.nmSecretaria" disabled type="text"></ion-input>
+          </ion-item>
+
+          <ion-item *ngIf="assunto">
+              <ion-label stacked>Assunto:*</ion-label>
+              <ion-input [(ngModel)]="assunto.nmAssunto" disabled type="text"></ion-input>
+          </ion-item>
+
+          <ion-item>
+              <ion-label stacked>Descrição:*</ion-label>
+              <ion-input [(ngModel)]="manifestacao.observacao" disabled type="text"></ion-input>
+          </ion-item>
+      </ion-item-group>
+
+      <ion-item-divider>
+          <h4>Anexo</h4>
+      </ion-item-divider>
+
+      <ion-item-group>
+          <ion-item>
+            <p>Nenhum arquivo selecionado...</p>
+          </ion-item>
+      </ion-item-group>
+
+      <ion-item-divider>
+        <h4>Local de ocorrência</h4>
+      </ion-item-divider>
+
+      <ion-item-group>
+        <ion-item>
+            <p> {{ this.endereco.logradouro }}, {{ this.endereco.numero }} - {{ this.endereco.bairro }} </p>
+
+            <ion-label *ngIf="unidade" stacked>Unidade:*</ion-label>
+            <ion-input *ngIf="unidade" [(ngModel)]="unidade.nmUnidade" disabled type="text"></ion-input>
+        </ion-item>
+      </ion-item-group>
+
+      <ion-item-divider>
+        <h4>Comentários</h4>
+      </ion-item-divider>
+
+      <ion-list class="list-Button">
+          <ion-item>
+              <button  id="large-button" ion-button full large>Acompanhar comentários</button>
+          </ion-item>
+      </ion-list>
+
+    </ion-list>
+
+  </ion-content>

@@ -9,6 +9,8 @@ import { IAssunto } from '../../interfaces/IAssunto';
 
 import { AlertController } from 'ionic-angular';
 
+import { DetalheManifestacaoPage } from './../detalhe-manifestacao/detalhe-manifestacao';
+
 @IonicPage()
 @Component({
   selector: 'page-manifestacoes-abertas',
@@ -88,7 +90,7 @@ export class ManifestacoesAbertasPage {
   }
 
   abreManifestacao(manifestacao: IManifestacao){
-    //this.navCtrl.push(DetalhePage, { manifestacao: manifestacao });
+    this.navCtrl.setRoot(DetalheManifestacaoPage, { manifestacao: manifestacao });
   }
 
   showAlert(title: string, subTitle: string) {

@@ -1,3 +1,4 @@
+import { IUnidade } from './../../interfaces/IUnidade';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IEndereco } from '../../interfaces/IEndereco';
@@ -18,6 +19,17 @@ export class EnderecoProvider {
   getEndereco(idUnidade: number){
     return new Promise<IEndereco>(resolve => {
       this.http.get<IEndereco>(this.apiUrl + '/unidades/endereco/'+idUnidade).subscribe(data => {
+        resolve(data);
+      },
+        err => {
+          console.log(err);
+        });
+    });
+  }
+
+  getUnidade(idUnidade: number){
+    return new Promise<IUnidade>(resolve => {
+      this.http.get<IUnidade>(this.apiUrl + '/unidades/'+idUnidade).subscribe(data => {
         resolve(data);
       },
         err => {

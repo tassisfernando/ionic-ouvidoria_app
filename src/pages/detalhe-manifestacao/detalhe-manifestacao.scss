@@ -1,0 +1,93 @@
+page-detalhe-manifestacao {
+
+}
+
+ion-header ion-navbar h5 {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin-top: 10px;
+  margin-left: 2%;
+  text-align: left;
+  vertical-align: middle;
+  color: #990A0D;
+  font-size: 13px;
+}
+
+h2 {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  color: #21186B;
+}
+
+h3 {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  color: rgb(14, 8, 61);
+  margin-right: 0;
+}
+
+
+h4{
+  color: rgb(111, 98, 204);
+  padding: 0;
+}
+
+.listButton{
+  padding-top: 15%;
+}
+
+#large-button{
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+
+  height: 100%;
+
+  background-color: #21186B;
+
+  position: relative;
+  bottom: 0;
+  top: 100%;
+
+  text-transform: none;
+}
+
+.clear-button{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-transform: none;
+  color: #21186B;
+
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
+}
+
+.locate-button{
+  background-color: #21186B;
+  width: 100%;
+  height: 15%;
+  text-transform: none;
+
+  color: #F6CFD0;
+  vertical-align: middle;
+
+}
+
+.listButton{
+  padding-top: 15%;
+}
+
+.icon-button{
+  background-color: rgb(33, 17, 92);
+  width: 100%;
+
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#icons{
+  padding: 20px;
+  margin-top: 10px;
+}
+
+
