@@ -2,7 +2,7 @@
   <ion-navbar>
     <h5>Nova manifestação - Passo 1 de 3</h5>
     <button ion-button menuToggle>
-      <ion-icon style="color: #990A0D;" name="menu"></ion-icon>
+      <ion-icon style="color: rgb(241, 67, 70);" name="menu"></ion-icon>
     </button>
   </ion-navbar>
 </ion-header>
@@ -59,10 +59,12 @@
           Padrão: (00) 0000-0000!
       </ion-item>
 
-
       <ion-list class="listButton">
-          <button [disabled]="!form.valid"  id="large-button" (click)="save()" ion-button full large>Próximo</button>
+          <button [disabled]="!form.valid" id="botao-Bonito" large block ion-button icon-start (click)="save()">
+               Próximo
+          </button>
       </ion-list>
+
     </form>
   </ion-list>
 </ion-content>

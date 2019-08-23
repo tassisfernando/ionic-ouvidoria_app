@@ -1,0 +1,276 @@
+page-comentarios {
+
+  $userBackgroundColor: #387ef5;
+  $toUserBackgroundColor: #fff;
+
+  ion-content .scroll-content {
+    background-color: #f5f5f5;
+  }
+
+  ion-footer {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.11);
+    background-color: #fff;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .line-breaker {
+    white-space: pre-line;
+  }
+
+  .input-wrap {
+    padding: 5px;
+    display: flex;
+    textarea {
+      flex: 1;
+      border: 0;
+      border-bottom: 1px $userBackgroundColor;
+      border-style: solid;
+    }
+  }
+
+  .message-wrap {
+    padding: 0 10px;
+    .message {
+      position: relative;
+      padding: 7px 0;
+      .user-img {
+        position: absolute;
+        border-radius: 45px;
+        width: 45px;
+        height: 45px;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.36);
+      }
+
+      .msg-detail {
+        width: 100%;
+        display: inline-block;
+        p {
+          margin: 0;
+        }
+        .msg-info {
+          p {
+            font-size: .8em;
+            color: #888;
+          }
+        }
+
+        .msg-content {
+          position: relative;
+          margin-top: 5px;
+          border-radius: 5px;
+          padding: 8px;
+          border: 1px solid #ddd;
+          color: #fff;
+          width: auto;
+          max-width: 80%;
+          span.triangle {
+            background-color: #fff;
+            border-radius: 2px;
+            height: 8px;
+            width: 8px;
+            top: 12px;
+            display: block;
+            border-style: solid;
+            border-color: #ddd;
+            border-width: 1px;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            position: absolute;
+          }
+        }
+
+      }
+    }
+
+    .message.left {
+      .msg-content {
+        background-color: $toUserBackgroundColor;
+        float: left;
+      }
+      .msg-detail {
+        padding-left: 60px;
+      }
+      .user-img {
+        left: 0;
+      }
+      .msg-content {
+        color: #343434;
+        span.triangle {
+          border-top-width: 0;
+          border-right-width: 0;
+          left: -5px;
+        }
+      }
+
+    }
+
+    .message.right {
+      text-align: right;
+      .msg-detail {
+        padding-right: 60px;
+        .msg-info {
+          text-align: right;
+        }
+      }
+      .user-img {
+        right: 0;
+      }
+      ion-spinner {
+        position: absolute;
+        right: 10px;
+        top: 50px;
+      }
+      .msg-content {
+        background-color: $userBackgroundColor;
+        float: right;
+        span.triangle {
+          background-color: $userBackgroundColor;
+          border-bottom-width: 0;
+          border-left-width: 0;
+          right: -5px;
+        }
+      }
+
+    }
+
+  }
+
+  .mensagens{
+    margin-left: 3%;
+    margin-top: 3%;
+  }
+
+  .mensagem{
+    padding-bottom: 0.5%;
+  }
+
+  .manifestante{
+    float: right;
+  }
+
+  .ouvidor{
+    float: left;
+  }
+
+  .date{
+    font-style: italic;
+    color: #21186B;
+  }
+
+  .textarea{
+    color: #21186B;
+  }
+
+  .label{
+    color: #990A0D;
+  }
+
+  .celula{
+    text-align: left;
+  }
+
+  .icon{
+    color: #990A0D;
+    text-align: right;
+    padding-top: 3%;
+    padding-right: 5%;
+  }
+
+  ion-header ion-navbar h5 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-top: 10px;
+    margin-left: 2%;
+    text-align: left;
+    vertical-align: middle;
+    color: #990A0D;
+    font-size: 17px;
+  }
+
+  h2 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    color: #21186B;
+  }
+
+  h3 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    color: rgb(14, 8, 61);
+    margin-right: 0;
+  }
+
+
+  h4{
+    color: rgb(111, 98, 204);
+    padding: 0;
+  }
+
+  .label{
+    padding-top: 5%;
+  }
+
+  .listButton{
+    padding-top: 15%;
+  }
+
+  #large-button{
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+
+    height: 100%;
+
+    background-color: #21186B;
+
+    position: relative;
+    bottom: 0;
+    top: 100%;
+
+    text-transform: none;
+  }
+
+  .label{
+    padding-top: 8%;
+  }
+
+  .clear-button{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-transform: none;
+    color: #21186B;
+
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+  }
+
+  .locate-button{
+    background-color: #21186B;
+    width: 100%;
+    height: 15%;
+    text-transform: none;
+
+    color: #F6CFD0;
+    vertical-align: middle;
+
+  }
+
+  .listButton{
+    padding-top: 15%;
+  }
+
+  .icon-button{
+    background-color: rgb(33, 17, 92);
+    width: 100%;
+
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  #icons{
+    padding: 20px;
+    margin-top: 10px;
+  }
+}
+

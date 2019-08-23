@@ -1,7 +1,10 @@
-import { ManifestacaoProvider } from './../../providers/manifestacao/manifestacao';
-import { ComentarioProvider } from './../../providers/comentario/comentario';
+import { ComentariosPage } from './../comentarios/comentarios';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+
+import { ManifestacaoProvider } from './../../providers/manifestacao/manifestacao';
+import { ComentarioProvider } from './../../providers/comentario/comentario';
+import { EnderecoProvider } from '../../providers/endereco/endereco';
 
 import { IManifestacao } from './../../interfaces/IManifestacao';
 import { IEndereco } from './../../interfaces/IEndereco';
@@ -11,8 +14,6 @@ import { ISecretaria } from './../../interfaces/ISecretaria';
 import { IManifestante } from './../../interfaces/IManifestante';
 import { IUnidade } from './../../interfaces/IUnidade';
 import { IComentario } from './../../interfaces/IComentario';
-
-import { EnderecoProvider } from '../../providers/endereco/endereco';
 
 @IonicPage()
 @Component({
@@ -79,7 +80,7 @@ export class DetalheManifestacaoPage {
   }
 
   abreComentarios(){
-    //this.navCtrl(ComentarioPage, { comentarios: this.comentarios });
+    this.navCtrl.push(ComentariosPage, { comentarios: this.comentarios });
   }
 
   criarAlert(title: string, subTitle: string, buttons: string[]) {

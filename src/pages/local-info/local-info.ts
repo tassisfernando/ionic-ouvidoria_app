@@ -53,7 +53,7 @@ export class LocalInfoPage {
   unidades : IUnidade[];
   unidade: IUnidade;
 
-  endereco: IEndereco = { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: ''};
+  endereco: IEndereco = { idEndereco: 0, logradouro: '', bairro: '', numero: 999, cep: '', complemento: ''};
 
   hasUnidade: boolean = true;
   hasEndereco: boolean = false;

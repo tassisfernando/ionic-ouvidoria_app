@@ -35,18 +35,33 @@ export class ManifestacoesFechadasPage {
     public manifestacaoProvider: ManifestacaoProvider,
     public storageProvider: StorageProvider) {
    this.found = false;
-   this.getManifestacoesStorage();
-   this.getManifestacoes();
+
  }
 
 
  ionViewDidLoad() {
-
+  this.getManifestacoesStorage();
+  this.getManifestacoes();
 }
 
   getManifestacoesStorage(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
       this.manifestacoesStorage = data;
+
+      if(data){
+        for(let pos = 0; pos < this.manifestacoesStorage.length; pos++) {
+          this.manifestacaoProvider.getManifestacaoPorId(this.manifestacoesStorage[pos].idManifestacao).then( data => {
+            if(data){
+              this.manifestacoesStorage[pos] = data;
+              console.log(data);
+
+              this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
+            }
+          }).catch( err => {
+            console.log(err);
+          });
+        }
+      }
 
       console.log("Manifestacoes", data)
     });

@@ -6,9 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { UsuarioPage } from './../pages/usuario/usuario';
 import { LocalInfoPage } from './../pages/local-info/local-info';
-import { MinhasManifestacoesPage } from '../pages/minhas-manifestacoes/minhas-manifestacoes';
-import { ValidacaoTestePage } from '../pages/validacao-teste/validacao-teste';  //Tirar depois
-import { ReactiveFormsValidationPage } from '../pages/reactive-forms-validation/reactive-forms-validation';  //Tirar depois
+import { TabsPage } from './../pages/tabs/tabs';
 
 @Component({
   templateUrl: 'app.html'
@@ -28,7 +26,7 @@ export class MyApp {
       { title: 'Início', component: HomePage},
       { title: 'Manifestação não anônima', component: UsuarioPage },
       { title: 'Manifestação anônima', component: LocalInfoPage },
-      { title: 'Minhas Manifestações', component: MinhasManifestacoesPage },
+      { title: 'Minhas Manifestações', component: TabsPage },
       { title: 'Configurações',component:HomePage},
     ];
 

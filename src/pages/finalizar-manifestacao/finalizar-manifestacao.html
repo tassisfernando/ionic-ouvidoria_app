@@ -4,7 +4,7 @@
       <h5 *ngIf="usuario != null">Finalizar manifestação</h5>
       <h5 *ngIf="usuario == null" style="font-size: 15px; text-align: left;">Finalizar manifestação anônima</h5>
       <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
+        <ion-icon name="back"></ion-icon>
       </button>
   </ion-navbar>
 
@@ -83,7 +83,7 @@
 
         <ion-list class="list-Button">
           <ion-item>
-              <button [disabled]="isEnabled()" id="large-button" (click)="save()" ion-button full large>Finalizar</button>
+              <button [disabled]="isEnabled()" id="botao-Bonito" (click)="save()" ion-button full large>Finalizar</button>
           </ion-item>
         </ion-list>
     </form>
@@ -91,7 +91,7 @@
 
     <ion-list *ngIf="usuario" class="list-Button">
       <ion-item>
-          <button [disabled]="isEnabled()" id="large-button" (click)="save()" ion-button full large>Finalizar</button>
+          <button [disabled]="isEnabled()" id="botao-Bonito" (click)="save()" ion-button full large>Finalizar</button>
       </ion-item>
     </ion-list>
 

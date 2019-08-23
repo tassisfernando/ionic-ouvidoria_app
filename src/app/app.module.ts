@@ -13,7 +13,7 @@ import { ManifestacoesAndamentoPage } from './../pages/manifestacoes-andamento/m
 import { ManifestacoesFechadasPage } from './../pages/manifestacoes-fechadas/manifestacoes-fechadas';
 import { ManifestacoesAbertasPage } from './../pages/manifestacoes-abertas/manifestacoes-abertas';
 import { DetalheManifestacaoPage } from './../pages/detalhe-manifestacao/detalhe-manifestacao';
-
+import { ComentariosPage } from './../pages/comentarios/comentarios';
 import { MinhasManifestacoesPage } from '../pages/minhas-manifestacoes/minhas-manifestacoes'; //tirar depois
 import {ManifestacaoPage} from '../pages/manifestacao/manifestacao'; //Tirar depois
 import {CadastroPage} from '../pages/cadastro/cadastro'; //tirar depois
@@ -55,6 +55,7 @@ import { ComentarioProvider } from '../providers/comentario/comentario';
     FinalizarManifestacaoPage,
     TabsPage,
     DetalheManifestacaoPage,
+    ComentariosPage,
     MinhasManifestacoesPage, //tirar depois
     ManifestacaoPage, //tirar depois
     ValidacaoTestePage, //tirar depois
@@ -82,6 +83,7 @@ import { ComentarioProvider } from '../providers/comentario/comentario';
     ManifestacoesFechadasPage,
     ManifestacoesAndamentoPage,
     DetalheManifestacaoPage,
+    ComentariosPage,
     MinhasManifestacoesPage, //tirar depois
     ManifestacaoPage, //tirar depois
     CadastroPage, //tirar depois

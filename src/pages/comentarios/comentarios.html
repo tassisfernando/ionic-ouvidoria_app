@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-navbar>
+
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-7 class="celula">
+            <h5>Comentários</h5>
+        </ion-col>
+        <ion-col col-5 class="icon">
+            <ion-icon name="chatboxes"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+</ion-navbar>
+
+</ion-header>
+
+<ion-content>
+<div class="mensagens">
+
+  <div class="mensagem" *ngFor="let comentario of comentarios">
+
+    <div class="message.left ouvidor" *ngIf="comentario.idOuvidor" >
+      <div class="message">
+        <label class="label" for="comentario">Ouvidor: </label>
+        <ion-textarea name="comentario" disabled [(ngModel)]="comentario.texto"></ion-textarea>
+        <p class="date"> {{ comentario.dtInclusao }} </p>
+      </div>
+    </div>
+
+    <div class="message.right manifestante" *ngIf="!comentario.idOuvidor" >
+      <div class="message">
+        <label class="label" for="comentario">Manifestante: </label>
+        <ion-textarea class="textarea" name="comentario" disabled [(ngModel)]="comentario.texto"></ion-textarea>
+        <p class="date"> {{ comentario.dtInclusao }} </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</ion-content>
+
+<ion-footer no-border>
+<div class="input-wrap ">
+
+  <textarea #chat_input
+      placeholder="Faça um comentário..."
+      [(ngModel)]="comentario.texto"
+    >
+  </textarea>
+
+  <button ion-button clear icon-only item-right (click)="salvarComentario()">
+    <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+  </button>
+</div>
+</ion-footer>
+

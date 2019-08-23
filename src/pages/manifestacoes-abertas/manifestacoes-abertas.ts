@@ -30,13 +30,26 @@ export class ManifestacoesAbertasPage {
      public manifestacaoProvider: ManifestacaoProvider,
      public storageProvider: StorageProvider) {
     this.found = false;
-    this.getManifestacoesStorage();
-    this.getManifestacoes();
   }
 
   getManifestacoesStorage(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
       this.manifestacoesStorage = data;
+
+      if(data){
+        for(let pos = 0; pos < this.manifestacoesStorage.length; pos++) {
+          this.manifestacaoProvider.getManifestacaoPorId(this.manifestacoesStorage[pos].idManifestacao).then( data => {
+            if(data){
+              this.manifestacoesStorage[pos] = data;
+              console.log(data);
+
+              this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
+            }
+          }).catch( err => {
+            console.log(err);
+          });
+        }
+      }
 
       console.log("Manifestacoes", data)
     });
@@ -57,6 +70,13 @@ export class ManifestacoesAbertasPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MinhasManifestacoesPage');
+    this.getManifestacoesStorage();
+    this.getManifestacoes();
+  }
+
+  ionViewWillEnter(){
+    this.getManifestacoesStorage();
+    this.getManifestacoes();
   }
 
   //IMPLEMENTAR O GET ITEMS PARA O SEARCHBAR FUNCIONAR
@@ -90,7 +110,7 @@ export class ManifestacoesAbertasPage {
   }
 
   abreManifestacao(manifestacao: IManifestacao){
-    this.navCtrl.setRoot(DetalheManifestacaoPage, { manifestacao: manifestacao });
+    this.navCtrl.push(DetalheManifestacaoPage, { manifestacao: manifestacao });
   }
 
   showAlert(title: string, subTitle: string) {
