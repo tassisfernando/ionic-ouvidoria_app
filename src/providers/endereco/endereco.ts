@@ -27,9 +27,9 @@ export class EnderecoProvider {
     });
   }
 
-  getUnidade(idUnidade: number){
+  getUnidades(id: number) {
     return new Promise<IUnidade>(resolve => {
-      this.http.get<IUnidade>(this.apiUrl + '/unidades/'+idUnidade).subscribe(data => {
+      this.http.get<IUnidade>(this.apiUrl + '/unidades/'+id).subscribe(data => {
         resolve(data);
       },
         err => {

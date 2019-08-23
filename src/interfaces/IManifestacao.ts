@@ -1,3 +1,4 @@
+import { ISecretaria } from './ISecretaria';
 import { ITipo } from './ITipo';
 import { IAssunto } from './IAssunto';
 import { IManifestante } from "./IManifestante";
@@ -18,4 +19,5 @@ export interface IManifestacao{
     tbendereco?: IEndereco;
     tbassunto?: IAssunto;
     tbtipo?: ITipo;
+    tbsecretaria?: ISecretaria;
 }

@@ -37,6 +37,22 @@
           </ion-item>
       </ion-item-group>
 
+      <ion-item-divider *ngIf="usuario != null">
+        <h4>Manifestante</h4>
+      </ion-item-divider>
+
+      <ion-item-group *ngIf="usuario != null">
+        <ion-item>
+          <ion-label stacked>Nome:*</ion-label>
+          <ion-input [(ngModel)]="usuario.nmManifestante" disabled type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>E-mail:*</ion-label>
+          <ion-input [(ngModel)]="usuario.email" disabled type="text"></ion-input>
+        </ion-item>
+      </ion-item-group>
+
       <ion-item-divider>
           <h4>Anexo</h4>
       </ion-item-divider>
@@ -54,7 +70,6 @@
       <ion-item-group>
         <ion-item>
             <p> {{ this.endereco.logradouro }}, {{ this.endereco.numero }} - {{ this.endereco.bairro }} </p>
-
             <ion-label *ngIf="unidade" stacked>Unidade:*</ion-label>
             <ion-input *ngIf="unidade" [(ngModel)]="unidade.nmUnidade" disabled type="text"></ion-input>
         </ion-item>
@@ -64,11 +79,17 @@
         <h4>Comentários</h4>
       </ion-item-divider>
 
-      <ion-list class="list-Button">
+      <ion-list class="list-Button" *ngIf="comentarios && comentarios.length > 0">
           <ion-item>
-              <button  id="large-button" ion-button full large>Acompanhar comentários</button>
+              <button  id="large-button" ion-button full large (click)="abreComentarios()">Acompanhar comentários</button>
           </ion-item>
       </ion-list>
+
+      <ion-item-group *ngIf="comentarios && comentarios.length == 0">
+        <ion-item>
+          <p>Nenhum comentário foi feito...</p>
+        </ion-item>
+    </ion-item-group>
 
     </ion-list>
 

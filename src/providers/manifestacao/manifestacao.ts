@@ -1,3 +1,4 @@
+import { IManifestante } from './../../interfaces/IManifestante';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IManifestacao } from '../../interfaces/IManifestacao';
@@ -39,6 +40,29 @@ export class ManifestacaoProvider {
             reject(error.json);
             console.log(error);
           })
+    });
+  }
+
+  getManifestacaoPorId(idManifestacao: number){
+    return new Promise<IManifestacao>(resolve => {
+      this.http.get<IManifestacao>(this.apiUrl + '/manifestacoes/'+idManifestacao).subscribe(data => {
+        resolve(data);
+      },
+        err => {
+          console.log(err);
+        });
+    });
+
+  }
+
+  getManifestantePorId(idManifestacao: number){
+    return new Promise<IManifestante>(resolve => {
+      this.http.get<IManifestante>(this.apiUrl + '/manifestantes/'+idManifestacao).subscribe(data => {
+        resolve(data);
+      },
+        err => {
+          console.log(err);
+        });
     });
   }
 

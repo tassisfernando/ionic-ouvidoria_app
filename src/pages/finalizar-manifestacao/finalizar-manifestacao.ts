@@ -82,16 +82,24 @@ export class FinalizarManifestacaoPage {
       console.log("cadastrou", data);
       this.manifestacao = data;
 
-      this.storageProvider.getStorage('manifestacoes').then((data) => {
-        if(data){
-          this.manifestacoesStorage = data;
-          this.manifestacoesStorage.push(this.manifestacao);
-        } else{
-          this.manifestacoesStorage.push(this.manifestacao);
-        }
+      //pega a manifestacao cadastrada com os outros campos do banco
+      this.manifestacaoProvider.getManifestacaoPorId(this.manifestacao.idManifestacao).then(manifestacao => {
+        this.manifestacao = manifestacao;
 
-        console.log('Storage', data);
-        this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
+        //cadastra a manifestacação no celular
+        this.storageProvider.getStorage('manifestacoes').then((data) => {
+          if(data){
+            this.manifestacoesStorage = data;
+            this.manifestacoesStorage.push(this.manifestacao);
+          } else{
+            this.manifestacoesStorage.push(this.manifestacao);
+          }
+
+          console.log('Storage', data);
+          this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
+        });
+      }).catch( (err) => {
+        console.log(err)
       });
 
       console.log(this.manifestacao.hash);

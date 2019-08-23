@@ -30,6 +30,8 @@ export class ManifestacoesAbertasPage {
      public manifestacaoProvider: ManifestacaoProvider,
      public storageProvider: StorageProvider) {
     this.found = false;
+    this.getManifestacoesStorage();
+    this.getManifestacoes();
   }
 
   getManifestacoesStorage(){
@@ -55,8 +57,6 @@ export class ManifestacoesAbertasPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MinhasManifestacoesPage');
-    this.getManifestacoesStorage();
-    this.getManifestacoes();
   }
 
   //IMPLEMENTAR O GET ITEMS PARA O SEARCHBAR FUNCIONAR

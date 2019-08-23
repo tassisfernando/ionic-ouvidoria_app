@@ -35,12 +35,13 @@ export class ManifestacoesFechadasPage {
     public manifestacaoProvider: ManifestacaoProvider,
     public storageProvider: StorageProvider) {
    this.found = false;
+   this.getManifestacoesStorage();
+   this.getManifestacoes();
  }
 
 
  ionViewDidLoad() {
-  this.getManifestacoesStorage();
-  this.getManifestacoes();
+
 }
 
   getManifestacoesStorage(){

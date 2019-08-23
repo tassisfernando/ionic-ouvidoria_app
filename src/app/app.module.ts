@@ -39,6 +39,7 @@ import { TipoProvider } from '../providers/tipo/tipo';
 import { SecretariaProvider } from '../providers/secretaria/secretaria';
 import { EnderecoProvider } from '../providers/endereco/endereco';
 import { StorageProvider } from '../providers/storage/storage';
+import { ComentarioProvider } from '../providers/comentario/comentario';
 
 
 @NgModule({
@@ -101,6 +102,7 @@ import { StorageProvider } from '../providers/storage/storage';
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     StorageProvider,
+    ComentarioProvider,
   ]
 })
 export class AppModule {}
