@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 
 import {ManifestacaoPage} from '../manifestacao/manifestacao';
 import { MinhasManifestacoesPage } from '../minhas-manifestacoes/minhas-manifestacoes';
@@ -18,7 +18,7 @@ export class HomePage {
 
   tipo:any;
 
-  constructor(public navCtrl: NavController) { }
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController) { }
 
   ionViewDidEnter(){
   }
@@ -36,6 +36,12 @@ export class HomePage {
 
   abrirManifestacaoPage(){
     this.navCtrl.push(TabsPage);
+    let loader = this.loadingCtrl.create({
+      content: "Carregando...",
+      duration: 1500,
+      spinner: 'crescent'
+    });
+    loader.present();
   }
 
   abrirLocalInfoPage(){

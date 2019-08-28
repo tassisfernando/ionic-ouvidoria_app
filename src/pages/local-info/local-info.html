@@ -133,7 +133,7 @@
 
               <ion-item>
                 <ion-label stacked>Número</ion-label>
-                <ion-input formControlName="numero" min="0" [(ngModel)]="endereco.numero" placeholder="999" name="numero" id="numero" type="number"></ion-input>
+                <ion-input formControlName="numero" [(ngModel)]="endereco.numero" placeholder="" name="numero" id="numero" type="text"></ion-input>
               </ion-item>
 
               <ion-item class="error" *ngIf="!formEnd.controls.numero.valid  && (formEnd.controls.numero.dirty || submitAttempt)">

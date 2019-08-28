@@ -33,9 +33,9 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 
 export class ManifestacaoPage {
 
-  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' } };
+  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
   manifestante: IManifestante = { nmManifestante: '', email: '', cpf_cnpj: '', rg: '', telefone: '' };
-  endereco: IEndereco = { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: ''};
+  endereco: IEndereco = { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: ''};
   secretarias: ISecretaria[];
   assuntos: IAssunto[];
   unidades : IUnidade[];

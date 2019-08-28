@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { IManifestante } from './../../interfaces/IManifestante';
@@ -27,19 +27,20 @@ export class FinalizarManifestacaoPage {
 
   usuario: IManifestante;
   manifestacoesStorage: IManifestacao[] = [];
-  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' } };
+  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
   secretaria: ISecretaria;
   tipo: ITipo;
   unidade: IUnidade;
   assunto: IAssunto;
-  endereco: IEndereco = { bairro: "", cep: "", complemento: "", idEndereco: 0, logradouro: "", numero: 0 };
+  endereco: IEndereco = { bairro: "", cep: "", complemento: "", idEndereco: 0, logradouro: "", numero: "" };
 
   hasEmail: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
               private manifestacaoProvider: ManifestacaoProvider,
               public alertCtrl: AlertController,
-              private storageProvider: StorageProvider) {
+              private storageProvider: StorageProvider,
+              public loadingCtrl: LoadingController) {
 
     this.form = formBuilder.group({
       emailAnonimo: ['', Validators.email]
@@ -76,7 +77,11 @@ export class FinalizarManifestacaoPage {
       this.manifestacao.tbmanifestante = null;
     }
 
-    this.manifestacao.idAssunto = 27; //TIRAR ISSO AQUI DEPOISSSSS
+    let loader = this.loadingCtrl.create({
+      content: "Cadastrando...",
+      duration: 1500,
+      spinner: 'crescent'
+    });
 
     this.manifestacaoProvider.criarManifestacao(this.manifestacao).then(data => {
       console.log("cadastrou", data);

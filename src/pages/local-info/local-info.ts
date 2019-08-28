@@ -38,8 +38,8 @@ export class LocalInfoPage {
   public submitAttempt: boolean = false;
 
 
-  usuario: IManifestante;                                         //MUDAR AQUI PARA 0 DEPOIS
-  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 27, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' } };
+  usuario: IManifestante;
+  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
 
   tipos: ITipo[];
   tipo: ITipo;
@@ -53,7 +53,7 @@ export class LocalInfoPage {
   unidades : IUnidade[];
   unidade: IUnidade;
 
-  endereco: IEndereco = { idEndereco: 0, logradouro: '', bairro: '', numero: 999, cep: '', complemento: ''};
+  endereco: IEndereco = { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: ''};
 
   hasUnidade: boolean = true;
   hasEndereco: boolean = false;
@@ -74,13 +74,13 @@ export class LocalInfoPage {
     this.formOne = formBuilder.group({
       tipo: ['', Validators.compose([Validators.min(1), Validators.required])],
       secretaria: ['', Validators.compose([Validators.min(1), Validators.required])],
-      assunto: ['', ], //MUDAR AQUI DEPOIS (MIN E REQUIRED)
+      assunto: ['', Validators.compose([Validators.min(1), Validators.required])],
     });
 
     this.formEnd = formBuilder.group({
       cep: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(8), Validators.required])],
       logradouro: ['', Validators.required],
-      numero: ['', Validators.min(1)],
+      numero: ['', Validators.min(1)], //SE DER MERDA TIRAR
       bairro: ['', Validators.required],
       complemento: ['', ],
     });

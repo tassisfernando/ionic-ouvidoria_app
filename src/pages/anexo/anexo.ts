@@ -1,6 +1,8 @@
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Loading, LoadingController, ToastController } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { IManifestacao } from './../../interfaces/IManifestacao';
 import { IManifestante } from './../../interfaces/IManifestante';
@@ -23,17 +25,28 @@ export class AnexoPage {
   public form: FormGroup;
 
   usuario: IManifestante;
-  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: 0, cep: '', complemento: '' } };
+  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
   secretaria: ISecretaria;
   tipo: ITipo;
   unidade: IUnidade;
   assunto: IAssunto;
   endereco: IEndereco;
 
+  imageURI:any;
+  imageFileName:any;
+
+  cameraImage : string;
+  lastImage: string = null;
+  loading: Loading;
+  public base64Image: string;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public formBuilder: FormBuilder,
               public alertCtrl: AlertController,
-  ) {
+              private transfer: FileTransfer,
+              private camera: Camera,
+              public loadingCtrl: LoadingController,
+              public toastCtrl: ToastController ) {
 
     this.form = formBuilder.group({
       descricao: ['', Validators.compose([Validators.minLength(3), Validators.required])]
@@ -55,7 +68,6 @@ export class AnexoPage {
   }
 
   showDuvidas(duvida: string){
-
     let texto;
 
     if( duvida == "descricao" ){
@@ -80,8 +92,65 @@ export class AnexoPage {
     return this.form.invalid;
   }
 
-  save(){
+  tirarFoto(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
 
+    this.camera.getPicture(options).then((imageData) => {
+      this.imageURI = imageData;
+    }, (err) => {
+      console.log(err);
+      this.presentToast(err);
+    });
+
+  }
+
+  uploadFile() {
+    let loader = this.loadingCtrl.create({
+      content: "Uploading..."
+    });
+    loader.present();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    let options: FileUploadOptions = {
+      fileKey: 'ionicfile',
+      fileName: 'ionicfile',
+      chunkedMode: false,
+      mimeType: "image/jpeg",
+      headers: {}
+    }
+
+    fileTransfer.upload(this.imageURI, 'http://192.168.0.7:8080/api/uploadImage', options)
+      .then((data) => {
+      console.log(data+" Uploaded Successfully");
+      this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
+      loader.dismiss();
+      this.presentToast("Image uploaded successfully");
+    }, (err) => {
+      console.log(err);
+      loader.dismiss();
+      this.presentToast(err);
+    });
+  }
+
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
+
+  save(){
     this.submitAttempt = true;
 
     console.log("Manifestação: ",this.manifestacao);
@@ -100,3 +169,4 @@ export class AnexoPage {
     }
   }
 }
+

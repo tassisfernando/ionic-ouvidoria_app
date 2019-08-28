@@ -26,6 +26,8 @@ import { Network } from  '@ionic-native/network'; //TIRAR O NGX SE DER MERDA
 import { Geolocation } from '@ionic-native/geolocation/';
 import { Camera } from '@ionic-native/camera';
 import { IonicStorageModule } from '@ionic/storage';
+import { FileTransfer, FileTransferObject, FileUploadOptions } from '@ionic-native/file-transfer/ngx'; //TIRAR O NGX SE DER MERDA
+import { File } from '@ionic-native/file/ngx'; //TIRAR O NGX SE DER MERDA
 
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -102,6 +104,10 @@ import { ComentarioProvider } from '../providers/comentario/comentario';
     EnderecoProvider,
     Network,
     Camera,
+    FileTransfer,
+    FileTransferObject,
+    // FileUploadOptions, descomentar se der merda
+    File,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     StorageProvider,
     ComentarioProvider,
