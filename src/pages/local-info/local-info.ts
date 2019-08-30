@@ -72,16 +72,16 @@ export class LocalInfoPage {
     this.usuario = navParams.get('usuario');
 
     this.formOne = formBuilder.group({
-      tipo: ['', Validators.compose([Validators.min(1), Validators.required])],
-      secretaria: ['', Validators.compose([Validators.min(1), Validators.required])],
-      assunto: ['', Validators.compose([Validators.min(1), Validators.required])],
+      tipo: ['', ], //Validators.compose([Validators.min(1), Validators.required])
+      secretaria: ['', ], //Validators.compose([Validators.min(1), Validators.required])
+      assunto: ['', ], //Validators.compose([Validators.min(1), Validators.required])
     });
 
     this.formEnd = formBuilder.group({
-      cep: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(8), Validators.required])],
-      logradouro: ['', Validators.required],
-      numero: ['', Validators.min(1)], //SE DER MERDA TIRAR
-      bairro: ['', Validators.required],
+      cep: ['', ], //Validators.compose([Validators.minLength(8), Validators.maxLength(8), Validators.required])
+      logradouro: ['', ], //VOLTA DEPOIS AE O Validators.required
+      numero: ['', ], //Validators.min(1)
+      bairro: ['', ], //Validators.required
       complemento: ['', ],
     });
 

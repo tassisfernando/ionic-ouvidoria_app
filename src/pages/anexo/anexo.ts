@@ -32,13 +32,8 @@ export class AnexoPage {
   assunto: IAssunto;
   endereco: IEndereco;
 
-  imageURI:any;
-  imageFileName:any;
-
-  cameraImage : string;
-  lastImage: string = null;
-  loading: Loading;
-  public base64Image: string;
+  base64Image: string;
+  hasAnexo: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public formBuilder: FormBuilder,
@@ -62,6 +57,7 @@ export class AnexoPage {
 
     console.log(this.manifestacao, this.usuario);
 
+    this.hasAnexo = false;
   }
 
   ionViewDidLoad() {
@@ -92,48 +88,35 @@ export class AnexoPage {
     return this.form.invalid;
   }
 
-  tirarFoto(){
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
-    }
-
-    this.camera.getPicture(options).then((imageData) => {
-      this.imageURI = imageData;
-    }, (err) => {
-      console.log(err);
-      this.presentToast(err);
-    });
-
+  isEnabledAnexo(){
+    return this.hasAnexo;
   }
 
-  uploadFile() {
-    let loader = this.loadingCtrl.create({
-      content: "Uploading..."
-    });
-    loader.present();
-    const fileTransfer: FileTransferObject = this.transfer.create();
+  abreCamera(type: string){
+    const options: CameraOptions = {
+      quality: 85,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.ALLMEDIA,
+      sourceType: type == "foto" ? this.camera.PictureSourceType.CAMERA : this.camera.PictureSourceType.PHOTOLIBRARY,
+      correctOrientation: true,
+      saveToPhotoAlbum: true
+    };
 
-    let options: FileUploadOptions = {
-      fileKey: 'ionicfile',
-      fileName: 'ionicfile',
-      chunkedMode: false,
-      mimeType: "image/jpeg",
-      headers: {}
-    }
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      if(type == "foto"){
+        this.base64Image = 'data:image/jpeg;base64,' + imageData;
+      } else {
+        this.base64Image = imageData;
+      }
 
-    fileTransfer.upload(this.imageURI, 'http://192.168.0.7:8080/api/uploadImage', options)
-      .then((data) => {
-      console.log(data+" Uploaded Successfully");
-      this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
-      loader.dismiss();
-      this.presentToast("Image uploaded successfully");
-    }, (err) => {
-      console.log(err);
-      loader.dismiss();
-      this.presentToast(err);
-    });
+      this.hasAnexo = true;
+     }, (err) => {
+      // Handle error
+     });
+
   }
 
   presentToast(msg) {
@@ -170,3 +153,46 @@ export class AnexoPage {
   }
 }
 
+/*tirarFoto(){
+  const options: CameraOptions = {
+    quality: 100,
+    destinationType: this.camera.DestinationType.FILE_URI,
+    sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+  }
+
+  this.camera.getPicture(options).then((imageData) => {
+    this.imageURI = imageData;
+  }, (err) => {
+    console.log(err);
+    this.presentToast(err);
+  });
+
+}
+
+uploadFile() {
+  let loader = this.loadingCtrl.create({
+    content: "Uploading..."
+  });
+  loader.present();
+  const fileTransfer: FileTransferObject = this.transfer.create();
+
+  let options: FileUploadOptions = {
+    fileKey: 'ionicfile',
+    fileName: 'ionicfile',
+    chunkedMode: false,
+    mimeType: "image/jpeg",
+    headers: {}
+  }
+
+  fileTransfer.upload(this.imageURI, 'http://192.168.0.7:8080/api/uploadImage', options)
+    .then((data) => {
+    console.log(data+" Uploaded Successfully");
+    this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
+    loader.dismiss();
+    this.presentToast("Image uploaded successfully");
+  }, (err) => {
+    console.log(err);
+    loader.dismiss();
+    this.presentToast(err);
+  });
+} */

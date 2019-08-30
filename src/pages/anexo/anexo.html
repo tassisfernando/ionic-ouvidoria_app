@@ -55,12 +55,12 @@
               <ion-grid>
                 <ion-row>
                   <ion-col col-6>
-                    <button class="icon-button" (click)="tirarFoto()" ion-button >
+                    <button [disabled]="isEnabledAnexo()" class="icon-button" (click)="abreCamera('foto')" ion-button >
                       <ion-icon name="md-camera"></ion-icon>
                         </button>
                   </ion-col>
                   <ion-col col-6>
-                     <button class="icon-button" ion-button >
+                     <button [disabled]="isEnabledAnexo()" class="icon-button" (click)="abreCamera('galeria')" ion-button >
                         <ion-icon name="ios-archive"></ion-icon>
                       </button>
                   </ion-col>
@@ -70,7 +70,7 @@
           </ion-item>
 
           <ion-item>
-            <img src="{{ imageFileName }}" *ngIf="imageFileName" alt="Foto">
+            <img src="{{base64Image}}" *ngIf="base64Image" alt="{{base64Image}}">
           </ion-item>
 
         </ion-item-group>

@@ -266,7 +266,7 @@ export class ManifestacaoPage {
       alert.present();
     }
 
-    abreCamera(){
+  abreCamera(){
       const options: CameraOptions = {
         quality: 100,
         destinationType: this.camera.DestinationType.FILE_URI,

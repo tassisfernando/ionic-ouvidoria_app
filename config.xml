@@ -5,6 +5,7 @@
     <author email="hi@ionicframework" href="http://ionicframework.com/">Fábrica de Software - CEFET</author>
     <content src="index.html" />
     <access origin="*" />
+    <allow-navigation href="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -93,4 +94,5 @@
         <string>You can take photos</string>
     </config-file>
     <allow-navigation href="http://200.128.146.234:8100" />
+    <allow-navigation href="http://192.168.1.9:8100" />
 </widget>

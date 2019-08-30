@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-      <h5 *ngIf="usuario != null">Nova manifestação - Passo 2 de 3</h5>
+      <h5 *ngIf="usuario != null" style="font-size: 15px; text-align: left;">Nova manifestação - Passo 2 de 3</h5>
       <h5 *ngIf="usuario == null" style="font-size: 15px; text-align: left;">Nova manifestação anônima - Passo 1 de 2</h5>
       <button ion-button menuToggle>
         <ion-icon name="back"></ion-icon>
@@ -37,7 +37,7 @@
               </ion-item>
 
               <ion-item class="item">
-                  <ion-label stacked>Secretaria*</ion-label>
+                  <ion-label class="label" stacked>Secretaria*</ion-label>
                   <ion-select formControlName="secretaria" [(ngModel)]="manifestacao.idSecretaria" cancelText="Cancelar" okText="Ok">
                     <ion-option *ngFor="let secretaria of secretarias" (ionSelect)="selectSecretaria($event, secretaria)" value="{{secretaria.idSecretaria}}">{{secretaria.nmSecretaria}}</ion-option>
                   </ion-select>
@@ -54,7 +54,7 @@
               </ion-item>
 
               <ion-item class="item">
-                  <ion-label stacked>Assunto*</ion-label>
+                  <ion-label class="label" stacked>Assunto*</ion-label>
                   <ion-select  formControlName="assunto" [(ngModel)]="manifestacao.idAssunto" cancelText="Cancelar" okText="Ok">
                     <ion-option *ngFor="let assunto of assuntos" (ionSelect)="selectAssunto($event, assunto)" value="{{assunto.idAssunto}}">{{assunto.nmAssunto}}</ion-option>
                   </ion-select>
@@ -79,7 +79,7 @@
         <ion-item-group>
 
           <ion-item class="item" *ngIf="hasEndereco == false">
-            <ion-label stacked>Unidade</ion-label>
+            <ion-label class="label" stacked>Unidade</ion-label>
             <ion-select cancelText="Cancelar" okText="Ok" >
               <ion-option *ngFor="let unidade of unidades" (ionSelect)="selectUnidade($event, unidade)" value="{{unidade.idUnidade}}">{{unidade.nmUnidade}}</ion-option>
             </ion-select>
@@ -123,7 +123,7 @@
               </ion-item>
 
               <ion-item>
-                  <ion-label stacked>Logradouro*</ion-label>
+                  <ion-label class="label" stacked>Logradouro*</ion-label>
                   <ion-input formControlName="logradouro" [(ngModel)]="endereco.logradouro" readonly="" name="logradouro" id="logradouro" type="text"></ion-input>
               </ion-item>
 
@@ -132,7 +132,7 @@
               </ion-item>
 
               <ion-item>
-                <ion-label stacked>Número</ion-label>
+                <ion-label class="label" stacked>Número</ion-label>
                 <ion-input formControlName="numero" [(ngModel)]="endereco.numero" placeholder="" name="numero" id="numero" type="text"></ion-input>
               </ion-item>
 
@@ -161,7 +161,7 @@
 
         <ion-list class="list-Button">
           <ion-item>
-            <button [disabled]="isEnabled()" id="botao-Bonito" (click)="save()" ion-button full large>Próximo</button>
+            <button [disabled]="" id="botao-Bonito" (click)="save()" ion-button full large>Próximo</button>
           </ion-item>
         </ion-list>
 

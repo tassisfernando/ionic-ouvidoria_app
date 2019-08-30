@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
 
 import {ManifestacaoPage} from '../manifestacao/manifestacao';
 import { MinhasManifestacoesPage } from '../minhas-manifestacoes/minhas-manifestacoes';
@@ -18,9 +18,31 @@ export class HomePage {
 
   tipo:any;
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController) { }
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private network: Network,
+    public alertCtrl: AlertController) {
+  }
 
   ionViewDidEnter(){
+    this.checkConnection();
+  }
+
+  checkConnection(){
+    this.network.onDisconnect().subscribe(() => {
+      this.criarAlert("Falha de conexão!", "Você não está conectado à internet. Sua experiência no app será afetada!", ['OK']);
+    });
+
+    this.network.onConnect().subscribe(() => {
+      console.log('conectado!');
+    });
+  }
+
+  criarAlert(title: string, subTitle: string, buttons: string[]) {
+    const alert = this.alertCtrl.create({
+      title: title,
+      subTitle: subTitle,
+      buttons: buttons
+    });
+    alert.present();
   }
 
   abrirPagina(x: number){
