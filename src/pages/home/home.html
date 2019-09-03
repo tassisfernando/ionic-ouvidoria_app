@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
+    <button ion-button menuToggle *ngIf="hasConnection">
       <ion-icon style="color: #990A0D;" name="menu"></ion-icon>
     </button>
     <ion-grid>
@@ -17,7 +17,14 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-grid>
+  <div *ngIf="hasConnection == false" class="connection-error">
+      <p>Você não está conectado à internet</p>
+      <button ion-button class="connection-button" round (click)="reloadPage()">
+        Tentar novamente
+      </button>
+  </div>
+
+    <ion-grid *ngIf="hasConnection == true">
       <ion-row>
         <ion-col>
           <button id="botao-bonito" color="default" large block ion-button icon-start (click)="abrirUsuarioPage()">
@@ -44,7 +51,7 @@
       </ion-row>
     </ion-grid>
 
-    <ion-list>
+    <ion-list *ngIf="hasConnection">
       <ion-list-header>
         <h2 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; color: #990A0D;">Notificações</h2>
       </ion-list-header>

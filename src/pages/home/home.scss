@@ -44,5 +44,21 @@ page-home{
       text-transform: none;
   }
 
+  .connection-error{
+    margin-top: 55%;
+    margin-left: 10%;
+  }
+
+  p{
+    color: rgb(83, 82, 94);
+    font-size: 17px;
+  }
+
+  .connection-button{
+    margin-left: 15%;
+    text-transform: none;
+    font-style: normal;
+    background-color: #21186B;
+  }
 }
 

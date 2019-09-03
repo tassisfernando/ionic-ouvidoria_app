@@ -2,21 +2,23 @@
   <ion-navbar>
     <h5>Nova manifestação - Passo 1 de 3</h5>
     <button ion-button menuToggle>
-      <ion-icon style="color: rgb(241, 67, 70);" name="menu"></ion-icon>
+      <ion-icon style="color: #990A0D;" name="menu"></ion-icon>
     </button>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Dados do usuário</h2>
-  <hr>
 
   <ion-list>
     <form [formGroup]="form">
+      <ion-item-divider style="padding-top: 0;
+                              padding-bottom: 0">
+          <h4>Dados do usuário</h4>
+      </ion-item-divider>
 
       <ion-item>
           <ion-label stacked>Nome:*</ion-label>
-          <ion-input [(ngModel)]="usuario.nmManifestante" autofocus="true" formControlName="nome" placeholder="Informe seu nome..." type="text"></ion-input>
+          <ion-input [(ngModel)]="usuario.nmManifestante" formControlName="nome" placeholder="Informe seu nome..." type="text"></ion-input>
       </ion-item>
 
       <ion-item class="error" *ngIf="!form.controls.nome.valid  && (form.controls.nome.dirty || submitAttempt)">

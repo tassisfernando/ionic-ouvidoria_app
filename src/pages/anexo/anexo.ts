@@ -119,20 +119,6 @@ export class AnexoPage {
 
   }
 
-  presentToast(msg) {
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: 3000,
-      position: 'bottom'
-    });
-
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-
-    toast.present();
-  }
-
   save(){
     this.submitAttempt = true;
 
@@ -150,6 +136,20 @@ export class AnexoPage {
 
       this.criarAlert("Erro", "Aconteceu um erro inesperado. Tente novamente mais tarde.", ['OK'])
     }
+  }
+
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 }
 
@@ -169,6 +169,7 @@ export class AnexoPage {
 
 }
 
+//método para o provider?
 uploadFile() {
   let loader = this.loadingCtrl.create({
     content: "Uploading..."
@@ -184,6 +185,7 @@ uploadFile() {
     headers: {}
   }
 
+  //Usar isso no provider, chamando o servidor de arquivos?
   fileTransfer.upload(this.imageURI, 'http://192.168.0.7:8080/api/uploadImage', options)
     .then((data) => {
     console.log(data+" Uploaded Successfully");

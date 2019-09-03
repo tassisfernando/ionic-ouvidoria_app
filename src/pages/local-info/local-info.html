@@ -4,7 +4,7 @@
       <h5 *ngIf="usuario != null" style="font-size: 15px; text-align: left;">Nova manifestação - Passo 2 de 3</h5>
       <h5 *ngIf="usuario == null" style="font-size: 15px; text-align: left;">Nova manifestação anônima - Passo 1 de 2</h5>
       <button ion-button menuToggle>
-        <ion-icon name="back"></ion-icon>
+        <ion-icon style="color: #990A0D;" name="back"></ion-icon>
       </button>
   </ion-navbar>
 
@@ -66,9 +66,9 @@
                   </button>
               </ion-item>
 
-              <!-- <ion-item class="error" *ngIf="!formOne.controls.assunto.valid  && (formOne.controls.assunto.dirty || submitAttempt)">
+              <ion-item class="error" *ngIf="!formOne.controls.assunto.valid  && (formOne.controls.assunto.dirty || submitAttempt)">
                   Você precisa informar um assunto!
-              </ion-item> -->
+              </ion-item>
         </ion-item-group>
 
 
@@ -161,7 +161,7 @@
 
         <ion-list class="list-Button">
           <ion-item>
-            <button [disabled]="" id="botao-Bonito" (click)="save()" ion-button full large>Próximo</button>
+            <button [disabled]="isEnabled()" id="botao-Bonito" (click)="save()" ion-button full large>Próximo</button>
           </ion-item>
         </ion-list>
 

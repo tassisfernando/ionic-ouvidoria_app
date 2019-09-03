@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController, ToastController } from 'ionic-angular';
 
 import {ManifestacaoPage} from '../manifestacao/manifestacao';
-import { MinhasManifestacoesPage } from '../minhas-manifestacoes/minhas-manifestacoes';
 import { UsuarioPage } from './../usuario/usuario';
 import { LocalInfoPage } from './../local-info/local-info';
 import { TabsPage } from './../tabs/tabs';
@@ -17,23 +16,51 @@ import { Network } from  '@ionic-native/network';
 export class HomePage {
 
   tipo:any;
+  hasConnection: boolean;
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private network: Network,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    public toastCtrl: ToastController) {
+      this.hasConnection = true;
   }
 
   ionViewDidEnter(){
     this.checkConnection();
   }
 
+  reloadPage(){
+    this.checkConnection();
+  }
+
   checkConnection(){
     this.network.onDisconnect().subscribe(() => {
-      this.criarAlert("Falha de conexão!", "Você não está conectado à internet. Sua experiência no app será afetada!", ['OK']);
+      if(this.hasConnection){
+        this.presentToast('Não há conexão com a internet.')
+      }
+      this.hasConnection = false;
     });
 
     this.network.onConnect().subscribe(() => {
       console.log('conectado!');
+      if(!this.hasConnection){
+        this.presentToast('Conectado!');
+      }
+      this.hasConnection = true;
     });
+  }
+
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 2500,
+      position: 'top'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 
   criarAlert(title: string, subTitle: string, buttons: string[]) {

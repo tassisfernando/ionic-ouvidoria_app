@@ -10,9 +10,15 @@
   </ion-header>
 
   <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
+    <ion-list style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                      padding-bottom: 5%;">
+      <button menuClose ion-item *ngFor="let p of pages" icon-start (click)="openPage(p)">
+          <ion-icon *ngIf="p.title == 'Início'" name="ios-home"></ion-icon>
+          <ion-icon *ngIf="p.title == 'Manifestação não anônima'" name="ios-megaphone"></ion-icon>
+          <ion-icon *ngIf="p.title == 'Manifestação anônima'" name="eye-off"></ion-icon>
+          <ion-icon *ngIf="p.title == 'Minhas Manifestações'" name="paper"></ion-icon>
+          <ion-icon *ngIf="p.title == 'Configurações'" name="ios-settings"></ion-icon>
+          {{p.title}}
       </button>
     </ion-list>
   </ion-content>
