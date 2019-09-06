@@ -28,6 +28,9 @@ import { Camera } from '@ionic-native/camera';
 import { IonicStorageModule } from '@ionic/storage';
 import { FileTransfer, FileTransferObject, FileUploadOptions } from '@ionic-native/file-transfer/ngx'; //TIRAR O NGX SE DER MERDA
 import { File } from '@ionic-native/file/ngx'; //TIRAR O NGX SE DER MERDA
+import { FileChooser } from '@ionic-native/file-chooser';
+import { FilePath } from '@ionic-native/file-path';
+import { FileOpener } from "@ionic-native/file-opener";
 
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -112,6 +115,9 @@ class CameraMock extends Camera{
     EnderecoProvider,
     Network,
     Camera, //Depois que testar nativo usar só { provide: Camera, useClass: CameraMock },
+    FileChooser,
+    FileOpener,
+    FilePath,
     FileTransfer,
     FileTransferObject,
     // FileUploadOptions, descomentar se der merda

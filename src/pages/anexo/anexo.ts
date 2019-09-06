@@ -1,8 +1,8 @@
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, Loading, LoadingController, ToastController } from 'ionic-angular';
+
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { IManifestacao } from './../../interfaces/IManifestacao';
 import { IManifestante } from './../../interfaces/IManifestante';
@@ -11,6 +11,11 @@ import { IUnidade } from './../../interfaces/IUnidade';
 import { ITipo } from './../../interfaces/ITipo';
 import { ISecretaria } from './../../interfaces/ISecretaria';
 import { IEndereco } from './../../interfaces/IEndereco';
+
+import { FilePath } from '@ionic-native/file-path';
+import { FileOpener } from '@ionic-native/file-opener';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 import { FinalizarManifestacaoPage } from './../finalizar-manifestacao/finalizar-manifestacao';
 
@@ -32,13 +37,17 @@ export class AnexoPage {
   assunto: IAssunto;
   endereco: IEndereco;
 
-  base64Image: string;
+  anexoNome: string;
   hasAnexo: boolean;
+  anexoBase64: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public formBuilder: FormBuilder,
               public alertCtrl: AlertController,
               private transfer: FileTransfer,
+              private fileChooser: FileChooser,
+              private fileOpener: FileOpener,
+              private filePath: FilePath,
               private camera: Camera,
               public loadingCtrl: LoadingController,
               public toastCtrl: ToastController ) {
@@ -92,31 +101,50 @@ export class AnexoPage {
     return this.hasAnexo;
   }
 
+  removerAnexo(){
+    this.hasAnexo = false;
+  }
+
   abreCamera(type: string){
     const options: CameraOptions = {
       quality: 85,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.ALLMEDIA,
+      mediaType: this.camera.MediaType.PICTURE,
       sourceType: type == "foto" ? this.camera.PictureSourceType.CAMERA : this.camera.PictureSourceType.PHOTOLIBRARY,
       correctOrientation: true,
       saveToPhotoAlbum: true
     };
 
     this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
       if(type == "foto"){
-        this.base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.anexoBase64 = 'data:image/jpeg;base64,' + imageData;
+        this.anexoNome = imageData;
       } else {
-        this.base64Image = imageData;
+        this.filePath.resolveNativePath(imageData).then( resolvedFilePath => {
+          this.anexoNome= resolvedFilePath.substr(resolvedFilePath.lastIndexOf('/') + 1);
+        })
+        //this.anexoNome = 'data:image/jpeg;uri,' + imageData; //APAGAR SE DER RUIMMMM
       }
 
       this.hasAnexo = true;
      }, (err) => {
-      // Handle error
+        this.presentToast('Erro inesperado ao utilizar a câmera!' + err)
      });
+  }
 
+  selecionaAnexo(){
+    this.fileChooser.open().then(file => {
+      this.filePath.resolveNativePath(file).then(resolvedFilePath => {
+        //pegando o arquivo aqui
+        this.anexoNome= resolvedFilePath.substr(resolvedFilePath.lastIndexOf('/') + 1);
+        this.hasAnexo = true;
+      }).catch(err => {
+        this.presentToast('Erro inesperado ao selecionar um arquivo!' + err)
+      })
+    }).catch(err => {
+      this.presentToast('Erro inesperado ao selecionar um arquivo!' + err)
+    })
   }
 
   save(){
@@ -142,7 +170,7 @@ export class AnexoPage {
     let toast = this.toastCtrl.create({
       message: msg,
       duration: 3000,
-      position: 'bottom'
+      position: 'top'
     });
 
     toast.onDidDismiss(() => {

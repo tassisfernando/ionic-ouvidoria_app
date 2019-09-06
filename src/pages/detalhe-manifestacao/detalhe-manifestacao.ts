@@ -1,6 +1,7 @@
+import { StorageProvider } from './../../providers/storage/storage';
 import { ComentariosPage } from './../comentarios/comentarios';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 
 import { ManifestacaoProvider } from './../../providers/manifestacao/manifestacao';
 import { ComentarioProvider } from './../../providers/comentario/comentario';
@@ -23,6 +24,7 @@ import { IComentario } from './../../interfaces/IComentario';
 export class DetalheManifestacaoPage {
 
   manifestacao: IManifestacao;
+  manifestacoesStorage: IManifestacao[];
   usuario: IManifestante;
   secretaria: ISecretaria;
   tipo: ITipo;
@@ -30,17 +32,23 @@ export class DetalheManifestacaoPage {
   endereco: IEndereco;
   unidade: IUnidade;
   comentarios: IComentario[];
+  isDownloaded: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public enderecoProvider: EnderecoProvider,
               public comentarioProvider: ComentarioProvider,
               public manifestacaoProvider: ManifestacaoProvider,
-              public alertCtrl: AlertController) {
+              public storageProvider: StorageProvider,
+              public alertCtrl: AlertController,
+              public toastCtrl: ToastController) {
+
+    this.manifestacoesStorage = navParams.get('manifestacoesStorage');
 
     this.manifestacao = navParams.get('manifestacao');
     this.tipo = this.manifestacao.tbtipo;
     this.endereco = this.manifestacao.tbendereco;
     this.assunto = this.manifestacao.tbassunto;
     this.secretaria = this.manifestacao.tbsecretaria;
+
 
     this.manifestacaoProvider.getManifestantePorId(this.manifestacao.idManifestacao).then( manifestante => {
       if(manifestante){
@@ -58,7 +66,46 @@ export class DetalheManifestacaoPage {
       });
     }
 
+    this.checkDownload();
     this.getComentarios();
+  }
+
+  checkDownload(){
+    this.isDownloaded = false;
+    for (let index = 0; index < this.manifestacoesStorage.length; index++) {
+      if(this.manifestacoesStorage[index].idManifestacao == this.manifestacao.idManifestacao){
+        this.isDownloaded = true;
+      }
+    }
+  }
+
+  downloadManifestacao(){
+    this.storageProvider.getStorage('manifestacoes').then((data) => {
+      if(data){
+        this.manifestacoesStorage = data;
+        this.manifestacoesStorage.push(this.manifestacao);
+      } else{
+        this.manifestacoesStorage.push(this.manifestacao);
+      }
+
+      this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
+      this.isDownloaded = true;
+      this.presentToast('Manifestação salva!')
+    });
+  }
+
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 2500,
+      position: 'top'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 
   ionViewDidLoad() {

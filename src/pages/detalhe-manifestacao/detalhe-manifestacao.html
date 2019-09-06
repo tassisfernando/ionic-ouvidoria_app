@@ -11,6 +11,10 @@
   <ion-content padding>
 
     <ion-list>
+      <ion-item *ngIf="!isDownloaded">
+          <button id="botao-bonito" ion-button round full (click)="downloadManifestacao()">Salvar manifestação</button>
+      </ion-item>
+
       <ion-item-divider>
         <h4>Informações gerais</h4>
       </ion-item-divider>
@@ -85,9 +89,12 @@
           </ion-item>
       </ion-list>
 
-      <ion-item-group *ngIf="comentarios && comentarios.length == 0">
-        <ion-item>
+      <ion-item-group>
+        <ion-item *ngIf="comentarios && comentarios.length == 0">
           <p>Nenhum comentário foi feito...</p>
+        </ion-item>
+        <ion-item *ngIf="!comentarios">
+          <p> Erro ao tentar buscar comentários...</p>
         </ion-item>
     </ion-item-group>
 

@@ -1,3 +1,6 @@
+import { IManifestacao } from './../../interfaces/IManifestacao';
+import { StorageProvider } from './../../providers/storage/storage';
+import { ManifestacaoProvider } from './../../providers/manifestacao/manifestacao';
 import { ManifestacoesFechadasPage } from './../manifestacoes-fechadas/manifestacoes-fechadas';
 import { ManifestacoesAndamentoPage } from './../manifestacoes-andamento/manifestacoes-andamento';
 import { ManifestacoesAbertasPage } from './../manifestacoes-abertas/manifestacoes-abertas';
@@ -21,6 +24,9 @@ export class TabsPage {
   tabRecebidas = ManifestacoesAbertasPage;
   tabEmAnalise = ManifestacoesAndamentoPage;
   tabEncerrada = ManifestacoesFechadasPage;
+
+  manifestacoesBd: IManifestacao[];
+  manifestacoesStorage: IManifestacao[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

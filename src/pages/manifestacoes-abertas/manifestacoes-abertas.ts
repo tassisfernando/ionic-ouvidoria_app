@@ -20,7 +20,8 @@ import { DetalheManifestacaoPage } from './../detalhe-manifestacao/detalhe-manif
 export class ManifestacoesAbertasPage {
 
   manifestacoes: IManifestacao[];
-  manifestacoesStorage: IManifestacao[];
+  manifestacoesBd: IManifestacao[];
+  manifestacoesStorage: IManifestacao[] = [];
   assunto: IAssunto;
   found: boolean;
 
@@ -34,24 +35,29 @@ export class ManifestacoesAbertasPage {
 
   getManifestacoesStorage(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
-      this.manifestacoesStorage = data;
 
-      if(data){
+      let posStorage = 0;
+      for(let pos = 0; pos < data.length; pos++) {
+        if(data[pos].status == 'Aberto'){
+          this.manifestacoesStorage[posStorage] = data[pos];
+          posStorage++;
+        }
+      }
+
+      /*if(data){
         for(let pos = 0; pos < this.manifestacoesStorage.length; pos++) {
           this.manifestacaoProvider.getManifestacaoPorId(this.manifestacoesStorage[pos].idManifestacao).then( data => {
             if(data){
               this.manifestacoesStorage[pos] = data;
-              console.log(data);
-
               this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
             }
           }).catch( err => {
             console.log(err);
           });
         }
-      }
+      }*/
 
-      console.log("Manifestacoes", data)
+      console.log("Manifestacoes", this.manifestacoesStorage)
     });
   }
 
@@ -60,9 +66,9 @@ export class ManifestacoesAbertasPage {
     this.manifestacaoProvider.getMinhasManifestações()
       .then(data => {
         if(data){
-          this.manifestacoes = data;
+          this.manifestacoesBd = data;
         }
-        console.log(this.manifestacoes);
+        console.log(this.manifestacoesBd);
       }).catch((err) => {
         this.showAlert('Erro de conexão', 'Estamos com problemas de conexão com o servidor. Tente novamente mais tarde.')
       });
@@ -70,13 +76,11 @@ export class ManifestacoesAbertasPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MinhasManifestacoesPage');
-    this.getManifestacoesStorage();
     this.getManifestacoes();
   }
 
   ionViewWillEnter(){
     this.getManifestacoesStorage();
-    this.getManifestacoes();
   }
 
   //IMPLEMENTAR O GET ITEMS PARA O SEARCHBAR FUNCIONAR
@@ -101,7 +105,7 @@ export class ManifestacoesAbertasPage {
           this.showAlert('Nada encontrado', 'Não encontramos nada com esse protocolo.')
         }
       } else{
-        this.getManifestacoes();
+        this.manifestacoes = this.manifestacoesBd;
         this.found = false;
       }
     } else{
@@ -110,7 +114,7 @@ export class ManifestacoesAbertasPage {
   }
 
   abreManifestacao(manifestacao: IManifestacao){
-    this.navCtrl.push(DetalheManifestacaoPage, { manifestacao: manifestacao });
+    this.navCtrl.push(DetalheManifestacaoPage, { manifestacao: manifestacao, manifestacoesStorage: this.manifestacoesStorage });
   }
 
   showAlert(title: string, subTitle: string) {

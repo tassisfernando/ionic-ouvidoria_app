@@ -74,10 +74,6 @@ page-anexo {
     padding-top: 8%;
   }
 
-  .listButton{
-    padding-top: 2%;
-  }
-
   #botao-Bonito{
     width: 100%;
     margin-left: 0;
@@ -91,6 +87,28 @@ page-anexo {
     top: 100%;
 
     text-transform: none;
+  }
+
+  .button-remove{
+    width: 25%;
+    margin-right: 0;
+    margin-bottom: 0;
+
+    padding-top: 5%;
+
+    background-color: #21186B;
+
+    position: relative;
+    left: 75%;
+    bottom: 0;
+    top: 100%;
+
+    text-transform: none;
+    text-align: left;
+  }
+
+  .icon{
+
   }
 
   .clear-button{
@@ -114,7 +132,7 @@ page-anexo {
 
   }
 
-  .listButton{
+  .list-button{
     padding-top: 15%;
   }
 

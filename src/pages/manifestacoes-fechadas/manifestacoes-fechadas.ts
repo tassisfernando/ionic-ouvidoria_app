@@ -25,7 +25,8 @@ import { AlertController } from 'ionic-angular';
 })
 export class ManifestacoesFechadasPage {
   manifestacoes: IManifestacao[];
-  manifestacoesStorage: IManifestacao[];
+  manifestacoesBd: IManifestacao[];
+  manifestacoesStorage: IManifestacao[] = [];
   assunto: IAssunto;
   found: boolean;
 
@@ -38,17 +39,28 @@ export class ManifestacoesFechadasPage {
 
  }
 
+  ionViewDidLoad() {
+    this.getManifestacoes();
+  }
 
- ionViewDidLoad() {
-  this.getManifestacoesStorage();
-  this.getManifestacoes();
-}
+
+  ionViewWillEnter(){
+    this.getManifestacoesStorage();
+  }
+
 
   getManifestacoesStorage(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
-      this.manifestacoesStorage = data;
 
-      if(data){
+      let posStorage = 0;
+      for(let pos = 0; pos < data.length; pos++) {
+        if(data[pos].status == 'Fechado'){
+          this.manifestacoesStorage[posStorage] = data[pos];
+          posStorage++;
+        }
+      }
+
+      /*if(data){
         for(let pos = 0; pos < this.manifestacoesStorage.length; pos++) {
           this.manifestacaoProvider.getManifestacaoPorId(this.manifestacoesStorage[pos].idManifestacao).then( data => {
             if(data){
@@ -61,9 +73,9 @@ export class ManifestacoesFechadasPage {
             console.log(err);
           });
         }
-      }
+      }*/
 
-      console.log("Manifestacoes", data)
+      console.log("Manifestacoes", this.manifestacoesStorage)
     });
   }
 
@@ -72,9 +84,8 @@ export class ManifestacoesFechadasPage {
     this.manifestacaoProvider.getMinhasManifestações()
       .then(data => {
         if(data){
-          this.manifestacoes = data;
+          this.manifestacoesBd = data;
         }
-        console.log(this.manifestacoes);
       }).catch((err) => {
         this.showAlert('Erro de conexão', 'Estamos com problemas de conexão com o servidor. Tente novamente mais tarde.')
       });
@@ -102,7 +113,7 @@ export class ManifestacoesFechadasPage {
           this.showAlert('Nada encontrado', 'Não encontramos nada com esse protocolo.')
         }
       } else{
-        this.getManifestacoes();
+        this.manifestacoes = this.manifestacoesBd;
         this.found = false;
       }
     } else{
@@ -111,7 +122,7 @@ export class ManifestacoesFechadasPage {
   }
 
   abreManifestacao(manifestacao: IManifestacao){
-    this.navCtrl.push(DetalheManifestacaoPage, { manifestacao: manifestacao });
+    this.navCtrl.push(DetalheManifestacaoPage, { manifestacao: manifestacao, manifestacoesStorage: this.manifestacoesStorage });
   }
 
   showAlert(title: string, subTitle: string) {

@@ -52,7 +52,17 @@ export class ManifestacaoProvider {
           console.log(err);
         });
     });
+  }
 
+  getManifestacoesPorId(manifestacoes: IManifestacao[]){
+    return new Promise<IManifestacao[]>(resolve => {
+      this.http.get<IManifestacao[]>(this.apiUrl + '/manifestacoesPorId/'+manifestacoes).subscribe(data => {
+        resolve(data);
+      },
+        err => {
+          console.log(err);
+        });
+    });
   }
 
   getManifestantePorId(idManifestacao: number){

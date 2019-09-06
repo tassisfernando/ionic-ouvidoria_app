@@ -33,7 +33,6 @@ export class ComentariosPage {
   }
 
   salvarComentario(){
-
     if(this.comentario.texto.length >= 2){
       this.comentario.idManifestacao = this.comentarios[0].idManifestacao;
 
@@ -41,6 +40,7 @@ export class ComentariosPage {
       this.comentarioProvider.criarComentario(this.comentario).then( data => {
         if(data){
           data.dtInclusao = data.dtInclusao["date"];
+          data.dtEdicao = data.dtEdicao["date"]
 
           this.comentarios.push(data);
           this.comentario.texto = "";
