@@ -21,41 +21,43 @@
 
 <ion-content>
 <div class="mensagens">
-
   <div class="mensagem" *ngFor="let comentario of comentarios">
+    <ion-card mode="md" *ngIf="comentario.idOuvidor" class="message.left ouvidor">
+            <ion-card-header>
+                  <label class="label" for="comentario">Ouvidor: </label>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-textarea name="comentario" disabled [(ngModel)]="comentario.texto"></ion-textarea>
+                <p class="date"> {{ comentario.dtEdicao }} </p>
+            </ion-card-content>
+    </ion-card>
 
-    <div class="message.left ouvidor" *ngIf="comentario.idOuvidor" >
-      <div class="message">
-        <label class="label" for="comentario">Ouvidor: </label>
-        <ion-textarea name="comentario" disabled [(ngModel)]="comentario.texto"></ion-textarea>
-        <p class="date"> {{ comentario.dtEdicao }} </p>
-      </div>
-    </div>
-
-    <div class="message.right manifestante" *ngIf="!comentario.idOuvidor" >
-      <div class="message">
-        <label class="label" for="comentario">Manifestante: </label>
-        <ion-textarea class="textarea" name="comentario" disabled [(ngModel)]="comentario.texto"></ion-textarea>
-        <p class="date"> {{ comentario.dtEdicao }} </p>
-      </div>
-    </div>
+    <ion-card *ngIf="!comentario.idOuvidor" class="message.right manifestante">
+        <ion-card-header>
+            <label class="label" for="comentario">Você: </label>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-textarea class="textarea" name="comentario" disabled [(ngModel)]="comentario.texto"></ion-textarea>
+            <p class="date"> {{ comentario.dtEdicao }} </p>
+        </ion-card-content>
+    </ion-card>
   </div>
 </div>
 
 </ion-content>
 
 <ion-footer no-border>
-<div class="input-wrap ">
+  <div class="input-wrap ">
 
-  <textarea #chat_input
-      placeholder="Faça um comentário..."
-      [(ngModel)]="comentario.texto"
-    >
-  </textarea>
+    <textarea #chat_input
+        placeholder="Faça um comentário..."
+        [(ngModel)]="comentario.texto"
+      >
+    </textarea>
 
-  <button ion-button clear icon-only item-right (click)="salvarComentario()">
-    <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
-  </button>
-</div>
+    <button ion-button clear icon-only item-right (click)="salvarComentario()">
+      <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+    </button>
+  </div>
 </ion-footer>
 

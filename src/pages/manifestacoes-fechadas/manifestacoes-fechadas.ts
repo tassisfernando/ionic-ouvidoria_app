@@ -41,6 +41,7 @@ export class ManifestacoesFechadasPage {
 
   ionViewDidLoad() {
     this.getManifestacoes();
+    this.manifestacoes = this.manifestacoesBd;
   }
 
 
@@ -85,6 +86,7 @@ export class ManifestacoesFechadasPage {
       .then(data => {
         if(data){
           this.manifestacoesBd = data;
+          this.manifestacoes = this.manifestacoesBd;
         }
       }).catch((err) => {
         this.showAlert('Erro de conexão', 'Estamos com problemas de conexão com o servidor. Tente novamente mais tarde.')

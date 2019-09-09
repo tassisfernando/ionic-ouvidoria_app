@@ -1,3 +1,4 @@
+import { IAnexo } from './../../interfaces/IAnexo';
 import { StorageProvider } from './../../providers/storage/storage';
 import { ComentariosPage } from './../comentarios/comentarios';
 import { Component } from '@angular/core';
@@ -31,6 +32,7 @@ export class DetalheManifestacaoPage {
   assunto: IAssunto;
   endereco: IEndereco;
   unidade: IUnidade;
+  anexo: IAnexo;
   comentarios: IComentario[];
   isDownloaded: boolean;
 
@@ -48,26 +50,39 @@ export class DetalheManifestacaoPage {
     this.endereco = this.manifestacao.tbendereco;
     this.assunto = this.manifestacao.tbassunto;
     this.secretaria = this.manifestacao.tbsecretaria;
+    this.anexo = this.manifestacao.tbanexo;
+
+    if(this.anexo){
+      this.anexo.nmAnexo = this.anexo.nmAnexo.substr(this.anexo.nmAnexo.lastIndexOf('/') + 1);
+    }
 
 
+    this.getManifestante();
+
+    if(this.endereco.idUnidade){
+      console.log(this.endereco.idUnidade);
+      this.getUnidade();
+    }
+
+    this.checkDownload();
+    this.getComentarios();
+  }
+
+  getManifestante(){
     this.manifestacaoProvider.getManifestantePorId(this.manifestacao.idManifestacao).then( manifestante => {
       if(manifestante){
         this.usuario = manifestante["0"];
       }
       console.log(this.usuario);
     });
+  }
 
-    if(this.endereco.idUnidade){
-      console.log(this.endereco.idUnidade);
-      enderecoProvider.getUnidades(this.endereco.idUnidade).then( (unidade) => {
-        if(unidade){
-          this.unidade = unidade;
-        }
-      });
-    }
-
-    this.checkDownload();
-    this.getComentarios();
+  getUnidade(){
+    this.enderecoProvider.getUnidades(this.endereco.idUnidade).then( (unidade) => {
+      if(unidade){
+        this.unidade = unidade;
+      }
+    });
   }
 
   checkDownload(){

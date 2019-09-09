@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-      <h5 *ngIf="usuario != null">Finalizar manifestação</h5>
+      <h5 *ngIf="usuario != null">Finalizar manifestação não anônima</h5>
       <h5 *ngIf="usuario == null" style="font-size: 15px; text-align: left;">Finalizar manifestação anônima</h5>
       <button ion-button menuToggle>
         <ion-icon name="back"></ion-icon>
@@ -39,13 +39,34 @@
         </ion-item>
     </ion-item-group>
 
+    <ion-item-divider *ngIf="usuario != null">
+        <h4>Manifestante</h4>
+    </ion-item-divider>
+
+    <ion-item-group *ngIf="usuario != null">
+      <ion-item>
+         <ion-label stacked>Nome:*</ion-label>
+         <ion-input [(ngModel)]="usuario.nmManifestante" disabled type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>E-mail:*</ion-label>
+        <ion-input [(ngModel)]="usuario.email" disabled type="text"></ion-input>
+      </ion-item>
+    </ion-item-group>
+
     <ion-item-divider>
         <h4>Anexo</h4>
     </ion-item-divider>
 
     <ion-item-group>
-        <ion-item>
+        <ion-item *ngIf="!anexo">
             <p>Nenhum arquivo selecionado...</p>
+        </ion-item>
+
+        <ion-item *ngIf="anexo">
+          <ion-label stacked>Anexo:*</ion-label>
+          <ion-input [(ngModel)]="anexo.nmAnexo" disabled type="text"></ion-input>
         </ion-item>
     </ion-item-group>
 

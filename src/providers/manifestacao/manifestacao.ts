@@ -1,3 +1,5 @@
+import { IAnexo } from './../../interfaces/IAnexo';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { IManifestante } from './../../interfaces/IManifestante';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -14,7 +16,7 @@ export class ManifestacaoProvider {
 
   apiUrl = 'http://localhost:8000/api';
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, private transfer: FileTransfer) {
   }
 
   getMinhasManifestações() {
@@ -33,6 +35,7 @@ export class ManifestacaoProvider {
       var data = manifestacao;
       this.http.post<IManifestacao>(this.apiUrl + '/manifestacoes', data).
         subscribe((result: IManifestacao) => { //MUDEI AQUI "TIREI O ANY  "
+          //this.uploadAnexo(manifestacao.tbanexo); => DESCOMENTAR AQUI DEPOIS
           resolve(result); //MUDEI AQUI "TIREI O .JSON"
           console.log(result)
         },
@@ -41,6 +44,7 @@ export class ManifestacaoProvider {
             console.log(error);
           })
     });
+
   }
 
   getManifestacaoPorId(idManifestacao: number){
@@ -73,6 +77,29 @@ export class ManifestacaoProvider {
         err => {
           console.log(err);
         });
+    });
+  }
+
+  //método para o providers
+  uploadAnexo(anexo: IAnexo) {
+
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    let options: FileUploadOptions = {
+      fileKey: 'fileApp',
+      fileName: anexo.nmAnexo,
+      chunkedMode: false,
+      headers: {}
+    }
+
+    //Usar isso no provider, chamando o servidor de arquivos?
+    fileTransfer.upload(anexo.nmAnexo, 'http://192.168.0.7:8080/api/uploadImage', options)
+      .then((data) => {
+      console.log(data+" Uploaded Successfully");
+      anexo.nmAnexo = "http://192.168.0.7:8080/static/images/ionicfile.jpg"; //mudar aqui
+      return anexo; //talvez tirar
+    }, (err) => {
+      console.log(err);
     });
   }
 

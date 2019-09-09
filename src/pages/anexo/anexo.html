@@ -67,15 +67,26 @@
             </ion-grid>
           </ion-item>
 
-          <ion-item *ngIf="anexoBase64">
+          <ion-item *ngIf="anexoBase64 && hasAnexo">
             <img src="{{ anexoBase64 }}" alt="{{anexoBase64}}">
           </ion-item>
 
-          <ion-item>
-            <p> Teste ok ok ok - {{ anexoNome }} </p>
-            <button  *ngIf="!hasAnexo" class="button-remove" ion-button icon-only (click)="removerAnexo()">
-                <ion-icon name="md-remove-circle" class="icon" color="danger"></ion-icon>
-            </button>
+          <ion-item *ngIf="hasAnexo">
+              <ion-grid>
+                  <ion-row>
+                    <ion-col col-10>
+                      <button [disabled]="true" id="button-anexo" ion-button outline>
+                        {{ anexo.nmAnexo }}
+                      </button>
+                    </ion-col>
+                    <ion-col col-2>
+                        <button class="button-remove" ion-button icon-only clear (click)="removerAnexo()">
+                            <ion-icon name="md-remove-circle" class="icon" color="danger"></ion-icon>
+                        </button>
+                    </ion-col>
+                </ion-row>
+              </ion-grid>
+
           </ion-item>
 
         </ion-item-group>

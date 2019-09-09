@@ -11,9 +11,12 @@
   <ion-content padding>
 
     <ion-list>
-      <ion-item *ngIf="!isDownloaded">
-          <button id="botao-bonito" ion-button round full (click)="downloadManifestacao()">Salvar manifestação</button>
-      </ion-item>
+        <div *ngIf="!isDownloaded" id="botao-salvar">
+            <button id="botao-bonito" ion-button round icon-start (click)="downloadManifestacao()">
+                <ion-icon name="md-bookmark"></ion-icon>
+                Salvar manifestação
+            </button>
+        </div>
 
       <ion-item-divider>
         <h4>Informações gerais</h4>
@@ -62,8 +65,25 @@
       </ion-item-divider>
 
       <ion-item-group>
-          <ion-item>
-            <p>Nenhum arquivo selecionado...</p>
+          <ion-item *ngIf="!anexo">
+              <p>Nenhum arquivo selecionado...</p>
+          </ion-item>
+
+          <ion-item *ngIf="anexo">
+              <ion-grid>
+                  <ion-row>
+                    <ion-col col-10>
+                      <button [disabled]="true" id="nome-anexo" ion-button outline>
+                        {{ anexo.nmAnexo }}
+                      </button>
+                    </ion-col>
+                    <ion-col col-2>
+                        <button id="botao-anexo" ion-button icon-only clear>
+                            <ion-icon name="md-download" class="icon"></ion-icon>
+                        </button>
+                    </ion-col>
+                </ion-row>
+              </ion-grid>
           </ion-item>
       </ion-item-group>
 

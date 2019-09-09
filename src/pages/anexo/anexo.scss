@@ -89,26 +89,22 @@ page-anexo {
     text-transform: none;
   }
 
+  #button-anexo{
+    text-transform: none;
+    text-align: left;
+
+    width: 100%;
+    color: #000000;
+  }
+
   .button-remove{
-    width: 25%;
     margin-right: 0;
     margin-bottom: 0;
 
-    padding-top: 5%;
-
-    background-color: #21186B;
-
-    position: relative;
-    left: 75%;
-    bottom: 0;
-    top: 100%;
 
     text-transform: none;
-    text-align: left;
-  }
-
-  .icon{
-
+    text-align: center;
+    align-content: center;
   }
 
   .clear-button{

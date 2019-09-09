@@ -36,11 +36,12 @@ page-detalhe-manifestacao {
     padding-top: 15%;
   }
 
-  #botao-bonito{
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 0;
+  #botao-salvar{
+    margin-left: 20%;
+    margin-right: 20%;
+  }
 
+  #botao-bonito{
     background-color: #21186B;
 
     position: relative;
@@ -86,6 +87,23 @@ page-detalhe-manifestacao {
   #icons{
     padding: 20px;
     margin-top: 10px;
+  }
+
+  #nome-anexo{
+    text-transform: none;
+    text-align: left;
+
+    width: 100%;
+    color: #000000;
+  }
+
+  #botao-anexo{
+    margin-right: 0;
+    margin-bottom: 0;
+
+    text-transform: none;
+    text-align: center;
+    align-content: center;
   }
 }
 

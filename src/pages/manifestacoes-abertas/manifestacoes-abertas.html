@@ -12,7 +12,7 @@
 <ion-content padding>
     <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
 
-    <ion-grid *ngIf="found == true">
+    <ion-grid class="table" *ngIf="found == true">
       <ion-row class="header">
         <ion-col col-3>
          Protocolo
@@ -27,7 +27,7 @@
 
       <ion-list>
           <div *ngFor="let manifestacao of manifestacoes">
-          <ion-row *ngIf="manifestacao.status == 'Aberto'" >
+          <ion-row *ngIf="manifestacao.status == 'Aberto'">
             <ion-col col-3>
               <button class="buttonTable" ion-item (click)="abreManifestacao(manifestacao)">
                  {{ manifestacao.hash }}
@@ -48,7 +48,7 @@
     </ion-list>
     </ion-grid>
 
-  <ion-grid *ngIf="found == false && manifestacoesStorage != null">
+  <ion-grid class="table" *ngIf="found == false && manifestacoesStorage != null">
     <ion-row class="header">
         <ion-col col-3>
             Protocolo

@@ -1,3 +1,4 @@
+import { IAnexo } from './IAnexo';
 import { ISecretaria } from './ISecretaria';
 import { ITipo } from './ITipo';
 import { IAssunto } from './IAssunto';
@@ -20,4 +21,5 @@ export interface IManifestacao{
     tbassunto?: IAssunto;
     tbtipo?: ITipo;
     tbsecretaria?: ISecretaria;
+    tbanexo?: IAnexo;
 }

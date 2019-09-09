@@ -1,3 +1,4 @@
+import { IAnexo } from './../../interfaces/IAnexo';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -33,6 +34,7 @@ export class FinalizarManifestacaoPage {
   unidade: IUnidade;
   assunto: IAssunto;
   endereco: IEndereco = { bairro: "", cep: "", complemento: "", idEndereco: 0, logradouro: "", numero: "" };
+  anexo: IAnexo;
 
   hasEmail: boolean = false;
 
@@ -53,9 +55,9 @@ export class FinalizarManifestacaoPage {
     this.unidade = navParams.get('unidade');
     this.assunto = navParams.get('assunto');
     this.endereco = navParams.get('endereco');
+    this.anexo = this.manifestacao.tbanexo;
 
     console.log(this.endereco);
-
   }
 
   isEnabled(){
@@ -83,6 +85,8 @@ export class FinalizarManifestacaoPage {
       spinner: 'crescent'
     });
 
+    loader.present();
+
     this.manifestacaoProvider.criarManifestacao(this.manifestacao).then(data => {
       console.log("cadastrou", data);
       this.manifestacao = data;
@@ -107,6 +111,8 @@ export class FinalizarManifestacaoPage {
         console.log(err)
       });
 
+      loader.dismiss();
+
       console.log(this.manifestacao.hash);
       this.criarAlert('Sucesso', `A sua manifestação foi enviada e armazenada na aba "Minhas manifestações"! O seu número de protocolo é: `+this.manifestacao.hash, ['OK']);
       this.voltarPaginaInicial();
@@ -129,7 +135,8 @@ export class FinalizarManifestacaoPage {
   }
 
   voltarPaginaInicial() {
-    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.insert(0,HomePage);
+    this.navCtrl.popToRoot();
   }
 
 }

@@ -67,6 +67,7 @@ export class ManifestacoesAbertasPage {
       .then(data => {
         if(data){
           this.manifestacoesBd = data;
+          this.manifestacoes = this.manifestacoesBd;
         }
         console.log(this.manifestacoesBd);
       }).catch((err) => {
@@ -77,6 +78,7 @@ export class ManifestacoesAbertasPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad MinhasManifestacoesPage');
     this.getManifestacoes();
+    this.manifestacoes = this.manifestacoesBd;
   }
 
   ionViewWillEnter(){

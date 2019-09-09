@@ -1,5 +1,6 @@
+import { IAnexo } from './../../interfaces/IAnexo';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Loading, LoadingController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,9 +14,7 @@ import { ISecretaria } from './../../interfaces/ISecretaria';
 import { IEndereco } from './../../interfaces/IEndereco';
 
 import { FilePath } from '@ionic-native/file-path';
-import { FileOpener } from '@ionic-native/file-opener';
 import { FileChooser } from '@ionic-native/file-chooser';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 import { FinalizarManifestacaoPage } from './../finalizar-manifestacao/finalizar-manifestacao';
 
@@ -30,23 +29,21 @@ export class AnexoPage {
   public form: FormGroup;
 
   usuario: IManifestante;
-  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
+  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbanexo: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
   secretaria: ISecretaria;
   tipo: ITipo;
   unidade: IUnidade;
   assunto: IAssunto;
   endereco: IEndereco;
+  anexo: IAnexo = { nmAnexo: '' };
 
-  anexoNome: string;
   hasAnexo: boolean;
   anexoBase64: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public formBuilder: FormBuilder,
               public alertCtrl: AlertController,
-              private transfer: FileTransfer,
               private fileChooser: FileChooser,
-              private fileOpener: FileOpener,
               private filePath: FilePath,
               private camera: Camera,
               public loadingCtrl: LoadingController,
@@ -103,29 +100,27 @@ export class AnexoPage {
 
   removerAnexo(){
     this.hasAnexo = false;
+    this.anexo = { nmAnexo: '' };
   }
 
   abreCamera(type: string){
     const options: CameraOptions = {
       quality: 85,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: type == "foto" ? this.camera.PictureSourceType.CAMERA : this.camera.PictureSourceType.PHOTOLIBRARY,
       correctOrientation: true,
-      saveToPhotoAlbum: true
     };
 
     this.camera.getPicture(options).then((imageData) => {
-      if(type == "foto"){
-        this.anexoBase64 = 'data:image/jpeg;base64,' + imageData;
-        this.anexoNome = imageData;
-      } else {
-        this.filePath.resolveNativePath(imageData).then( resolvedFilePath => {
-          this.anexoNome= resolvedFilePath.substr(resolvedFilePath.lastIndexOf('/') + 1);
-        })
-        //this.anexoNome = 'data:image/jpeg;uri,' + imageData; //APAGAR SE DER RUIMMMM
-      }
+
+      this.anexoBase64 = 'data:image/jpeg;base64,' + imageData;
+
+      this.filePath.resolveNativePath(imageData).then( resolvedFilePath => {
+        // this.anexo.nmAnexo = resolvedFilePath;
+        this.anexo.nmAnexo = resolvedFilePath.substr(resolvedFilePath.lastIndexOf('/') + 1);
+      })
 
       this.hasAnexo = true;
      }, (err) => {
@@ -137,7 +132,8 @@ export class AnexoPage {
     this.fileChooser.open().then(file => {
       this.filePath.resolveNativePath(file).then(resolvedFilePath => {
         //pegando o arquivo aqui
-        this.anexoNome= resolvedFilePath.substr(resolvedFilePath.lastIndexOf('/') + 1);
+        // this.anexo.nmAnexo = resolvedFilePath;
+        this.anexo.nmAnexo = resolvedFilePath.substr(resolvedFilePath.lastIndexOf('/') + 1);
         this.hasAnexo = true;
       }).catch(err => {
         this.presentToast('Erro inesperado ao selecionar um arquivo!' + err)
@@ -154,6 +150,12 @@ export class AnexoPage {
     console.log("Usuário: ", this.usuario);
 
     if(this.form.valid){
+      if(this.hasAnexo){
+        this.manifestacao.tbanexo = this.anexo;
+      } else{
+        this.manifestacao.tbanexo = null;
+      }
+
       console.log("Dados certos!");
 
       //passar para a outra página
@@ -181,23 +183,8 @@ export class AnexoPage {
   }
 }
 
-/*tirarFoto(){
-  const options: CameraOptions = {
-    quality: 100,
-    destinationType: this.camera.DestinationType.FILE_URI,
-    sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
-  }
 
-  this.camera.getPicture(options).then((imageData) => {
-    this.imageURI = imageData;
-  }, (err) => {
-    console.log(err);
-    this.presentToast(err);
-  });
-
-}
-
-//método para o provider?
+/*//método para o provider?
 uploadFile() {
   let loader = this.loadingCtrl.create({
     content: "Uploading..."
