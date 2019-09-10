@@ -36,11 +36,13 @@ export class ManifestacoesAbertasPage {
   getManifestacoesStorage(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
 
-      let posStorage = 0;
-      for(let pos = 0; pos < data.length; pos++) {
-        if(data[pos].status == 'Aberto'){
-          this.manifestacoesStorage[posStorage] = data[pos];
-          posStorage++;
+      if(data){
+        let posStorage = 0;
+        for(let pos = 0; pos < data.length; pos++) {
+          if(data[pos].status == 'Aberto'){
+            this.manifestacoesStorage[posStorage] = data[pos];
+            posStorage++;
+          }
         }
       }
 
@@ -61,6 +63,16 @@ export class ManifestacoesAbertasPage {
     });
   }
 
+  atualizaStorage(){
+    for (let index = 0; index < this.manifestacoesStorage.length; index++) {
+      for (let j = 0; j < this.manifestacoes.length; j++) {
+        if(this.manifestacoesStorage[index].idManifestacao == this.manifestacoes[j].idManifestacao){
+          this.manifestacoesStorage[index] = this.manifestacoes[j];
+        }
+      }
+    }
+  }
+
   //VAI TER QUE SER GETMANIFESTAÇÕES POR PROTOCOLO, ENTÃO O FILTRO VAI TER QUE FUNCIONAR
   getManifestacoes() {
     this.manifestacaoProvider.getMinhasManifestações()
@@ -68,6 +80,7 @@ export class ManifestacoesAbertasPage {
         if(data){
           this.manifestacoesBd = data;
           this.manifestacoes = this.manifestacoesBd;
+          this.atualizaStorage();
         }
         console.log(this.manifestacoesBd);
       }).catch((err) => {
@@ -76,7 +89,6 @@ export class ManifestacoesAbertasPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MinhasManifestacoesPage');
     this.getManifestacoes();
     this.manifestacoes = this.manifestacoesBd;
   }

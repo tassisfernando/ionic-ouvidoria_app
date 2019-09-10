@@ -29,7 +29,7 @@ export class AnexoPage {
   public form: FormGroup;
 
   usuario: IManifestante;
-  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbanexo: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
+  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tb_manifestante: null, tb_anexo: null, tb_endereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
   secretaria: ISecretaria;
   tipo: ITipo;
   unidade: IUnidade;
@@ -151,9 +151,9 @@ export class AnexoPage {
 
     if(this.form.valid){
       if(this.hasAnexo){
-        this.manifestacao.tbanexo = this.anexo;
+        this.manifestacao.tb_anexo = this.anexo;
       } else{
-        this.manifestacao.tbanexo = null;
+        this.manifestacao.tb_anexo = null;
       }
 
       console.log("Dados certos!");

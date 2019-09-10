@@ -12,7 +12,7 @@ import { IEndereco } from '../../interfaces/IEndereco';
 @Injectable()
 export class EnderecoProvider {
 
-  apiUrl = 'http://localhost:8000/api';
+  apiUrl = 'https://ouvidoria.alessiojr.com/api';
 
   constructor(public http: HttpClient) { }
 

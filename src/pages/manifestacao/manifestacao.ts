@@ -33,7 +33,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 
 export class ManifestacaoPage {
 
-  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
+  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tb_manifestante: null, tb_endereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
   manifestante: IManifestante = { nmManifestante: '', email: '', cpf_cnpj: '', rg: '', telefone: '' };
   endereco: IEndereco = { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: ''};
   secretarias: ISecretaria[];
@@ -114,8 +114,8 @@ export class ManifestacaoPage {
   selectSecretaria(event,secretaria:ISecretaria){
     console.log(secretaria.idSecretaria);
     this.manifestacao.idSecretaria=secretaria.idSecretaria;
-    this.assuntos = secretaria.tbassunto;
-    this.unidades = secretaria.tbunidade;
+    this.assuntos = secretaria.tb_assunto;
+    this.unidades = secretaria.tb_unidade;
   }
 
   //Selecionando o tipo passado por parâmetro
@@ -136,21 +136,21 @@ export class ManifestacaoPage {
     console.log(unidade.idUnidade);
     this.enderecoProvider.getEndereco(unidade.idUnidade).then(data => {
       console.log(data);
-      this.manifestacao.tbendereco.idEndereco = data["0"]["idEndereco"];
+      this.manifestacao.tb_endereco.idEndereco = data["0"]["idEndereco"];
       this.hasUnidade = true;
-      console.log(this.manifestacao.tbendereco.idEndereco)
+      console.log(this.manifestacao.tb_endereco.idEndereco)
     });
   }
 
   criarManifestacao(){
     //teste se há manifestante
       if((this.toggle) || (this.manifestante.nmManifestante != '')){
-        this.manifestacao.tbmanifestante = this.manifestante;
+        this.manifestacao.tb_manifestante = this.manifestante;
       } else{
-        this.manifestacao.tbmanifestante = null;
+        this.manifestacao.tb_manifestante = null;
       }
       if((this.hasEndereco) || (this.endereco.logradouro != '')){
-        this.manifestacao.tbendereco = this.endereco;
+        this.manifestacao.tb_endereco = this.endereco;
       }
 
       console.log(this.manifestacao);

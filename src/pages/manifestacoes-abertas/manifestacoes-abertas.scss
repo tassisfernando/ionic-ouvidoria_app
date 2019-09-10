@@ -4,12 +4,14 @@ page-manifestacoes-abertas {
   }
 
   .buttonTable{
-    font-size: 12px;
+    font-size: 13.5px;
     margin: 0;
     left: 0;
     padding: 0;
     width: 100%;
     text-align: center;
+
+    font-family:  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
 
   table{
@@ -20,10 +22,20 @@ page-manifestacoes-abertas {
   .header{
     text-align: center;
     font-size: 16px;
+    color: #21186B;
 
-    border: #21186B;
+    font-family:  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
 
+  .body{
+    text-align: center;
+  }
 
+  ion-row.header{
+    border-bottom: solid #21186B 2px;
+  }
+
+  ion-col.body{
   }
 
   .label{

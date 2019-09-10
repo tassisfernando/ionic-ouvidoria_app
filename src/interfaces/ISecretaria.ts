@@ -4,6 +4,6 @@ import { IAssunto } from "./IAssunto";
 export interface ISecretaria{
     idSecretaria?: number;
     nmSecretaria: string;
-    tbunidade: IUnidade[];
-    tbassunto: IAssunto[];
+    tb_unidade: IUnidade[];
+    tb_assunto: IAssunto[];
 }

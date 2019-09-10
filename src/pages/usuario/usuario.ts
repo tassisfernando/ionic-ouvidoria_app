@@ -19,7 +19,7 @@ export class UsuarioPage {
   public form: FormGroup;
   private submitAttempt: boolean = false;
 
-  private usuario: IManifestante = { nmManifestante: '', email: '', cpf_cnpj: '', rg: '', telefone: '' };
+  public usuario: IManifestante = { nmManifestante: '', email: '', cpf_cnpj: '', rg: '', telefone: '' };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
 

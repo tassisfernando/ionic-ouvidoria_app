@@ -14,7 +14,7 @@ import { IManifestacao } from '../../interfaces/IManifestacao';
 @Injectable()
 export class ManifestacaoProvider {
 
-  apiUrl = 'http://localhost:8000/api';
+  apiUrl = 'https://ouvidoria.alessiojr.com/api';
 
   constructor(public http: HttpClient, private transfer: FileTransfer) {
   }
@@ -141,7 +141,7 @@ export class ManifestacaoProvider {
         idtipo: manifestacao.idTipo,
         idsecretaria: manifestacao.idSecretaria,
         idassunto: manifestacao.idAssunto,
-        idendereco: manifestacao.tbendereco.idEndereco,
+        idendereco: manifestacao.tb_endereco.idEndereco,
         descricao: manifestacao.observacao,
         idManifestante: idManifestante
       };

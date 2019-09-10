@@ -1,10 +1,10 @@
 <ion-header>
 
   <ion-navbar>
-      <h5 *ngIf="usuario != null" style="font-size: 15px; text-align: left;">Nova manifestação - Passo 2 de 3</h5>
-      <h5 *ngIf="usuario == null" style="font-size: 15px; text-align: left;">Nova manifestação anônima - Passo 1 de 2</h5>
+      <h5 *ngIf="usuario != null">Nova manifestação - Passo 2 de 3</h5>
+      <h5 *ngIf="usuario == null" style="font-size: 15.5px; text-align: left;">Nova manifestação anônima - Passo 1 de 2</h5>
       <button ion-button menuToggle>
-        <ion-icon style="color: #990A0D;" name="back"></ion-icon>
+        <ion-icon style="color: #990A0D;" name="menu"></ion-icon>
       </button>
   </ion-navbar>
 
@@ -103,7 +103,7 @@
               </ion-item>
 
               <ion-item>
-                <button (click)="getLocation()" ion-button block class="locate-button">
+                <button (click)="getLocation()" ion-button block round class="locate-button">
                   <ion-icon name="md-locate"></ion-icon>
                   Recuperar localização atual
                 </button>
@@ -111,7 +111,7 @@
 
               <ion-item>
                   <ion-label stacked>CEP*</ion-label>
-                  <ion-input formControlName="cep" [(ngModel)]="endereco.cep" (ionBlur)="getEnderecoPorCep()" type="text" placeholder="00000-000" [brmasker]="{mask:'00000000', len:8}"></ion-input>
+                  <ion-input formControlName="cep" [(ngModel)]="endereco.cep" (ionBlur)="getEnderecoPorCep()" type="text" placeholder="00000-000"></ion-input>
               </ion-item>
 
               <ion-item class="cep-button">

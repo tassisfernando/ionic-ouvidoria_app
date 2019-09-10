@@ -53,12 +53,15 @@ export class ManifestacoesFechadasPage {
   getManifestacoesStorage(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
 
-      let posStorage = 0;
-      for(let pos = 0; pos < data.length; pos++) {
-        if(data[pos].status == 'Fechado'){
-          this.manifestacoesStorage[posStorage] = data[pos];
-          posStorage++;
+      if(data){
+        let posStorage = 0;
+        for(let pos = 0; pos < data.length; pos++) {
+          if(data[pos].status == 'Fechado'){
+            this.manifestacoesStorage[posStorage] = data[pos];
+            posStorage++;
+          }
         }
+
       }
 
       /*if(data){
@@ -80,6 +83,16 @@ export class ManifestacoesFechadasPage {
     });
   }
 
+  atualizaStorage(){
+    for (let index = 0; index < this.manifestacoesStorage.length; index++) {
+      for (let j = 0; j < this.manifestacoes.length; j++) {
+        if(this.manifestacoesStorage[index].idManifestacao == this.manifestacoes[j].idManifestacao){
+          this.manifestacoesStorage[index] = this.manifestacoes[j];
+        }
+      }
+    }
+  }
+
   //VAI TER QUE SER GETMANIFESTAÇÕES POR PROTOCOLO, ENTÃO O FILTRO VAI TER QUE FUNCIONAR
   getManifestacoes() {
     this.manifestacaoProvider.getMinhasManifestações()
@@ -87,6 +100,7 @@ export class ManifestacoesFechadasPage {
         if(data){
           this.manifestacoesBd = data;
           this.manifestacoes = this.manifestacoesBd;
+          this.atualizaStorage();
         }
       }).catch((err) => {
         this.showAlert('Erro de conexão', 'Estamos com problemas de conexão com o servidor. Tente novamente mais tarde.')

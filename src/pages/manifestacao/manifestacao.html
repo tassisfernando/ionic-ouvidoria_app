@@ -25,12 +25,12 @@
 
     <ion-item>
       <ion-label stacked>CPF/CNPJ</ion-label>
-      <ion-input [(ngModel)]="manifestante.cpf_cnpj" type="text" value="" [brmasker]="{mask:'000.000.000-00', len:14, type:'num'}"></ion-input>
+      <ion-input [(ngModel)]="manifestante.cpf_cnpj" type="text" value=""></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label stacked>RG</ion-label>
-      <ion-input [(ngModel)]="manifestante.rg" type="text" value="" [brmasker]="{mask:'AA-00.000.000', len:13}"></ion-input>
+      <ion-input [(ngModel)]="manifestante.rg" type="text" value=""></ion-input>
     </ion-item>
 
     <ion-item>
@@ -40,7 +40,7 @@
 
     <ion-item>
       <ion-label stacked>Telefone</ion-label>
-      <ion-input [(ngModel)]="manifestante.telefone" type="text" value="" [brmasker]="{phone: true}"></ion-input>
+      <ion-input [(ngModel)]="manifestante.telefone" type="text" value="" ></ion-input>
     </ion-item>
 
   </ion-list>
@@ -105,7 +105,7 @@
 
       <ion-item>
         <ion-label stacked>CEP</ion-label>
-        <ion-input [(ngModel)]="endereco.cep" (ionBlur)="getEnderecoPorCep()" type="text" value="" placeholder="35180005" [brmasker]="{mask:'00000000', len:8}"></ion-input>
+        <ion-input [(ngModel)]="endereco.cep" (ionBlur)="getEnderecoPorCep()" type="text" value="" placeholder="35180005"></ion-input>
       </ion-item>
 
       <ion-item>

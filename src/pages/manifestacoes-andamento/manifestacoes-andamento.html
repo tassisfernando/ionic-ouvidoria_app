@@ -14,10 +14,10 @@
 
     <ion-grid *ngIf="found == true">
       <ion-row class="header">
-        <ion-col col-3>
+        <ion-col col-4>
          Protocolo
         </ion-col>
-        <ion-col col-4>
+        <ion-col col-3>
          Tipo
         </ion-col>
         <ion-col col-5>
@@ -28,19 +28,19 @@
       <ion-list>
           <div *ngFor="let manifestacao of manifestacoes">
           <ion-row *ngIf="manifestacao.status == 'Em andamento'" >
-            <ion-col col-3>
+            <ion-col col-4>
               <button ion-item class="buttonTable"(click)="abreManifestacao(manifestacao)">
                  {{ manifestacao.hash }}
               </button>
             </ion-col>
-            <ion-col col-4>
+            <ion-col class="body" col-3>
               <button ion-item class="buttonTable" (click)="abreManifestacao(manifestacao)">
-                {{ manifestacao.tbtipo?.nmTipo }}
+                {{ manifestacao.tb_tipo?.nmTipo }}
               </button>
             </ion-col>
             <ion-col col-5>
                 <button ion-item class="buttonTable" (click)="abreManifestacao(manifestacao)">
-                  {{ manifestacao.tbassunto?.nmAssunto }}
+                  {{ manifestacao.tb_assunto?.nmAssunto }}
                 </button>
             </ion-col>
           </ion-row>
@@ -50,10 +50,10 @@
 
   <ion-grid *ngIf="found == false && manifestacoesStorage">
     <ion-row class="header">
-        <ion-col col-3>
+        <ion-col col-4>
             Protocolo
            </ion-col>
-           <ion-col col-4>
+           <ion-col col-3>
             Tipo
            </ion-col>
            <ion-col col-5>
@@ -64,19 +64,19 @@
     <ion-list>
       <div *ngFor="let manifestacao of manifestacoesStorage">
         <ion-row *ngIf="manifestacao.status == 'Em andamento'">
-            <ion-col col-3>
+            <ion-col col-4>
               <button ion-item class="buttonTable" (click)="abreManifestacao(manifestacao)">
                  {{ manifestacao.hash }}
               </button>
             </ion-col>
-            <ion-col col-4>
+            <ion-col class="body" col-3>
                 <button ion-item class="buttonTable" (click)="abreManifestacao(manifestacao)">
-                  {{ manifestacao.tbtipo?.nmTipo }}
+                  {{ manifestacao.tb_tipo?.nmTipo }}
                 </button>
               </ion-col>
               <ion-col col-5>
                   <button ion-item class="buttonTable" (click)="abreManifestacao(manifestacao)">
-                    {{ manifestacao.tbassunto?.nmAssunto }}
+                    {{ manifestacao.tb_assunto?.nmAssunto }}
                   </button>
               </ion-col>
         </ion-row>

@@ -16,10 +16,10 @@ export interface IManifestacao{
     emailAnonimo?: string;
     dtInclusao?: Date;
     dtEdicao?: Date;
-    tbmanifestante?: IManifestante;
-    tbendereco?: IEndereco;
-    tbassunto?: IAssunto;
-    tbtipo?: ITipo;
-    tbsecretaria?: ISecretaria;
-    tbanexo?: IAnexo;
+    tb_manifestante?: IManifestante;
+    tb_endereco?: IEndereco;
+    tb_assunto?: IAssunto;
+    tb_tipo?: ITipo;
+    tb_secretaria?: ISecretaria;
+    tb_anexo?: IAnexo;
 }

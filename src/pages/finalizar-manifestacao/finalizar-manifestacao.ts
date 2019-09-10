@@ -28,7 +28,7 @@ export class FinalizarManifestacaoPage {
 
   usuario: IManifestante;
   manifestacoesStorage: IManifestacao[] = [];
-  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
+  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tb_manifestante: null, tb_endereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
   secretaria: ISecretaria;
   tipo: ITipo;
   unidade: IUnidade;
@@ -55,7 +55,7 @@ export class FinalizarManifestacaoPage {
     this.unidade = navParams.get('unidade');
     this.assunto = navParams.get('assunto');
     this.endereco = navParams.get('endereco');
-    this.anexo = this.manifestacao.tbanexo;
+    this.anexo = this.manifestacao.tb_anexo;
 
     console.log(this.endereco);
   }
@@ -74,18 +74,18 @@ export class FinalizarManifestacaoPage {
 
   save(){
     if(this.usuario){
-      this.manifestacao.tbmanifestante = this.usuario;
+      this.manifestacao.tb_manifestante = this.usuario;
     } else {
-      this.manifestacao.tbmanifestante = null;
+      this.manifestacao.tb_manifestante = null;
     }
 
-    let loader = this.loadingCtrl.create({
-      content: "Cadastrando...",
-      duration: 1500,
-      spinner: 'crescent'
-    });
+    // let loader = this.loadingCtrl.create({
+    //   content: "Cadastrando...",
+    //   duration: 1500,
+    //   spinner: 'crescent'
+    // });
 
-    loader.present();
+    // loader.present();
 
     this.manifestacaoProvider.criarManifestacao(this.manifestacao).then(data => {
       console.log("cadastrou", data);
@@ -111,7 +111,7 @@ export class FinalizarManifestacaoPage {
         console.log(err)
       });
 
-      loader.dismiss();
+      // loader.dismiss();
 
       console.log(this.manifestacao.hash);
       this.criarAlert('Sucesso', `A sua manifestação foi enviada e armazenada na aba "Minhas manifestações"! O seu número de protocolo é: `+this.manifestacao.hash, ['OK']);

@@ -1,7 +1,7 @@
 import { Geolocation } from '@ionic-native/geolocation';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 
 import { SecretariaProvider } from './../../providers/secretaria/secretaria';
 import { TipoProvider } from './../../providers/tipo/tipo';
@@ -39,7 +39,7 @@ export class LocalInfoPage {
 
 
   usuario: IManifestante;
-  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tbmanifestante: null, tbendereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
+  manifestacao: IManifestacao = { dtEdicao: null, dtInclusao: null, idAssunto: 0, idTipo: 0, idSecretaria: 0, observacao: '', hash: '', emailAnonimo: '', tb_manifestante: null, tb_endereco: { idEndereco: 0, logradouro: '', bairro: '', numero: '', cep: '', complemento: '' } };
 
   tipos: ITipo[];
   tipo: ITipo;
@@ -67,21 +67,22 @@ export class LocalInfoPage {
               public enderecoProvider: EnderecoProvider,
               public servicesProvider: ServicesProvider,
               public formBuilder: FormBuilder,
-              private geolocation: Geolocation,) {
+              private geolocation: Geolocation,
+              public toastCtrl: ToastController) {
 
     this.usuario = navParams.get('usuario');
 
     this.formOne = formBuilder.group({
-      tipo: ['', ], //Validators.compose([Validators.min(1), Validators.required])
-      secretaria: ['', ], //Validators.compose([Validators.min(1), Validators.required])
-      assunto: ['', ], //Validators.compose([Validators.min(1), Validators.required])
+      tipo: ['', Validators.compose([Validators.min(1), Validators.required])], //Validators.compose([Validators.min(1), Validators.required])
+      secretaria: ['', Validators.compose([Validators.min(1), Validators.required])], //Validators.compose([Validators.min(1), Validators.required])
+      assunto: ['', Validators.compose([Validators.min(1), Validators.required])], //Validators.compose([Validators.min(1), Validators.required])
     });
 
     this.formEnd = formBuilder.group({
-      cep: ['', ], //Validators.compose([Validators.minLength(8), Validators.maxLength(8), Validators.required])
-      logradouro: ['', ], //VOLTA DEPOIS AE O Validators.required
-      numero: ['', ], //Validators.min(1)
-      bairro: ['', ], //Validators.required
+      cep: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(8), Validators.required])], //Validators.compose([Validators.minLength(8), Validators.maxLength(8), Validators.required])
+      logradouro: ['', Validators.required], //Validators.required
+      numero: ['', Validators.min(1)], //Validators.min(1)
+      bairro: ['', Validators.required], //Validators.required
       complemento: ['', ],
     });
 
@@ -91,6 +92,20 @@ export class LocalInfoPage {
     this.hasEndereco = false;
 
     console.log(this.usuario);
+  }
+
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 2500,
+      position: 'top'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 
   //BUSCANDO DADOS DO BD
@@ -103,6 +118,7 @@ export class LocalInfoPage {
       }
     }).catch((err)=>{
       this.criarAlert('Erro de conexão', 'Erro ao conectar com o banco de dados. Tente novamente mais tarde.', ['OK']);
+      this.presentToast(err);
       this.voltarPaginaInicial();
     }
   );
@@ -131,8 +147,8 @@ export class LocalInfoPage {
 
     this.secretaria = secretaria;
     this.manifestacao.idSecretaria=secretaria.idSecretaria;
-    this.assuntos = secretaria.tbassunto;
-    this.unidades = secretaria.tbunidade;
+    this.assuntos = secretaria.tb_assunto;
+    this.unidades = secretaria.tb_unidade;
   }
 
   selectAssunto(event,assunto:IAssunto){
@@ -149,13 +165,13 @@ export class LocalInfoPage {
 
     this.enderecoProvider.getEndereco(unidade.idUnidade).then(data => {
       console.log(data);
-      this.manifestacao.tbendereco.idEndereco = data["0"]["idEndereco"];
+      this.manifestacao.tb_endereco.idEndereco = data["0"]["idEndereco"];
       this.endereco.bairro = data["0"]["bairro"];
       this.endereco.logradouro = data["0"]["logradouro"];
       this.endereco.numero = data["0"]["numero"];
 
       this.hasUnidade = true;
-      console.log(this.manifestacao.tbendereco.idEndereco)
+      console.log(this.manifestacao.tb_endereco.idEndereco)
     });
   }
 
@@ -191,7 +207,7 @@ export class LocalInfoPage {
       this.hasEndereco = true;
       this.hasUnidade = false;
       this.unidade = null;
-      this.manifestacao.tbendereco.idEndereco = 0;
+      this.manifestacao.tb_endereco.idEndereco = 0;
     }
     else{
       this.hasEndereco = false;
@@ -199,7 +215,12 @@ export class LocalInfoPage {
   }
 
   getLocation(){
-    this.geolocation.getCurrentPosition()
+    this.endereco.numero = "121";
+    this.endereco.cep = "35180008";
+
+    this.getEnderecoPorCep();
+
+    /*this.geolocation.getCurrentPosition()
       .then((resp) => {
         //manipular as coordenadas aqui
         this.location = resp.coords;
@@ -231,9 +252,9 @@ export class LocalInfoPage {
         )
       }).catch((error) => {
         //exibir um alert com os erros
-        this.criarAlert('Erro inesperado', 'Erro ao recuperar sua localização', ['OK']);
+        this.criarAlert('Erro inesperado', 'Erro ao recuperar sua localização: '+error, ['OK']);
         console.log('Erro ao recuperar sua posição', error);
-      });
+      });*/
   }
 
   getEnderecoPorCep(){
@@ -265,7 +286,7 @@ export class LocalInfoPage {
   }
 
   isEnabled(){
-    if(this.manifestacao.tbendereco.idEndereco != 0){ //se foi informada alguma unidade
+    if(this.manifestacao.tb_endereco.idEndereco != 0){ //se foi informada alguma unidade
       if(this.formOne.valid)
         return false;
       else{
@@ -299,7 +320,7 @@ export class LocalInfoPage {
         this.navCtrl.push(AnexoPage, { usuario: this.usuario, manifestacao: this.manifestacao, tipo: this.tipo, assunto: this.assunto, secretaria: this.secretaria, unidade: this.unidade, endereco: this.endereco });
       }
     } else{ //senao, verifica os dois forms
-      this.manifestacao.tbendereco = this.endereco;
+      this.manifestacao.tb_endereco = this.endereco;
 
       if(!this.formOne.valid || !this.formEnd.valid){
         console.log("Erro nos dados!");

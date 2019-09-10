@@ -46,11 +46,11 @@ export class DetalheManifestacaoPage {
     this.manifestacoesStorage = navParams.get('manifestacoesStorage');
 
     this.manifestacao = navParams.get('manifestacao');
-    this.tipo = this.manifestacao.tbtipo;
-    this.endereco = this.manifestacao.tbendereco;
-    this.assunto = this.manifestacao.tbassunto;
-    this.secretaria = this.manifestacao.tbsecretaria;
-    this.anexo = this.manifestacao.tbanexo;
+    this.tipo = this.manifestacao.tb_tipo;
+    this.endereco = this.manifestacao.tb_endereco;
+    this.assunto = this.manifestacao.tb_assunto;
+    this.secretaria = this.manifestacao.tb_secretaria;
+    this.anexo = this.manifestacao.tb_anexo;
 
     if(this.anexo){
       this.anexo.nmAnexo = this.anexo.nmAnexo.substr(this.anexo.nmAnexo.lastIndexOf('/') + 1);
@@ -105,7 +105,7 @@ export class DetalheManifestacaoPage {
 
       this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
       this.isDownloaded = true;
-      this.presentToast('Manifestação salva!')
+      this.presentToast('Manifestação salva!');
     });
   }
 

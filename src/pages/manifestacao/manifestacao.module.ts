@@ -1,3 +1,4 @@
+import { BrMaskerModule } from 'brmasker-ionic-3';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ManifestacaoPage } from './manifestacao';
@@ -8,7 +9,11 @@ import { ManifestacaoPage } from './manifestacao';
   ],
   imports: [
     IonicPageModule.forChild(ManifestacaoPage),
+    BrMaskerModule
   ],
+  exports: [
+    BrMaskerModule,
+  ]
 })
 export class ManifestacaoPageModule {}
 

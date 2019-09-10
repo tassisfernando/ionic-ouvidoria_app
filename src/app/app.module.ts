@@ -4,21 +4,36 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { UsuarioPage } from '../pages/usuario/usuario';
-import { LocalInfoPage } from './../pages/local-info/local-info';
-import { AnexoPage } from './../pages/anexo/anexo';
-import { FinalizarManifestacaoPage } from './../pages/finalizar-manifestacao/finalizar-manifestacao';
-import { TabsPage } from './../pages/tabs/tabs';
-import { ManifestacoesAndamentoPage } from './../pages/manifestacoes-andamento/manifestacoes-andamento';
-import { ManifestacoesFechadasPage } from './../pages/manifestacoes-fechadas/manifestacoes-fechadas';
-import { ManifestacoesAbertasPage } from './../pages/manifestacoes-abertas/manifestacoes-abertas';
-import { DetalheManifestacaoPage } from './../pages/detalhe-manifestacao/detalhe-manifestacao';
-import { ComentariosPage } from './../pages/comentarios/comentarios';
-import { MinhasManifestacoesPage } from '../pages/minhas-manifestacoes/minhas-manifestacoes'; //tirar depois
-import {ManifestacaoPage} from '../pages/manifestacao/manifestacao'; //Tirar depois
-import {CadastroPage} from '../pages/cadastro/cadastro'; //tirar depois
-import { ValidacaoTestePage } from '../pages/validacao-teste/validacao-teste'; //tirar depois
-import { ReactiveFormsValidationPage } from '../pages/reactive-forms-validation/reactive-forms-validation'; //tirar depois
+
+// import { UsuarioPage } from '../pages/usuario/usuario';
+import { UsuarioPageModule } from './../pages/usuario/usuario.module';
+
+// import { LocalInfoPage } from './../pages/local-info/local-info'; DESCOMENTAR SE DER MERDA
+import { LocalInfoPageModule } from './../pages/local-info/local-info.module';
+
+// import { AnexoPage } from './../pages/anexo/anexo'; DESCOMENTAR SE DER MERDAA
+import { AnexoPageModule } from './../pages/anexo/anexo.module';
+
+// import { ComentariosPage } from './../pages/comentarios/comentarios';  DESCOMENTAR SE DER MERDAA
+import { ComentariosPageModule } from './../pages/comentarios/comentarios.module';
+
+// import { DetalheManifestacaoPage } from './../pages/detalhe-manifestacao/detalhe-manifestacao';
+import { DetalheManifestacaoPageModule } from './../pages/detalhe-manifestacao/detalhe-manifestacao.module';
+
+// import { FinalizarManifestacaoPage } from './../pages/finalizar-manifestacao/finalizar-manifestacao';  DESCOMENTAR SE DER MERDA
+import { FinalizarManifestacaoPageModule } from './../pages/finalizar-manifestacao/finalizar-manifestacao.module';
+
+// import { TabsPage } from './../pages/tabs/tabs';
+import { TabsPageModule } from './../pages/tabs/tabs.module';
+
+// import { ManifestacoesAndamentoPage } from './../pages/manifestacoes-andamento/manifestacoes-andamento';
+import { ManifestacoesAndamentoPageModule } from './../pages/manifestacoes-andamento/manifestacoes-andamento.module';
+
+// import { ManifestacoesFechadasPage } from './../pages/manifestacoes-fechadas/manifestacoes-fechadas';
+import { ManifestacoesFechadasPageModule } from './../pages/manifestacoes-fechadas/manifestacoes-fechadas.module';
+
+// import { ManifestacoesAbertasPage } from './../pages/manifestacoes-abertas/manifestacoes-abertas';
+import { ManifestacoesAbertasPageModule } from './../pages/manifestacoes-abertas/manifestacoes-abertas.module';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -35,7 +50,7 @@ import { FileOpener } from "@ionic-native/file-opener";
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
-import { BrMaskerModule} from 'brmasker-ionic-3';
+import { BrMaskerModule } from 'brmasker-ionic-3';
 
 import { RestProvider } from '../providers/rest/rest';
 import { ManifestacaoProvider } from '../providers/manifestacao/manifestacao';
@@ -59,21 +74,16 @@ class CameraMock extends Camera{
   declarations: [
     MyApp,
     HomePage,
-    ManifestacoesAbertasPage,
-    ManifestacoesFechadasPage,
-    ManifestacoesAndamentoPage,
-    UsuarioPage,
-    LocalInfoPage,
-    AnexoPage,
-    FinalizarManifestacaoPage,
-    TabsPage,
-    DetalheManifestacaoPage,
-    ComentariosPage,
-    MinhasManifestacoesPage, //tirar depois
-    ManifestacaoPage, //tirar depois
-    ValidacaoTestePage, //tirar depois
-    ReactiveFormsValidationPage, //tirar depois
-    CadastroPage, //Tirar depois
+    // ManifestacoesAbertasPage, DESCOMENTAR SE DER MERDA
+    // ManifestacoesFechadasPage, DESCOMENTAR SE DER MERDA
+    // ManifestacoesAndamentoPage, DESCOMENTAR SE DER MERDA
+    // UsuarioPage, DESCOMENTAR SE DER MERDA
+    // LocalInfoPage, DESCOMENTAR SE DER MERDA
+    // AnexoPage, DESCOMENTAR SE DER MERDA
+    // FinalizarManifestacaoPage, DESCOMENTAR SE DER MERDA
+    // TabsPage, DESCOMENTAR SE DER MERDA
+    // DetalheManifestacaoPage, DESCOMENTAR SE DER MERDAA
+    // ComentariosPage,  DESCOMENTAR SE DER MERDAA
   ],
   imports: [
     BrowserModule,
@@ -81,27 +91,32 @@ class CameraMock extends Camera{
     IonicModule.forRoot(MyApp),
     HttpClientModule,
     HttpModule,
+    AnexoPageModule,
+    ComentariosPageModule,
+    DetalheManifestacaoPageModule,
+    FinalizarManifestacaoPageModule,
+    LocalInfoPageModule,
+    ManifestacoesAbertasPageModule,
+    ManifestacoesAndamentoPageModule,
+    ManifestacoesFechadasPageModule,
+    TabsPageModule,
+    UsuarioPageModule,
     IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    UsuarioPage,
-    LocalInfoPage,
-    AnexoPage,
-    FinalizarManifestacaoPage,
-    TabsPage,
-    ManifestacoesAbertasPage,
-    ManifestacoesFechadasPage,
-    ManifestacoesAndamentoPage,
-    DetalheManifestacaoPage,
-    ComentariosPage,
-    MinhasManifestacoesPage, //tirar depois
-    ManifestacaoPage, //tirar depois
-    CadastroPage, //tirar depois
-    ValidacaoTestePage, //tirar depoiss
-    ReactiveFormsValidationPage //tirar depois
+    // UsuarioPage, DESCOMENTAR SE DER MERDA
+    // LocalInfoPage, DESCOMENTAR SE DER MERDA
+    // AnexoPage, DESCOMENTAR SE DER MERDA
+    // FinalizarManifestacaoPage, DESCOMENTAR SE DER MERDA
+    // TabsPage, DESCOMENTAR SE DER MERDA
+    // ManifestacoesAbertasPage, DESCOMENTAR SE DER MERDA
+    // ManifestacoesFechadasPage, DESCOMENTAR SE DER MERDA
+    // ManifestacoesAndamentoPage,
+    // DetalheManifestacaoPage, DESCOMENTAR SE DER MERDAA
+    // ComentariosPage,  DESCOMENTAR SE DER MERDAA
   ],
   providers: [
     StatusBar,
