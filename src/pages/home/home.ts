@@ -87,7 +87,7 @@ export class HomePage {
     this.navCtrl.push(TabsPage);
     let loader = this.loadingCtrl.create({
       content: "Carregando...",
-      duration: 1500,
+      duration: 2000,
       spinner: 'crescent'
     });
     loader.present();

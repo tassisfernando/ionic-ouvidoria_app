@@ -3,6 +3,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, Content, AlertController} from 'ionic-angular';
 
 import { IComentario } from './../../interfaces/IComentario';
+import { IManifestacao } from '../../interfaces/IManifestacao';
 
 @IonicPage()
 @Component({
@@ -14,12 +15,14 @@ export class ComentariosPage {
 
   comentarios: IComentario[];
   comentario: IComentario = { idComentario: 0, texto: '', idManifestacao: 0 };
+  manifestacao: IManifestacao;
 
   constructor(navParams: NavParams,
               private events: Events,
               public comentarioProvider: ComentarioProvider,
               private alertCtrl: AlertController) {
       this.comentarios = navParams.get('comentarios');
+      this.manifestacao = navParams.get('manifestacao');
 
       console.log(this.comentarios);
   }

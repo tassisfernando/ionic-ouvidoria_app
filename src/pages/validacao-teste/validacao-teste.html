@@ -51,7 +51,7 @@
 
       <ion-item>
         <ion-label floating>CPF</ion-label>
-        <ion-input type="text" [(ngModel)]="userData.cpf" formControlName="cpf" [class.error1]="!signupform.controls.cpf.valid && signupform.controls.cpf.dirty" [brmasker]="{mask:'000.000.000-00', len:14,type:'num'}"></ion-input>
+        <ion-input type="text" [(ngModel)]="userData.cpf" formControlName="cpf" [class.error1]="!signupform.controls.cpf.valid && signupform.controls.cpf.dirty"></ion-input>
       </ion-item>
 
       <ion-item no-lines *ngIf="( signupform.get('cpf').hasError('minlength') || signupform.get('cpf').hasError('pattern') ||signupform.get('cpf').hasError('required') ) && signupform.get('cpf').touched">

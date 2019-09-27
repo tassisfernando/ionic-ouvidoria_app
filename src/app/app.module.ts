@@ -5,34 +5,34 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
-// import { UsuarioPage } from '../pages/usuario/usuario';
+import { UsuarioPage } from '../pages/usuario/usuario';
 import { UsuarioPageModule } from './../pages/usuario/usuario.module';
 
-// import { LocalInfoPage } from './../pages/local-info/local-info'; DESCOMENTAR SE DER MERDA
+import { LocalInfoPage } from './../pages/local-info/local-info'; //DESCOMENTAR SE DER MERDA
 import { LocalInfoPageModule } from './../pages/local-info/local-info.module';
 
-// import { AnexoPage } from './../pages/anexo/anexo'; DESCOMENTAR SE DER MERDAA
+import { AnexoPage } from './../pages/anexo/anexo'; //DESCOMENTAR SE DER MERDAA
 import { AnexoPageModule } from './../pages/anexo/anexo.module';
 
-// import { ComentariosPage } from './../pages/comentarios/comentarios';  DESCOMENTAR SE DER MERDAA
+import { ComentariosPage } from './../pages/comentarios/comentarios';  //DESCOMENTAR SE DER MERDAA
 import { ComentariosPageModule } from './../pages/comentarios/comentarios.module';
 
-// import { DetalheManifestacaoPage } from './../pages/detalhe-manifestacao/detalhe-manifestacao';
+import { DetalheManifestacaoPage } from './../pages/detalhe-manifestacao/detalhe-manifestacao';
 import { DetalheManifestacaoPageModule } from './../pages/detalhe-manifestacao/detalhe-manifestacao.module';
 
-// import { FinalizarManifestacaoPage } from './../pages/finalizar-manifestacao/finalizar-manifestacao';  DESCOMENTAR SE DER MERDA
+import { FinalizarManifestacaoPage } from './../pages/finalizar-manifestacao/finalizar-manifestacao';  //DESCOMENTAR SE DER MERDA
 import { FinalizarManifestacaoPageModule } from './../pages/finalizar-manifestacao/finalizar-manifestacao.module';
 
-// import { TabsPage } from './../pages/tabs/tabs';
+import { TabsPage } from './../pages/tabs/tabs';
 import { TabsPageModule } from './../pages/tabs/tabs.module';
 
-// import { ManifestacoesAndamentoPage } from './../pages/manifestacoes-andamento/manifestacoes-andamento';
+import { ManifestacoesAndamentoPage } from './../pages/manifestacoes-andamento/manifestacoes-andamento';
 import { ManifestacoesAndamentoPageModule } from './../pages/manifestacoes-andamento/manifestacoes-andamento.module';
 
-// import { ManifestacoesFechadasPage } from './../pages/manifestacoes-fechadas/manifestacoes-fechadas';
+import { ManifestacoesFechadasPage } from './../pages/manifestacoes-fechadas/manifestacoes-fechadas';
 import { ManifestacoesFechadasPageModule } from './../pages/manifestacoes-fechadas/manifestacoes-fechadas.module';
 
-// import { ManifestacoesAbertasPage } from './../pages/manifestacoes-abertas/manifestacoes-abertas';
+import { ManifestacoesAbertasPage } from './../pages/manifestacoes-abertas/manifestacoes-abertas';
 import { ManifestacoesAbertasPageModule } from './../pages/manifestacoes-abertas/manifestacoes-abertas.module';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -74,16 +74,16 @@ class CameraMock extends Camera{
   declarations: [
     MyApp,
     HomePage,
-    // ManifestacoesAbertasPage, DESCOMENTAR SE DER MERDA
-    // ManifestacoesFechadasPage, DESCOMENTAR SE DER MERDA
-    // ManifestacoesAndamentoPage, DESCOMENTAR SE DER MERDA
-    // UsuarioPage, DESCOMENTAR SE DER MERDA
-    // LocalInfoPage, DESCOMENTAR SE DER MERDA
-    // AnexoPage, DESCOMENTAR SE DER MERDA
-    // FinalizarManifestacaoPage, DESCOMENTAR SE DER MERDA
-    // TabsPage, DESCOMENTAR SE DER MERDA
-    // DetalheManifestacaoPage, DESCOMENTAR SE DER MERDAA
-    // ComentariosPage,  DESCOMENTAR SE DER MERDAA
+    ManifestacoesAbertasPage, //DESCOMENTAR SE DER MERDA
+    ManifestacoesFechadasPage, //DESCOMENTAR SE DER MERDA
+    ManifestacoesAndamentoPage, //DESCOMENTAR SE DER MERDA
+    UsuarioPage, //DESCOMENTAR SE DER MERDA
+    LocalInfoPage, //DESCOMENTAR SE DER MERDA
+    AnexoPage, //DESCOMENTAR SE DER MERDA
+    FinalizarManifestacaoPage, //DESCOMENTAR SE DER MERDA
+    TabsPage, //DESCOMENTAR SE DER MERDA
+    DetalheManifestacaoPage, //DESCOMENTAR SE DER MERDAA
+    ComentariosPage,  //DESCOMENTAR SE DER MERDAA
   ],
   imports: [
     BrowserModule,
@@ -91,32 +91,32 @@ class CameraMock extends Camera{
     IonicModule.forRoot(MyApp),
     HttpClientModule,
     HttpModule,
-    AnexoPageModule,
-    ComentariosPageModule,
-    DetalheManifestacaoPageModule,
-    FinalizarManifestacaoPageModule,
-    LocalInfoPageModule,
-    ManifestacoesAbertasPageModule,
-    ManifestacoesAndamentoPageModule,
-    ManifestacoesFechadasPageModule,
-    TabsPageModule,
-    UsuarioPageModule,
+    // AnexoPageModule,
+    // ComentariosPageModule,
+    // DetalheManifestacaoPageModule,
+    // FinalizarManifestacaoPageModule,
+    // LocalInfoPageModule,
+    // ManifestacoesAbertasPageModule,
+    // ManifestacoesAndamentoPageModule,
+    // ManifestacoesFechadasPageModule,
+    // TabsPageModule,
+    // UsuarioPageModule,
     IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    // UsuarioPage, DESCOMENTAR SE DER MERDA
-    // LocalInfoPage, DESCOMENTAR SE DER MERDA
-    // AnexoPage, DESCOMENTAR SE DER MERDA
-    // FinalizarManifestacaoPage, DESCOMENTAR SE DER MERDA
-    // TabsPage, DESCOMENTAR SE DER MERDA
-    // ManifestacoesAbertasPage, DESCOMENTAR SE DER MERDA
-    // ManifestacoesFechadasPage, DESCOMENTAR SE DER MERDA
-    // ManifestacoesAndamentoPage,
-    // DetalheManifestacaoPage, DESCOMENTAR SE DER MERDAA
-    // ComentariosPage,  DESCOMENTAR SE DER MERDAA
+    UsuarioPage, //DESCOMENTAR SE DER MERDA
+    LocalInfoPage, //DESCOMENTAR SE DER MERDA
+    AnexoPage, //DESCOMENTAR SE DER MERDA
+    FinalizarManifestacaoPage, //DESCOMENTAR SE DER MERDA
+    TabsPage, //DESCOMENTAR SE DER MERDA
+    ManifestacoesAbertasPage, //DESCOMENTAR SE DER MERDA
+    ManifestacoesFechadasPage, //DESCOMENTAR SE DER MERDA
+    ManifestacoesAndamentoPage,
+    DetalheManifestacaoPage, //DESCOMENTAR SE DER MERDAA
+    ComentariosPage,  //DESCOMENTAR SE DER MERDAA
   ],
   providers: [
     StatusBar,

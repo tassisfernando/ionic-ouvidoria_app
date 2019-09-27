@@ -68,6 +68,10 @@ export class DetalheManifestacaoPage {
     this.getComentarios();
   }
 
+  ionViewDidLoad(){
+    this.checkDownload();
+  }
+
   getManifestante(){
     this.manifestacaoProvider.getManifestantePorId(this.manifestacao.idManifestacao).then( manifestante => {
       if(manifestante){
@@ -109,6 +113,29 @@ export class DetalheManifestacaoPage {
     });
   }
 
+  excluirManifestacao(){
+    this.storageProvider.getStorage('manifestacoes').then((data) => {
+      if(data){
+        this.manifestacoesStorage = data;
+        let pos = this.acharPosManifestacao(); //acha a posição
+        this.manifestacoesStorage.splice(pos, 1); //exclui o objeto na posição pos
+      }
+
+      this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
+      this.isDownloaded = false;
+      this.presentToast('Manifestação excluida!');
+    });
+  }
+
+  acharPosManifestacao(){
+    for (let i = 0; i < this.manifestacoesStorage.length; i++) {
+      if(this.manifestacoesStorage[i].idManifestacao == this.manifestacao.idManifestacao){
+        return i;
+      }
+    }
+  }
+
+
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
@@ -121,10 +148,6 @@ export class DetalheManifestacaoPage {
     });
 
     toast.present();
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad DetalheManifestacaoPage');
   }
 
   getComentarios(){
@@ -142,7 +165,7 @@ export class DetalheManifestacaoPage {
   }
 
   abreComentarios(){
-    this.navCtrl.push(ComentariosPage, { comentarios: this.comentarios });
+    this.navCtrl.push(ComentariosPage, { comentarios: this.comentarios, manifestacao: this.manifestacao });
   }
 
   criarAlert(title: string, subTitle: string, buttons: string[]) {

@@ -46,7 +46,7 @@
 
 </ion-content>
 
-<ion-footer no-border>
+<ion-footer no-border *ngIf="manifestacao.status != 'Fechado'" >
   <div class="input-wrap ">
 
     <textarea #chat_input

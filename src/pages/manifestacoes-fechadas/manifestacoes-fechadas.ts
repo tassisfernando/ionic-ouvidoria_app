@@ -41,27 +41,26 @@ export class ManifestacoesFechadasPage {
 
   ionViewDidLoad() {
     this.getManifestacoes();
+    this.getManifestacoesStorage();
     this.manifestacoes = this.manifestacoesBd;
   }
-
 
   ionViewWillEnter(){
     this.getManifestacoesStorage();
   }
 
-
   getManifestacoesStorage(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
 
       if(data){
-        let posStorage = 0;
+        /*let posStorage = 0;
         for(let pos = 0; pos < data.length; pos++) {
           if(data[pos].status == 'Fechado'){
             this.manifestacoesStorage[posStorage] = data[pos];
             posStorage++;
           }
-        }
-
+        }*/
+        this.manifestacoesStorage = data;
       }
 
       /*if(data){
@@ -91,6 +90,7 @@ export class ManifestacoesFechadasPage {
         }
       }
     }
+    this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
   }
 
   //VAI TER QUE SER GETMANIFESTAÇÕES POR PROTOCOLO, ENTÃO O FILTRO VAI TER QUE FUNCIONAR
