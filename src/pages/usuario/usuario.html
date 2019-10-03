@@ -21,6 +21,7 @@
           <ion-input [(ngModel)]="usuario.nmManifestante" formControlName="nome" placeholder="Informe seu nome..." type="text"></ion-input>
       </ion-item>
 
+
       <ion-item class="error" *ngIf="!form.controls.nome.valid  && (form.controls.nome.dirty || submitAttempt)">
           Informe no mínimo 3 e apenas letras!
       </ion-item>
@@ -54,7 +55,7 @@
 
       <ion-item>
           <ion-label class="label" stacked>Telefone:*</ion-label>
-          <ion-input [(ngModel)]="usuario.telefone" formControlName="telefone" type="text" placeholder="0000-0000"></ion-input>
+          <ion-input [(ngModel)]="usuario.telefone" formControlName="telefone" type="text" [brmasker]="{phone: true}" placeholder="(00) 0000-0000"></ion-input>
       </ion-item>
 
       <ion-item class="error" *ngIf="!form.controls.telefone.valid  && (form.controls.telefone.dirty || submitAttempt)">
