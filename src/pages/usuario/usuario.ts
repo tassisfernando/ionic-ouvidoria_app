@@ -2,14 +2,13 @@ import { IManifestante } from './../../interfaces/IManifestante';
 import { LocalInfoPage } from './../local-info/local-info';
 import { MinhasManifestacoesPage } from './../minhas-manifestacoes/minhas-manifestacoes';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CpfValidator } from  '../../assets/validators/cpf';
 
 
 
-@IonicPage()
 @Component({
   selector: 'page-usuario',
   templateUrl: 'usuario.html',

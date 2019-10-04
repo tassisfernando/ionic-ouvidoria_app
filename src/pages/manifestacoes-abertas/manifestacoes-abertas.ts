@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { ManifestacaoProvider } from '../../providers/manifestacao/manifestacao';
 import { StorageProvider } from './../../providers/storage/storage';
@@ -11,7 +11,6 @@ import { AlertController } from 'ionic-angular';
 
 import { DetalheManifestacaoPage } from './../detalhe-manifestacao/detalhe-manifestacao';
 
-@IonicPage()
 @Component({
   selector: 'page-manifestacoes-abertas',
   templateUrl: 'manifestacoes-abertas.html',
@@ -95,7 +94,6 @@ export class ManifestacoesAbertasPage {
 
   ionViewDidLoad() {
     this.getManifestacoes();
-    this.getManifestacoesStorage();
     this.manifestacoes = this.manifestacoesBd;
   }
 

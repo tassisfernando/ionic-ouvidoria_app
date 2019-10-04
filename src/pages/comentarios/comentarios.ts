@@ -1,11 +1,10 @@
 import { ComentarioProvider } from './../../providers/comentario/comentario';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, Content, AlertController} from 'ionic-angular';
+import { NavController, NavParams, Events, Content, AlertController} from 'ionic-angular';
 
 import { IComentario } from './../../interfaces/IComentario';
 import { IManifestacao } from '../../interfaces/IManifestacao';
 
-@IonicPage()
 @Component({
   selector: 'page-comentarios',
   templateUrl: 'comentarios.html',

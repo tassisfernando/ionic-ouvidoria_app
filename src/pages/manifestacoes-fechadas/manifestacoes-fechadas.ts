@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { ManifestacaoProvider } from '../../providers/manifestacao/manifestacao';
 import { StorageProvider } from './../../providers/storage/storage';
@@ -11,14 +11,6 @@ import { DetalheManifestacaoPage } from './../detalhe-manifestacao/detalhe-manif
 
 import { AlertController } from 'ionic-angular';
 
-/**
- * Generated class for the ManifestacoesFechadasPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
   selector: 'page-manifestacoes-fechadas',
   templateUrl: 'manifestacoes-fechadas.html',
@@ -41,7 +33,6 @@ export class ManifestacoesFechadasPage {
 
   ionViewDidLoad() {
     this.getManifestacoes();
-    this.getManifestacoesStorage();
     this.manifestacoes = this.manifestacoesBd;
   }
 

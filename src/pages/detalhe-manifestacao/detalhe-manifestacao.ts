@@ -2,7 +2,7 @@ import { IAnexo } from './../../interfaces/IAnexo';
 import { StorageProvider } from './../../providers/storage/storage';
 import { ComentariosPage } from './../comentarios/comentarios';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 
 import { ManifestacaoProvider } from './../../providers/manifestacao/manifestacao';
 import { ComentarioProvider } from './../../providers/comentario/comentario';
@@ -17,7 +17,6 @@ import { IManifestante } from './../../interfaces/IManifestante';
 import { IUnidade } from './../../interfaces/IUnidade';
 import { IComentario } from './../../interfaces/IComentario';
 
-@IonicPage()
 @Component({
   selector: 'page-detalhe-manifestacao',
   templateUrl: 'detalhe-manifestacao.html',

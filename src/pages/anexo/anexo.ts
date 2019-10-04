@@ -1,6 +1,6 @@
 import { IAnexo } from './../../interfaces/IAnexo';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,7 +18,6 @@ import { FileChooser } from '@ionic-native/file-chooser';
 
 import { FinalizarManifestacaoPage } from './../finalizar-manifestacao/finalizar-manifestacao';
 
-@IonicPage()
 @Component({
   selector: 'page-anexo',
   templateUrl: 'anexo.html',
@@ -121,8 +120,9 @@ export class AnexoPage {
         // this.anexo.nmAnexo = resolvedFilePath;
         this.anexo.nmAnexo = resolvedFilePath.substr(resolvedFilePath.lastIndexOf('/') + 1);
       })
-
       this.hasAnexo = true;
+
+      this.presentToast('Foto adicionada com sucesso!')
      }, (err) => {
         this.presentToast('Erro inesperado ao utilizar a câmera!' + err)
      });
@@ -135,6 +135,7 @@ export class AnexoPage {
         // this.anexo.nmAnexo = resolvedFilePath;
         this.anexo.nmAnexo = resolvedFilePath.substr(resolvedFilePath.lastIndexOf('/') + 1);
         this.hasAnexo = true;
+        this.presentToast('Anexo adicionado com sucesso!')
       }).catch(err => {
         this.presentToast('Erro inesperado ao selecionar um arquivo!' + err)
       })

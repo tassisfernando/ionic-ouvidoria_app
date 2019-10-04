@@ -1,6 +1,6 @@
 import { IAnexo } from './../../interfaces/IAnexo';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { IManifestante } from './../../interfaces/IManifestante';
@@ -16,7 +16,6 @@ import { HomePage } from './../home/home';
 import { ManifestacaoProvider } from './../../providers/manifestacao/manifestacao';
 import { StorageProvider } from './../../providers/storage/storage';
 
-@IonicPage()
 @Component({
   selector: 'page-finalizar-manifestacao',
   templateUrl: 'finalizar-manifestacao.html',

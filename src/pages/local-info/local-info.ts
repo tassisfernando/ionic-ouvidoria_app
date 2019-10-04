@@ -1,7 +1,7 @@
 import { Geolocation } from '@ionic-native/geolocation';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 
 import { SecretariaProvider } from './../../providers/secretaria/secretaria';
 import { TipoProvider } from './../../providers/tipo/tipo';
@@ -19,14 +19,6 @@ import { IManifestacao } from './../../interfaces/IManifestacao';
 import { IManifestante } from './../../interfaces/IManifestante';
 import { IEndereco } from './../../interfaces/IEndereco';
 
-/**
- * Generated class for the LocalInfoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
   selector: 'page-local-info',
   templateUrl: 'local-info.html',
@@ -73,16 +65,16 @@ export class LocalInfoPage {
     this.usuario = navParams.get('usuario');
 
     this.formOne = formBuilder.group({
-      tipo: ['', Validators.compose([Validators.min(1), Validators.required])], //Validators.compose([Validators.min(1), Validators.required])
-      secretaria: ['', Validators.compose([Validators.min(1), Validators.required])], //Validators.compose([Validators.min(1), Validators.required])
-      assunto: ['', Validators.compose([Validators.min(1), Validators.required])], //Validators.compose([Validators.min(1), Validators.required])
+      tipo: ['', ], //Validators.compose([Validators.min(1), Validators.required])
+      secretaria: ['', ], //Validators.compose([Validators.min(1), Validators.required])
+      assunto: ['', ], //Validators.compose([Validators.min(1), Validators.required])
     });
 
     this.formEnd = formBuilder.group({
-      cep: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(8), Validators.required])], //Validators.compose([Validators.minLength(8), Validators.maxLength(8), Validators.required])
-      logradouro: ['', Validators.required], //Validators.required
-      numero: ['', Validators.min(1)], //Validators.min(1)
-      bairro: ['', Validators.required], //Validators.required
+      cep: ['', ], //Validators.compose([Validators.minLength(8), Validators.maxLength(8), Validators.required])
+      logradouro: ['', ], //Validators.required
+      numero: ['', ], //Validators.min(1)
+      bairro: ['', ], //Validators.required
       complemento: ['', ],
     });
 
