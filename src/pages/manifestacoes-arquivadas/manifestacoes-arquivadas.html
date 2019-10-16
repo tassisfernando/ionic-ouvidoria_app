@@ -1,0 +1,56 @@
+<ion-header>
+
+  <ion-navbar>
+      <h5 >Manifestações arquivadas</h5>
+      <button ion-button menuToggle>
+        <ion-icon style="color: #990A0D;" name="menu"></ion-icon>
+      </button>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+
+  <ion-grid class="table">
+    <ion-row class="header">
+      <ion-col col-4>
+       Protocolo
+      </ion-col>
+      <ion-col col-3>
+       Tipo
+      </ion-col>
+      <ion-col col-5>
+        Assunto
+      </ion-col>
+    </ion-row>
+
+    <ion-list>
+        <div *ngFor="let manifestacao of manifestacoes">
+        <ion-row>
+          <ion-col col-4>
+            <button class="buttonTable" ion-item (click)="abreManifestacao(manifestacao)">
+               {{ manifestacao.hash }}
+            </button>
+          </ion-col>
+          <ion-col col-3 class="body">
+            <button ion-item class="buttonTable" (click)="abreManifestacao(manifestacao)">
+              {{ manifestacao.tb_tipo?.nmTipo }}
+            </button>
+          </ion-col>
+          <ion-col col-5>
+              <button ion-item class="buttonTable" (click)="abreManifestacao(manifestacao)">
+                {{ manifestacao.tb_assunto?.nmAssunto }}
+              </button>
+          </ion-col>
+        </ion-row>
+      </div>
+  </ion-list>
+  </ion-grid>
+
+  <p *ngIf="!manifestacoes">Não há nenhuma manifestação arquivada.</p>
+
+</ion-content>
+
+
+
+

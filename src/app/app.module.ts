@@ -35,6 +35,8 @@ import { ManifestacoesFechadasPage } from './../pages/manifestacoes-fechadas/man
 import { ManifestacoesAbertasPage } from './../pages/manifestacoes-abertas/manifestacoes-abertas';
 // import { ManifestacoesAbertasPageModule } from './../pages/manifestacoes-abertas/manifestacoes-abertas.module';
 
+import { ManifestacoesArquivadasPage } from './../pages/manifestacoes-arquivadas/manifestacoes-arquivadas';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from  '@ionic-native/network'; //TIRAR O NGX SE DER MERDA
@@ -75,6 +77,7 @@ import { ComentarioProvider } from '../providers/comentario/comentario';
     TabsPage,
     DetalheManifestacaoPage,
     ComentariosPage,
+    ManifestacoesArquivadasPage,
   ],
   imports: [
     BrowserModule,
@@ -98,6 +101,7 @@ import { ComentarioProvider } from '../providers/comentario/comentario';
     ManifestacoesAndamentoPage,
     DetalheManifestacaoPage,
     ComentariosPage,
+    ManifestacoesArquivadasPage,
   ],
   providers: [
     StatusBar,

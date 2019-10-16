@@ -11,17 +11,24 @@
   <ion-content padding>
 
     <ion-list>
-      <div *ngIf="!isDownloaded" id="botao-salvar">
+      <div *ngIf="!isDownloaded && !isArquivado" id="botao-salvar">
           <button id="botao-bonito" ion-button round icon-start (click)="downloadManifestacao()">
-          <ion-icon name="md-bookmark"></ion-icon>
+          <ion-icon name="md-download"></ion-icon>
           Salvar manifestação
+        </button>
+      </div>
+
+      <div *ngIf="isArquivado && !isDownloaded" id="botao-salvar">
+        <button id="botao-bonito" ion-button round icon-start (click)="desarquivarManifestacao()">
+          <ion-icon name="open"></ion-icon>
+          Desarquivar manifestação
         </button>
       </div>
 
       <div *ngIf="isDownloaded" id="botao-salvar">
         <button id="botao-bonito" ion-button round icon-start (click)="excluirManifestacao()">
-            <ion-icon name="md-trash"></ion-icon>
-            Excluir manifestação
+            <ion-icon name="md-bookmark"></ion-icon>
+            Arquivar manifestação
         </button>
       </div>
 

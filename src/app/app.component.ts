@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { UsuarioPage } from './../pages/usuario/usuario';
 import { LocalInfoPage } from './../pages/local-info/local-info';
 import { TabsPage } from './../pages/tabs/tabs';
+import { ManifestacoesArquivadasPage } from './../pages/manifestacoes-arquivadas/manifestacoes-arquivadas';
 
 @Component({
   templateUrl: 'app.html'
@@ -27,6 +28,7 @@ export class MyApp {
       { title: 'Manifestação não anônima', component: UsuarioPage },
       { title: 'Manifestação anônima', component: LocalInfoPage },
       { title: 'Minhas Manifestações', component: TabsPage },
+      { title: 'Manifestações arquivadas', component: ManifestacoesArquivadasPage },
       { title: 'Configurações',component:HomePage},
     ];
 

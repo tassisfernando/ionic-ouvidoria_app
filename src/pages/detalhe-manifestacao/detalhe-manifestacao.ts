@@ -25,6 +25,7 @@ export class DetalheManifestacaoPage {
 
   manifestacao: IManifestacao;
   manifestacoesStorage: IManifestacao[];
+  manifestacoesArquiv: IManifestacao[] = [];
   usuario: IManifestante;
   secretaria: ISecretaria;
   tipo: ITipo;
@@ -34,6 +35,7 @@ export class DetalheManifestacaoPage {
   anexo: IAnexo;
   comentarios: IComentario[];
   isDownloaded: boolean;
+  isArquivado: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public enderecoProvider: EnderecoProvider,
               public comentarioProvider: ComentarioProvider,
@@ -42,7 +44,15 @@ export class DetalheManifestacaoPage {
               public alertCtrl: AlertController,
               public toastCtrl: ToastController) {
 
+
     this.manifestacoesStorage = navParams.get('manifestacoesStorage');
+    console.log('Storage:', this.manifestacoesStorage);
+
+    this.storageProvider.getStorage('manifestacoesArquivadas').then((data) => {
+      this.manifestacoesArquiv = data;
+      this.checkArquivada();
+      console.log('Arquivadas:', this.manifestacoesArquiv);
+    });
 
     this.manifestacao = navParams.get('manifestacao');
     this.tipo = this.manifestacao.tb_tipo;
@@ -65,6 +75,9 @@ export class DetalheManifestacaoPage {
 
     this.checkDownload();
     this.getComentarios();
+
+    console.log('Arquivada:', this.isArquivado);
+    console.log('Salva:', this.isDownloaded);
   }
 
   ionViewDidLoad(){
@@ -90,9 +103,26 @@ export class DetalheManifestacaoPage {
 
   checkDownload(){
     this.isDownloaded = false;
-    for (let index = 0; index < this.manifestacoesStorage.length; index++) {
-      if(this.manifestacoesStorage[index].idManifestacao == this.manifestacao.idManifestacao){
-        this.isDownloaded = true;
+
+    if(this.manifestacoesStorage){
+      for (let index = 0; index < this.manifestacoesStorage.length; index++) {
+        if(this.manifestacoesStorage[index].idManifestacao == this.manifestacao.idManifestacao){
+          this.isDownloaded = true;
+          this.isArquivado = false;
+        }
+      }
+    }
+  }
+
+  checkArquivada(){
+    this.isArquivado = false;
+
+    if(this.manifestacoesArquiv){
+      for (let index = 0; index < this.manifestacoesArquiv.length; index++) {
+        if(this.manifestacoesArquiv[index].idManifestacao == this.manifestacao.idManifestacao){
+          this.isArquivado = true;
+          this.isDownloaded = false;
+        }
       }
     }
   }
@@ -112,6 +142,20 @@ export class DetalheManifestacaoPage {
     });
   }
 
+  desarquivarManifestacao(){
+    this.storageProvider.getStorage('manifestacoesArquivadas').then((data) => {
+      if(data){
+        this.manifestacoesArquiv = data;
+        let pos = this.acharPosManifestacao(); //acha a posição
+        this.manifestacoesArquiv.splice(pos, 1); //exclui o objeto na posição pos
+      }
+
+      this.storageProvider.setStorage('manifestacoesArquivadas', this.manifestacoesArquiv);
+      this.isArquivado = false;
+      this.downloadManifestacao();
+    });
+  }
+
   excluirManifestacao(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
       if(data){
@@ -122,7 +166,24 @@ export class DetalheManifestacaoPage {
 
       this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
       this.isDownloaded = false;
-      this.presentToast('Manifestação excluida!');
+      this.isArquivado = true;
+
+      this.arquivarManifestacao();
+      this.presentToast('Manifestação arquivada!');
+    });
+  }
+
+  arquivarManifestacao(){
+    this.storageProvider.getStorage('manifestacoesArquivadas').then((data) => {
+      if(data){
+        this.manifestacoesArquiv = data;
+        this.manifestacoesArquiv.push(this.manifestacao);
+      } else{
+        this.manifestacoesArquiv = [];
+        this.manifestacoesArquiv.push(this.manifestacao);
+      }
+
+      this.storageProvider.setStorage('manifestacoesArquivadas', this.manifestacoesArquiv);
     });
   }
 
@@ -134,6 +195,13 @@ export class DetalheManifestacaoPage {
     }
   }
 
+  acharPosManifestacaoArquiv(){
+    for (let i = 0; i < this.manifestacoesArquiv.length; i++) {
+      if(this.manifestacoesArquiv[i].idManifestacao == this.manifestacao.idManifestacao){
+        return i;
+      }
+    }
+  }
 
   presentToast(msg) {
     let toast = this.toastCtrl.create({
