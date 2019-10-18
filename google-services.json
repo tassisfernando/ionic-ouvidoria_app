@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "284259732871",
+    "firebase_url": "https://ouvidoriaapp.firebaseio.com",
+    "project_id": "ouvidoriaapp",
+    "storage_bucket": "ouvidoriaapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:284259732871:android:7cd0377ca81f9a05239722",
+        "android_client_info": {
+          "package_name": "com.fabricadesoftware.appouvidoria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "284259732871-rlig3qb8lti9r13oogrl0g9085fvcpnf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6wWJcey3StCc5VQMFKd54nMPGlou1cBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "284259732871-rlig3qb8lti9r13oogrl0g9085fvcpnf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

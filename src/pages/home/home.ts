@@ -6,7 +6,7 @@ import { UsuarioPage } from './../usuario/usuario';
 import { LocalInfoPage } from './../local-info/local-info';
 import { TabsPage } from './../tabs/tabs';
 
-
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Network } from  '@ionic-native/network';
 
 @Component({
@@ -20,8 +20,37 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private network: Network,
     public alertCtrl: AlertController,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController,
+    private push: Push) {
       this.hasConnection = true;
+
+      this.push.hasPermission().then((res: any) => {
+        if (res.isEnabled) {
+          console.log('Permissão concedida para mandar push notifications');
+
+          const options: PushOptions = {
+            android: {},
+            ios: {},
+            windows: {},
+            browser: {
+              pushServiceURL: ''
+            }
+          };
+
+          const pushObject: PushObject = this.push.init(options);
+
+          pushObject.on('notification').subscribe((notification: any) => {
+            this.criarAlert(notification.title, notification.message, ['OK']);
+          });
+
+          pushObject.on('registration').subscribe((registration: any) => console.log('Serviço registrado', registration));
+
+          pushObject.on('error').subscribe(error => console.error('Erro com o plugin Push', error));
+
+        } else {
+          console.log('Permissão negada para enviar push notifications');
+        }
+      });
   }
 
   ionViewDidEnter(){

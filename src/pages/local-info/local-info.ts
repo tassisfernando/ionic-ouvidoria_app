@@ -65,16 +65,16 @@ export class LocalInfoPage {
     this.usuario = navParams.get('usuario');
 
     this.formOne = formBuilder.group({
-      tipo: ['', ], //Validators.compose([Validators.min(1), Validators.required])
-      secretaria: ['', ], //Validators.compose([Validators.min(1), Validators.required])
-      assunto: ['', ], //Validators.compose([Validators.min(1), Validators.required])
+      tipo: ['', Validators.compose([Validators.min(1), Validators.required])], //Validators.compose([Validators.min(1), Validators.required])
+      secretaria: ['', Validators.compose([Validators.min(1), Validators.required])], //Validators.compose([Validators.min(1), Validators.required])
+      assunto: ['', Validators.compose([Validators.min(1), Validators.required])], //Validators.compose([Validators.min(1), Validators.required])
     });
 
     this.formEnd = formBuilder.group({
-      cep: ['', ], //Validators.compose([Validators.minLength(8), Validators.maxLength(8), Validators.required])
-      logradouro: ['', ], //Validators.required
-      numero: ['', ], //Validators.min(1)
-      bairro: ['', ], //Validators.required
+      cep: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(8), Validators.required])], //Validators.compose([Validators.minLength(8), Validators.maxLength(8), Validators.required])
+      logradouro: ['', Validators.required], //Validators.required
+      numero: ['', Validators.min(1)], //Validators.min(1)
+      bairro: ['', Validators.required], //Validators.required
       complemento: ['', ],
     });
 
@@ -177,7 +177,6 @@ export class LocalInfoPage {
   }
 
   showDuvidas(duvida: string){
-
     let texto;
 
     if( duvida == "tipo" ){
@@ -207,12 +206,13 @@ export class LocalInfoPage {
   }
 
   getLocation(){
-    this.endereco.numero = "121";
-    this.endereco.cep = "35180008";
+    //Para simular o uso
+    // this.endereco.numero = "121";
+    // this.endereco.cep = "35180008";
 
-    this.getEnderecoPorCep();
+    // this.getEnderecoPorCep();
 
-    /*this.geolocation.getCurrentPosition()
+    this.geolocation.getCurrentPosition()
       .then((resp) => {
         //manipular as coordenadas aqui
         this.location = resp.coords;
@@ -246,7 +246,7 @@ export class LocalInfoPage {
         //exibir um alert com os erros
         this.criarAlert('Erro inesperado', 'Erro ao recuperar sua localização: '+error, ['OK']);
         console.log('Erro ao recuperar sua posição', error);
-      });*/
+      });
   }
 
   getEnderecoPorCep(){

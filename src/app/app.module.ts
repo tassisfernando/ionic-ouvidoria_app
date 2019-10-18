@@ -48,6 +48,7 @@ import { File } from '@ionic-native/file/ngx'; //TIRAR O NGX SE DER MERDA
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
 import { FileOpener } from "@ionic-native/file-opener";
+import { Push } from '@ionic-native/push';
 
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -113,6 +114,8 @@ import { ComentarioProvider } from '../providers/comentario/comentario';
     TipoProvider,
     SecretariaProvider,
     EnderecoProvider,
+    StorageProvider,
+    ComentarioProvider,
     Network,
     Camera, //Depois que testar nativo usar só { provide: Camera, useClass: CameraMock },
     FileChooser,
@@ -122,9 +125,8 @@ import { ComentarioProvider } from '../providers/comentario/comentario';
     FileTransferObject,
     // FileUploadOptions, descomentar se der merda
     File,
+    Push,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    StorageProvider,
-    ComentarioProvider,
   ]
 })
 export class AppModule {}

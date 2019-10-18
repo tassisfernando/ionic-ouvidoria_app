@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.fabricadesoftware.appouvidoria" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Ouvidoria App</name>
     <description>Aplicativo voltado para manifestações de populares da cidade de Timóteo.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Fábrica de Software - CEFET</author>
@@ -89,6 +89,12 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^2.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-advanced-http" spec="2.0.1" />
+    <plugin name="phonegap-plugin-push" spec="2.3.0">
+        <variable name="SENDER_ID" value="284259732871" />
+    </plugin>
+    <platform name="android">
+        <resource-file src="google-services.json" target="google-services.json" />
+    </platform>
     <allow-navigation href="http://200.128.148.98:8100" />
     <config-file parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
         <string>You can take photos</string>
