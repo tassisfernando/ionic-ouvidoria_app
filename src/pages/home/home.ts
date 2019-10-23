@@ -26,7 +26,7 @@ export class HomePage {
 
       this.push.hasPermission().then((res: any) => {
         if (res.isEnabled) {
-          console.log('Permissão concedida para mandar push notifications');
+          this.criarAlert('Sucesso', 'Permissão concedida para mandar push notifications', ['OK']);
 
           const options: PushOptions = {
             android: {},
@@ -48,7 +48,7 @@ export class HomePage {
           pushObject.on('error').subscribe(error => console.error('Erro com o plugin Push', error));
 
         } else {
-          console.log('Permissão negada para enviar push notifications');
+          this.criarAlert('Falha', 'Permissão negada para enviar push notifications', ['OK']);
         }
       });
   }
