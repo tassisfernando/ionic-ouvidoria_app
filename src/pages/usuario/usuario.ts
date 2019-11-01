@@ -31,8 +31,7 @@ export class UsuarioPage {
     });
   }
 
-  save(){
-
+  proximo(){
     this.submitAttempt = true;
 
     console.log(this.usuario);
@@ -48,9 +47,4 @@ export class UsuarioPage {
         this.navCtrl.push(LocalInfoPage, {usuario: this.usuario});
       }
   }
-
-  ionViewDidLoad() {
-
-  }
-
 }

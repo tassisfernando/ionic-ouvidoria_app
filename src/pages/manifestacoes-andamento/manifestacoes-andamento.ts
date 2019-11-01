@@ -31,6 +31,30 @@ export class ManifestacoesAndamentoPage {
     this.found = false;
   }
 
+  ionViewDidLoad() {
+    this.getManifestacoes();
+    this.manifestacoes = this.manifestacoesBd;
+  }
+
+  ionViewWillEnter(){
+    this.getManifestacoesStorage();
+  }
+
+   //VAI TER QUE SER GETMANIFESTAÇÕES POR PROTOCOLO, ENTÃO O FILTRO VAI TER QUE FUNCIONAR
+   getManifestacoes() {
+    this.manifestacaoProvider.getMinhasManifestações()
+      .then(data => {
+        if(data){
+          this.manifestacoesBd = data;
+          this.manifestacoes = this.manifestacoesBd;
+          this.atualizaStorage();
+        }
+        console.log(this.manifestacoesBd);
+      }).catch((err) => {
+        this.showAlert('Erro de conexão', 'Estamos com problemas de conexão com o servidor. Tente novamente mais tarde.')
+      });
+  }
+
   getManifestacoesStorage(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
 
@@ -73,30 +97,6 @@ export class ManifestacoesAndamentoPage {
       }
     }
     this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
-  }
-
-  //VAI TER QUE SER GETMANIFESTAÇÕES POR PROTOCOLO, ENTÃO O FILTRO VAI TER QUE FUNCIONAR
-  getManifestacoes() {
-    this.manifestacaoProvider.getMinhasManifestações()
-      .then(data => {
-        if(data){
-          this.manifestacoesBd = data;
-          this.manifestacoes = this.manifestacoesBd;
-          this.atualizaStorage();
-        }
-        console.log(this.manifestacoesBd);
-      }).catch((err) => {
-        this.showAlert('Erro de conexão', 'Estamos com problemas de conexão com o servidor. Tente novamente mais tarde.')
-      });
-  }
-
-  ionViewDidLoad() {
-    this.getManifestacoes();
-    this.manifestacoes = this.manifestacoesBd;
-  }
-
-  ionViewWillEnter(){
-    this.getManifestacoesStorage();
   }
 
   //IMPLEMENTAR O GET ITEMS PARA O SEARCHBAR FUNCIONAR

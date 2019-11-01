@@ -59,7 +59,7 @@ export class FinalizarManifestacaoPage {
     console.log(this.endereco);
   }
 
-  isEnabled(){
+  isEnabledBotaoProximo(){
     if(this.hasEmail){
       if(this.form.valid){
         return false;
@@ -71,7 +71,7 @@ export class FinalizarManifestacaoPage {
     }
   }
 
-  save(){
+  finalizar(){
     if(this.usuario){
       this.manifestacao.tb_manifestante = this.usuario;
     } else {
@@ -127,10 +127,6 @@ export class FinalizarManifestacaoPage {
       buttons: buttons
     });
     alert.present();
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad FinalizarManifestacaoPage');
   }
 
   voltarPaginaInicial() {

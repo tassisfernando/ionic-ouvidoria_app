@@ -26,10 +26,6 @@ export class ComentariosPage {
       console.log(this.comentarios);
   }
 
-  ionViewCanEnter(){
-
-  }
-
   update(){
     this.content.resize();
   }

@@ -32,49 +32,13 @@ export class ManifestacoesAbertasPage {
     this.found = false;
   }
 
-  getManifestacoesStorage(){
-    this.storageProvider.getStorage('manifestacoes').then((data) => {
-
-      if(data){
-        /*let posStorage = 0;
-        for(let pos = 0; pos < data.length; pos++) {
-          if(data[pos].status == 'Aberto'){
-            this.manifestacoesStorage[posStorage] = data[pos];
-            posStorage++;
-          }
-        }*/
-
-        this.manifestacoesStorage = data;
-
-      }
-
-      /*if(data){
-        for(let pos = 0; pos < this.manifestacoesStorage.length; pos++) {
-          this.manifestacaoProvider.getManifestacaoPorId(this.manifestacoesStorage[pos].idManifestacao).then( data => {
-            if(data){
-              this.manifestacoesStorage[pos] = data;
-              this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
-            }
-          }).catch( err => {
-            console.log(err);
-          });
-        }
-      }*/
-
-      console.log("Manifestacoes", this.manifestacoesStorage)
-    });
+  ionViewDidLoad() {
+    this.getManifestacoes();
+    this.manifestacoes = this.manifestacoesBd;
   }
 
-  atualizaStorage(){
-    for (let index = 0; index < this.manifestacoesStorage.length; index++) {
-      for (let j = 0; j < this.manifestacoes.length; j++) {
-        if(this.manifestacoesStorage[index].idManifestacao == this.manifestacoes[j].idManifestacao){
-          this.manifestacoesStorage[index] = this.manifestacoes[j];
-        }
-      }
-    }
-
-    this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
+  ionViewWillEnter(){
+    this.getManifestacoesStorage();
   }
 
   //VAI TER QUE SER GETMANIFESTAÇÕES POR PROTOCOLO, ENTÃO O FILTRO VAI TER QUE FUNCIONAR
@@ -92,14 +56,28 @@ export class ManifestacoesAbertasPage {
       });
   }
 
-  ionViewDidLoad() {
-    this.getManifestacoes();
-    this.manifestacoes = this.manifestacoesBd;
+  getManifestacoesStorage(){
+    this.storageProvider.getStorage('manifestacoes').then((data) => {
+      if(data){
+        this.manifestacoesStorage = data;
+      }
+
+      console.log("Manifestacoes", this.manifestacoesStorage)
+    });
   }
 
-  ionViewWillEnter(){
-    this.getManifestacoesStorage();
+  atualizaStorage(){
+    for (let index = 0; index < this.manifestacoesStorage.length; index++) {
+      for (let j = 0; j < this.manifestacoes.length; j++) {
+        if(this.manifestacoesStorage[index].idManifestacao == this.manifestacoes[j].idManifestacao){
+          this.manifestacoesStorage[index] = this.manifestacoes[j];
+        }
+      }
+    }
+
+    this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
   }
+
 
   //IMPLEMENTAR O GET ITEMS PARA O SEARCHBAR FUNCIONAR
   getItems(ev: any) {

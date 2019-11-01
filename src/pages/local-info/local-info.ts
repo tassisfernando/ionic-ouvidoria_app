@@ -277,7 +277,7 @@ export class LocalInfoPage {
     this.navCtrl.setRoot(HomePage);
   }
 
-  isEnabled(){
+  isEnabledBotaoProximo(){
     if(this.manifestacao.tb_endereco.idEndereco != 0){ //se foi informada alguma unidade
       if(this.formOne.valid)
         return false;
@@ -328,8 +328,4 @@ export class LocalInfoPage {
     }
 
   }
-
-  ionViewDidLoad() {
-  }
-
 }

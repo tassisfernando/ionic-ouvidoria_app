@@ -2,18 +2,10 @@ import { DetalheManifestacaoPage } from './../detalhe-manifestacao/detalhe-manif
 import { ManifestacaoProvider } from './../../providers/manifestacao/manifestacao';
 import { IAssunto } from './../../interfaces/IAssunto';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { IManifestacao } from '../../interfaces/IManifestacao';
 import { StorageProvider } from '../../providers/storage/storage';
 
-/**
- * Generated class for the ManifestacoesArquivadasPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
   selector: 'page-manifestacoes-arquivadas',
   templateUrl: 'manifestacoes-arquivadas.html',
@@ -36,6 +28,20 @@ export class ManifestacoesArquivadasPage {
   ionViewWillEnter(){
     this.getManifestacoes();
     console.log(this.manifestacoes);
+  }
+
+  getManifestacoes() {
+    this.storageProvider.getStorage('manifestacoesArquivadas').then((data) => {
+      if(data){
+        this.manifestacoes = data;
+      }
+    });
+
+    this.storageProvider.getStorage('manifestacoes').then((data) => {
+      if(data){
+        this.manifestacoesStorage = data;
+      }
+    });
   }
 
   getItems(ev: any) {
@@ -65,20 +71,6 @@ export class ManifestacoesArquivadasPage {
     } else{
       this.showAlert('Erro de conexão', 'Estamos com problemas de conexão com o servidor. Tente novamente mais tarde.')
     }
-  }
-
-  getManifestacoes() {
-    this.storageProvider.getStorage('manifestacoesArquivadas').then((data) => {
-      if(data){
-        this.manifestacoes = data;
-      }
-    });
-
-    this.storageProvider.getStorage('manifestacoes').then((data) => {
-      if(data){
-        this.manifestacoesStorage = data;
-      }
-    });
   }
 
   showAlert(title: string, subTitle: string) {

@@ -65,9 +65,6 @@ export class AnexoPage {
     this.hasAnexo = false;
   }
 
-  ionViewDidLoad() {
-  }
-
   showDuvidas(duvida: string){
     let texto;
 
@@ -89,11 +86,11 @@ export class AnexoPage {
     alert.present();
   }
 
-  isEnabled(){
+  isEnabledBotaoProximo(){
     return this.form.invalid;
   }
 
-  isEnabledAnexo(){
+  isEnabledAnexoButton(){
     return this.hasAnexo;
   }
 
@@ -144,7 +141,7 @@ export class AnexoPage {
     })
   }
 
-  save(){
+  proximo(){
     this.submitAttempt = true;
 
     console.log("Manifestação: ",this.manifestacao);

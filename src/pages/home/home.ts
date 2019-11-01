@@ -78,29 +78,6 @@ export class HomePage {
     });
   }
 
-  presentToast(msg) {
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: 2500,
-      position: 'top'
-    });
-
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-
-    toast.present();
-  }
-
-  criarAlert(title: string, subTitle: string, buttons: string[]) {
-    const alert = this.alertCtrl.create({
-      title: title,
-      subTitle: subTitle,
-      buttons: buttons
-    });
-    alert.present();
-  }
-
   abrirPagina(x: number){
     this.navCtrl.push(ManifestacaoPage, {
       item: x
@@ -124,5 +101,28 @@ export class HomePage {
 
   abrirLocalInfoPage(){
     this.navCtrl.push(LocalInfoPage, {usuario: null});
+  }
+
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 2500,
+      position: 'top'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
+
+  criarAlert(title: string, subTitle: string, buttons: string[]) {
+    const alert = this.alertCtrl.create({
+      title: title,
+      subTitle: subTitle,
+      buttons: buttons
+    });
+    alert.present();
   }
 }

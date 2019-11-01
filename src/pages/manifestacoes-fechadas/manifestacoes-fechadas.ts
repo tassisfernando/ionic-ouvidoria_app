@@ -40,6 +40,20 @@ export class ManifestacoesFechadasPage {
     this.getManifestacoesStorage();
   }
 
+  //VAI TER QUE SER GETMANIFESTAÇÕES POR PROTOCOLO, ENTÃO O FILTRO VAI TER QUE FUNCIONAR
+  getManifestacoes() {
+    this.manifestacaoProvider.getMinhasManifestações()
+      .then(data => {
+        if(data){
+          this.manifestacoesBd = data;
+          this.manifestacoes = this.manifestacoesBd;
+          this.atualizaStorage();
+        }
+      }).catch((err) => {
+        this.showAlert('Erro de conexão', 'Estamos com problemas de conexão com o servidor. Tente novamente mais tarde.')
+      });
+  }
+
   getManifestacoesStorage(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
 
@@ -82,20 +96,6 @@ export class ManifestacoesFechadasPage {
       }
     }
     this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
-  }
-
-  //VAI TER QUE SER GETMANIFESTAÇÕES POR PROTOCOLO, ENTÃO O FILTRO VAI TER QUE FUNCIONAR
-  getManifestacoes() {
-    this.manifestacaoProvider.getMinhasManifestações()
-      .then(data => {
-        if(data){
-          this.manifestacoesBd = data;
-          this.manifestacoes = this.manifestacoesBd;
-          this.atualizaStorage();
-        }
-      }).catch((err) => {
-        this.showAlert('Erro de conexão', 'Estamos com problemas de conexão com o servidor. Tente novamente mais tarde.')
-      });
   }
 
   //IMPLEMENTAR O GET ITEMS PARA O SEARCHBAR FUNCIONAR

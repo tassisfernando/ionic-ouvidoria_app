@@ -104,7 +104,7 @@
 
         <ion-list class="list-Button">
           <ion-item>
-              <button [disabled]="isEnabled()" id="botao-Bonito" (click)="save()" ion-button full large>Finalizar</button>
+              <button [disabled]="isEnabledBotaoProximo()" id="botao-Bonito" (click)="finalizar()" ion-button full large>Finalizar</button>
           </ion-item>
         </ion-list>
     </form>
@@ -112,7 +112,7 @@
 
     <ion-list *ngIf="usuario" class="list-Button">
       <ion-item>
-          <button [disabled]="isEnabled()" id="botao-Bonito" (click)="save()" ion-button full large>Finalizar</button>
+          <button [disabled]="isEnabledBotaoProximo()" id="botao-Bonito" (click)="finalizar()" ion-button full large>Finalizar</button>
       </ion-item>
     </ion-list>
 

@@ -142,6 +142,20 @@ export class DetalheManifestacaoPage {
     });
   }
 
+  arquivarManifestacao(){
+    this.storageProvider.getStorage('manifestacoesArquivadas').then((data) => {
+      if(data){
+        this.manifestacoesArquiv = data;
+        this.manifestacoesArquiv.push(this.manifestacao);
+      } else{
+        this.manifestacoesArquiv = [];
+        this.manifestacoesArquiv.push(this.manifestacao);
+      }
+
+      this.storageProvider.setStorage('manifestacoesArquivadas', this.manifestacoesArquiv);
+    });
+  }
+
   desarquivarManifestacao(){
     this.storageProvider.getStorage('manifestacoesArquivadas').then((data) => {
       if(data){
@@ -173,20 +187,6 @@ export class DetalheManifestacaoPage {
     });
   }
 
-  arquivarManifestacao(){
-    this.storageProvider.getStorage('manifestacoesArquivadas').then((data) => {
-      if(data){
-        this.manifestacoesArquiv = data;
-        this.manifestacoesArquiv.push(this.manifestacao);
-      } else{
-        this.manifestacoesArquiv = [];
-        this.manifestacoesArquiv.push(this.manifestacao);
-      }
-
-      this.storageProvider.setStorage('manifestacoesArquivadas', this.manifestacoesArquiv);
-    });
-  }
-
   acharPosManifestacao(){
     for (let i = 0; i < this.manifestacoesStorage.length; i++) {
       if(this.manifestacoesStorage[i].idManifestacao == this.manifestacao.idManifestacao){
@@ -201,20 +201,6 @@ export class DetalheManifestacaoPage {
         return i;
       }
     }
-  }
-
-  presentToast(msg) {
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: 2500,
-      position: 'top'
-    });
-
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-
-    toast.present();
   }
 
   getComentarios(){
@@ -244,4 +230,17 @@ export class DetalheManifestacaoPage {
     alert.present();
   }
 
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 2500,
+      position: 'top'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
 }
