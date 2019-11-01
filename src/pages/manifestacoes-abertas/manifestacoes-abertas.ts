@@ -32,16 +32,18 @@ export class ManifestacoesAbertasPage {
     this.found = false;
   }
 
+  //método executado quando a página é carregada
   ionViewDidLoad() {
     this.getManifestacoes();
     this.manifestacoes = this.manifestacoesBd;
   }
 
+  //método executado quando a página vai ser construída
   ionViewWillEnter(){
     this.getManifestacoesStorage();
   }
 
-  //VAI TER QUE SER GETMANIFESTAÇÕES POR PROTOCOLO, ENTÃO O FILTRO VAI TER QUE FUNCIONAR
+  //recupera todas as manifestações do BD
   getManifestacoes() {
     this.manifestacaoProvider.getMinhasManifestações()
       .then(data => {
@@ -56,6 +58,7 @@ export class ManifestacoesAbertasPage {
       });
   }
 
+  //recupera as manifestações armazenadas no celular do usuário
   getManifestacoesStorage(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
       if(data){
@@ -66,6 +69,7 @@ export class ManifestacoesAbertasPage {
     });
   }
 
+  //atualiza as manifestações do storage, no caso de ter alguma mudança no BD
   atualizaStorage(){
     for (let index = 0; index < this.manifestacoesStorage.length; index++) {
       for (let j = 0; j < this.manifestacoes.length; j++) {
@@ -78,8 +82,7 @@ export class ManifestacoesAbertasPage {
     this.storageProvider.setStorage('manifestacoes', this.manifestacoesStorage);
   }
 
-
-  //IMPLEMENTAR O GET ITEMS PARA O SEARCHBAR FUNCIONAR
+  //método para funcionar a barra de pesquisa da página, filtra as manifestações por protocolo
   getItems(ev: any) {
 
     // Reset items back to all of the items
@@ -109,10 +112,12 @@ export class ManifestacoesAbertasPage {
     }
   }
 
+  //abre a página de DetalheManifestacao para exibir os dados da manifestação selecionada
   abreManifestacao(manifestacao: IManifestacao){
     this.navCtrl.push(DetalheManifestacaoPage, { manifestacao: manifestacao, manifestacoesStorage: this.manifestacoesStorage });
   }
 
+  //Cria um alert com um texto de ajuda ao usuário
   showAlert(title: string, subTitle: string) {
     const alert = this.alertCtrl.create({
       title: title,

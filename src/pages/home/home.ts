@@ -53,14 +53,17 @@ export class HomePage {
       });
   }
 
+  //método executado quando a página vai ser construída
   ionViewDidEnter(){
     this.checkConnection();
   }
 
+  //executa quando a página é recarregada
   reloadPage(){
     this.checkConnection();
   }
 
+  //verifica a conexão com a internet
   checkConnection(){
     this.network.onDisconnect().subscribe(() => {
       if(this.hasConnection){
@@ -78,17 +81,17 @@ export class HomePage {
     });
   }
 
-  abrirPagina(x: number){
-    this.navCtrl.push(ManifestacaoPage, {
-      item: x
-    });
-    console.log(x);
-  }
-
+  //abre a página 1 do cadastro de manifestação não anônima
   abrirUsuarioPage(){
     this.navCtrl.push(UsuarioPage);
   }
 
+  //abre a página 1 do cadastro de manifestação anônima
+  abrirLocalInfoPage(){
+    this.navCtrl.push(LocalInfoPage, {usuario: null});
+  }
+
+  //abre a página que exibe as manifestações do usuário
   abrirManifestacaoPage(){
     this.navCtrl.push(TabsPage);
     let loader = this.loadingCtrl.create({
@@ -99,10 +102,7 @@ export class HomePage {
     loader.present();
   }
 
-  abrirLocalInfoPage(){
-    this.navCtrl.push(LocalInfoPage, {usuario: null});
-  }
-
+  //cria um toast recebendo a mensagem como parâmetros
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
@@ -117,6 +117,7 @@ export class HomePage {
     toast.present();
   }
 
+  //cria um alert recebendo os dados como parâmetros
   criarAlert(title: string, subTitle: string, buttons: string[]) {
     const alert = this.alertCtrl.create({
       title: title,

@@ -25,11 +25,13 @@ export class ManifestacoesArquivadasPage {
       this.found = false;
   }
 
+  //método executado quando a página vai ser construída
   ionViewWillEnter(){
     this.getManifestacoes();
     console.log(this.manifestacoes);
   }
 
+  //recupera todas as manifestações do BD
   getManifestacoes() {
     this.storageProvider.getStorage('manifestacoesArquivadas').then((data) => {
       if(data){
@@ -44,6 +46,7 @@ export class ManifestacoesArquivadasPage {
     });
   }
 
+  //método para funcionar a barra de pesquisa da página, filtra as manifestações por protocolo
   getItems(ev: any) {
 
     // Reset items back to all of the items
@@ -73,6 +76,7 @@ export class ManifestacoesArquivadasPage {
     }
   }
 
+  //Cria um alert com um texto de ajuda ao usuário
   showAlert(title: string, subTitle: string) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -82,6 +86,7 @@ export class ManifestacoesArquivadasPage {
     alert.present();
   }
 
+  //abre a página de DetalheManifestacao para exibir os dados da manifestação selecionada
   abreManifestacao(manifestacao: IManifestacao){
     this.navCtrl.push(DetalheManifestacaoPage, { manifestacao: manifestacao, manifestacoesStorage: this.manifestacoesStorage });
   }

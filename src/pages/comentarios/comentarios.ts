@@ -26,10 +26,12 @@ export class ComentariosPage {
       console.log(this.comentarios);
   }
 
+  //atualiza o conteúdo da tela
   update(){
     this.content.resize();
   }
 
+  //cadastra o comentário no BD e adiciona ao vetor de comentários da página
   salvarComentario(){
     if(this.comentario.texto.length >= 2){
       this.comentario.idManifestacao = this.comentarios[0].idManifestacao;
@@ -49,6 +51,7 @@ export class ComentariosPage {
     }
   }
 
+  //cria um alert recebendo os dados como parâmetros
   criarAlert(title: string, subTitle: string, buttons: string[]) {
     const alert = this.alertCtrl.create({
       title: title,

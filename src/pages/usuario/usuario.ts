@@ -31,6 +31,7 @@ export class UsuarioPage {
     });
   }
 
+  //função chamada ao clicar o botão "Próximo" e vai para a próxima página do cadastro
   proximo(){
     this.submitAttempt = true;
 

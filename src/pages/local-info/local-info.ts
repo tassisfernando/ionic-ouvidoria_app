@@ -86,6 +86,7 @@ export class LocalInfoPage {
     console.log(this.usuario);
   }
 
+  //cria um toast recebendo a mensagem como parâmetro
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
@@ -100,7 +101,34 @@ export class LocalInfoPage {
     toast.present();
   }
 
-  //BUSCANDO DADOS DO BD
+  //cria um alert recebendo os dados como parâmetros
+  criarAlert(title: string, subTitle: string, buttons: string[]) {
+    const alert = this.alertCtrl.create({
+      title: title,
+      subTitle: subTitle,
+      buttons: buttons
+    });
+    alert.present();
+  }
+
+  //Cria um alert com um texto de ajuda ao usuário
+  showDuvidas(duvida: string){
+    let texto;
+
+    if( duvida == "tipo" ){
+      texto = "O tipo da manifestação define genericamente seu propósito: criticar, elogiar, denunciar etc.";
+    } else if ( duvida == "secretaria" ) {
+      texto = "A secretaria é o órgão da prefeitura sobre o qual você quer dizer algo.";
+    } else if ( duvida == "assunto" ) {
+      texto = "O assunto especifica qual será o foco da sua manifestação, de acordo com a secretaria escolhida."
+    } else if ( duvida == "unidade" ){
+      texto = "É a unidade de algum setor da prefeitura, como postos de saúde, escolas e a própria prefeitura."
+    }
+
+    this.criarAlert("Ajuda", texto, ['OK']);
+  }
+
+  //busca os tipos no BD
   getTipos(){
     this.tipoProvider.getTipos()
     .then(data => {
@@ -116,6 +144,7 @@ export class LocalInfoPage {
   );
   }
 
+  //busca as secretarias no BD
   getSecretarias(){
     this.secretariaProvider.getSecretarias()
     .then(data => {
@@ -126,7 +155,7 @@ export class LocalInfoPage {
     });
   }
 
-  //SELECIONANDO ITEM DA
+  //pega o tipo selecionado pelo usuário
   selectTipo(event,tipo:ITipo){
     console.log(tipo.idTipo);
 
@@ -134,6 +163,7 @@ export class LocalInfoPage {
     this.manifestacao.idTipo=tipo.idTipo;
   }
 
+  //pega a secretaria selecionada pelo usuário
   selectSecretaria(event,secretaria:ISecretaria){
     console.log(secretaria.idSecretaria);
 
@@ -143,6 +173,7 @@ export class LocalInfoPage {
     this.unidades = secretaria.tb_unidade;
   }
 
+  //pega o assunto selecionado pelo usuário
   selectAssunto(event,assunto:IAssunto){
     console.log(assunto.idAssunto);
 
@@ -150,6 +181,7 @@ export class LocalInfoPage {
     this.manifestacao.idAssunto=assunto.idAssunto;
   }
 
+  //pega a unidade selecionada pelo usuário
   selectUnidade(event,unidade:IUnidade){
     console.log(unidade.idUnidade);
 
@@ -167,32 +199,7 @@ export class LocalInfoPage {
     });
   }
 
-  criarAlert(title: string, subTitle: string, buttons: string[]) {
-    const alert = this.alertCtrl.create({
-      title: title,
-      subTitle: subTitle,
-      buttons: buttons
-    });
-    alert.present();
-  }
-
-  showDuvidas(duvida: string){
-    let texto;
-
-    if( duvida == "tipo" ){
-      texto = "O tipo da manifestação define genericamente seu propósito: criticar, elogiar, denunciar etc.";
-    } else if ( duvida == "secretaria" ) {
-      texto = "A secretaria é o órgão da prefeitura sobre o qual você quer dizer algo.";
-    } else if ( duvida == "assunto" ) {
-      texto = "O assunto especifica qual será o foco da sua manifestação, de acordo com a secretaria escolhida."
-    } else if ( duvida == "unidade" ){
-      texto = "É a unidade de algum setor da prefeitura, como postos de saúde, escolas e a própria prefeitura."
-    }
-
-    this.criarAlert("Ajuda", texto, ['OK']);
-
-  }
-
+//exibe o formulário de endereço
   exibirEndForm(){
     if(!this.hasEndereco){
       this.hasEndereco = true;
@@ -205,6 +212,7 @@ export class LocalInfoPage {
     }
   }
 
+  //recupera a localização atual utilizando o plugin e a API do google
   getLocation(){
     //Para simular o uso
     // this.endereco.numero = "121";
@@ -249,6 +257,7 @@ export class LocalInfoPage {
       });
   }
 
+  //recupera o endereço pelo CEP, utilizando a API dos correios
   getEnderecoPorCep(){
     this.servicesProvider.getEnderecoPorCep(this.endereco.cep).subscribe(
       data => {
@@ -269,14 +278,17 @@ export class LocalInfoPage {
     });
   }
 
+  //deixa apenas números no CEP
   getCepCorreto(){
     this.endereco.cep.replace(/\D+/g, '');
   }
 
+  //vai para o página home
   voltarPaginaInicial() {
     this.navCtrl.setRoot(HomePage);
   }
 
+  //controla se o botão "Próximo" está habilitado
   isEnabledBotaoProximo(){
     if(this.manifestacao.tb_endereco.idEndereco != 0){ //se foi informada alguma unidade
       if(this.formOne.valid)
@@ -293,7 +305,8 @@ export class LocalInfoPage {
     }
   }
 
-  save(){
+  //função chamada ao clicar o botão "Próximo" e vai para a próxima página do cadastro
+  proximo(){
     this.submitAttempt = true;
 
     console.log(this.usuario);

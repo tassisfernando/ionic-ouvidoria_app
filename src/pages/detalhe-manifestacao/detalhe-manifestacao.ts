@@ -80,10 +80,12 @@ export class DetalheManifestacaoPage {
     console.log('Salva:', this.isDownloaded);
   }
 
+  //método executado quando a página é carregada
   ionViewDidLoad(){
     this.checkDownload();
   }
 
+  //recupera o manifestante no BD a partir do ID da manifestação
   getManifestante(){
     this.manifestacaoProvider.getManifestantePorId(this.manifestacao.idManifestacao).then( manifestante => {
       if(manifestante){
@@ -93,6 +95,7 @@ export class DetalheManifestacaoPage {
     });
   }
 
+  //recupera o objeto unidade da API de acordo com o ID do endereço da manifestação
   getUnidade(){
     this.enderecoProvider.getUnidades(this.endereco.idUnidade).then( (unidade) => {
       if(unidade){
@@ -101,6 +104,7 @@ export class DetalheManifestacaoPage {
     });
   }
 
+  //verifica se a manifestação está baixada no celular do usuáro
   checkDownload(){
     this.isDownloaded = false;
 
@@ -114,6 +118,7 @@ export class DetalheManifestacaoPage {
     }
   }
 
+  //verifica se essa é uma manifestação arquivada
   checkArquivada(){
     this.isArquivado = false;
 
@@ -127,6 +132,7 @@ export class DetalheManifestacaoPage {
     }
   }
 
+  //baixa a manifestação no celular do usuário
   downloadManifestacao(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
       if(data){
@@ -142,6 +148,7 @@ export class DetalheManifestacaoPage {
     });
   }
 
+  //arquiva a manifestação (é ocultada da lista principal)
   arquivarManifestacao(){
     this.storageProvider.getStorage('manifestacoesArquivadas').then((data) => {
       if(data){
@@ -156,6 +163,7 @@ export class DetalheManifestacaoPage {
     });
   }
 
+  //desarquiva a manifestação (volta para a lista principal)
   desarquivarManifestacao(){
     this.storageProvider.getStorage('manifestacoesArquivadas').then((data) => {
       if(data){
@@ -170,6 +178,7 @@ export class DetalheManifestacaoPage {
     });
   }
 
+  //arquiva a manifestação
   excluirManifestacao(){
     this.storageProvider.getStorage('manifestacoes').then((data) => {
       if(data){
@@ -187,6 +196,7 @@ export class DetalheManifestacaoPage {
     });
   }
 
+  //achar a posição da manifestação pelo ID no vetor do Storage
   acharPosManifestacao(){
     for (let i = 0; i < this.manifestacoesStorage.length; i++) {
       if(this.manifestacoesStorage[i].idManifestacao == this.manifestacao.idManifestacao){
@@ -195,6 +205,7 @@ export class DetalheManifestacaoPage {
     }
   }
 
+  //achar a posição da manifestação pelo ID no vetor das manifestações arquivadas
   acharPosManifestacaoArquiv(){
     for (let i = 0; i < this.manifestacoesArquiv.length; i++) {
       if(this.manifestacoesArquiv[i].idManifestacao == this.manifestacao.idManifestacao){
@@ -203,6 +214,7 @@ export class DetalheManifestacaoPage {
     }
   }
 
+  //busca na API os comentários referentes a essa manifestação
   getComentarios(){
     this.comentarioProvider.getComentarios(this.manifestacao.idManifestacao).then( comentarios => {
       if(comentarios){
@@ -217,10 +229,12 @@ export class DetalheManifestacaoPage {
     });
   }
 
+  //abre a página de comentários
   abreComentarios(){
     this.navCtrl.push(ComentariosPage, { comentarios: this.comentarios, manifestacao: this.manifestacao });
   }
 
+  //cria um alert recebendo os dados como parâmetros
   criarAlert(title: string, subTitle: string, buttons: string[]) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -230,6 +244,7 @@ export class DetalheManifestacaoPage {
     alert.present();
   }
 
+  //cria um toast recebendo a mensagem como parâmetro
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,

@@ -65,6 +65,7 @@ export class AnexoPage {
     this.hasAnexo = false;
   }
 
+  //Cria um alert com um texto de ajuda ao usuário
   showDuvidas(duvida: string){
     let texto;
 
@@ -77,6 +78,22 @@ export class AnexoPage {
     this.criarAlert("Ajuda", texto, ['OK']);
   }
 
+  //cria um toast recebendo a mensagem como parâmetro
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'top'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
+
+  //cria um alert recebendo os dados como parâmetros
   criarAlert(title: string, subTitle: string, buttons: string[]) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -86,19 +103,40 @@ export class AnexoPage {
     alert.present();
   }
 
+  //controla se o botão "Próximo" está habilitado
   isEnabledBotaoProximo(){
     return this.form.invalid;
   }
 
+  //controla se o botões de adicionar anexo e o de abrir a câmera estão habilitados
   isEnabledAnexoButton(){
     return this.hasAnexo;
   }
 
+  //seleciona um arquivo do celular escolhido pelo usuário
+  selecionaAnexo(){
+    this.fileChooser.open().then(file => {
+      this.filePath.resolveNativePath(file).then(resolvedFilePath => {
+        //pegando o arquivo aqui
+        // this.anexo.nmAnexo = resolvedFilePath;
+        this.anexo.nmAnexo = resolvedFilePath.substr(resolvedFilePath.lastIndexOf('/') + 1);
+        this.hasAnexo = true;
+        this.presentToast('Anexo adicionado com sucesso!')
+      }).catch(err => {
+        this.presentToast('Erro inesperado ao selecionar um arquivo!' + err)
+      })
+    }).catch(err => {
+      this.presentToast('Erro inesperado ao selecionar um arquivo!' + err)
+    })
+  }
+
+  //remove o anexo selecionado da escolha
   removerAnexo(){
     this.hasAnexo = false;
     this.anexo = { nmAnexo: '' };
   }
 
+  //utilizando o plugin, abre a câmera do celular e recupera a foto tirada
   abreCamera(type: string){
     const options: CameraOptions = {
       quality: 85,
@@ -125,22 +163,7 @@ export class AnexoPage {
      });
   }
 
-  selecionaAnexo(){
-    this.fileChooser.open().then(file => {
-      this.filePath.resolveNativePath(file).then(resolvedFilePath => {
-        //pegando o arquivo aqui
-        // this.anexo.nmAnexo = resolvedFilePath;
-        this.anexo.nmAnexo = resolvedFilePath.substr(resolvedFilePath.lastIndexOf('/') + 1);
-        this.hasAnexo = true;
-        this.presentToast('Anexo adicionado com sucesso!')
-      }).catch(err => {
-        this.presentToast('Erro inesperado ao selecionar um arquivo!' + err)
-      })
-    }).catch(err => {
-      this.presentToast('Erro inesperado ao selecionar um arquivo!' + err)
-    })
-  }
-
+  //função chamada ao clicar o botão "Próximo" e vai para a próxima página do cadastro
   proximo(){
     this.submitAttempt = true;
 
@@ -164,20 +187,6 @@ export class AnexoPage {
 
       this.criarAlert("Erro", "Aconteceu um erro inesperado. Tente novamente mais tarde.", ['OK'])
     }
-  }
-
-  presentToast(msg) {
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: 3000,
-      position: 'top'
-    });
-
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-
-    toast.present();
   }
 }
 

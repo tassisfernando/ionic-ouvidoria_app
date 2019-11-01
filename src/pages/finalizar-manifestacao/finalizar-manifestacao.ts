@@ -59,6 +59,7 @@ export class FinalizarManifestacaoPage {
     console.log(this.endereco);
   }
 
+  //controla se o botão "Próximo" está habilitado
   isEnabledBotaoProximo(){
     if(this.hasEmail){
       if(this.form.valid){
@@ -71,6 +72,7 @@ export class FinalizarManifestacaoPage {
     }
   }
 
+  //finaliza o cadastro de manifestação, mandando o objeto para a API
   finalizar(){
     if(this.usuario){
       this.manifestacao.tb_manifestante = this.usuario;
@@ -120,6 +122,7 @@ export class FinalizarManifestacaoPage {
     });
   }
 
+  //cria um alert recebendo os dados como parâmetros
   criarAlert(title: string, subTitle: string, buttons: string[]) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -129,6 +132,7 @@ export class FinalizarManifestacaoPage {
     alert.present();
   }
 
+  //volta para a página home
   voltarPaginaInicial() {
     this.navCtrl.insert(0,HomePage);
     this.navCtrl.popToRoot();
