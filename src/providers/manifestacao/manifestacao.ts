@@ -19,6 +19,7 @@ export class ManifestacaoProvider {
   constructor(public http: HttpClient, private transfer: FileTransfer) {
   }
 
+  //Método GET que retorna todas as manifestações do BD
   getMinhasManifestações() {
     return new Promise<IManifestacao[]>(resolve => {
       this.http.get<IManifestacao[]>(this.apiUrl + '/manifestacoes').subscribe(data => {
@@ -30,6 +31,7 @@ export class ManifestacaoProvider {
     });
   }
 
+  //Método POST que cadastra a manifestação no BD
   criarManifestacao(manifestacao: IManifestacao) {
     return new Promise<IManifestacao>((resolve, reject) => {
       var data = manifestacao;
@@ -47,6 +49,7 @@ export class ManifestacaoProvider {
 
   }
 
+  //Método GET que retorna a manifestação com id passado
   getManifestacaoPorId(idManifestacao: number){
     return new Promise<IManifestacao>(resolve => {
       this.http.get<IManifestacao>(this.apiUrl + '/manifestacoes/'+idManifestacao).subscribe(data => {
@@ -58,6 +61,7 @@ export class ManifestacaoProvider {
     });
   }
 
+  //Não estou usando
   getManifestacoesPorId(manifestacoes: IManifestacao[]){
     return new Promise<IManifestacao[]>(resolve => {
       this.http.get<IManifestacao[]>(this.apiUrl + '/manifestacoesPorId/'+manifestacoes).subscribe(data => {
@@ -69,6 +73,7 @@ export class ManifestacaoProvider {
     });
   }
 
+  //Método GET que retorna o manifestante de acordo com o id da manifestação
   getManifestantePorId(idManifestacao: number){
     return new Promise<IManifestante>(resolve => {
       this.http.get<IManifestante>(this.apiUrl + '/manifestantes/'+idManifestacao).subscribe(data => {
@@ -80,7 +85,7 @@ export class ManifestacaoProvider {
     });
   }
 
-  //método para o providers
+  //método para mandar o anexo para o servidor
   uploadAnexo(anexo: IAnexo) {
 
     const fileTransfer: FileTransferObject = this.transfer.create();

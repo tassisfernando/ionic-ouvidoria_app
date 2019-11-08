@@ -8,9 +8,9 @@ export class ComentarioProvider {
   apiUrl = 'https://ouvidoria.alessiojr.com/api';
 
   constructor(public http: HttpClient) {
-    console.log('Hello ComentarioProvider Provider');
   }
 
+  //Requisição HTTP GET para pegar os comentários pelo idManifestação passado por paramêtro
   getComentarios(idManifestacao: number) {
     return new Promise<IComentario[]>(resolve => {
       this.http.get<IComentario[]>(this.apiUrl + '/comentarios/'+idManifestacao).subscribe(data => {
@@ -22,6 +22,7 @@ export class ComentarioProvider {
     });
   }
 
+  //Método HTTP POST para cadastrar o comentário no BD
   criarComentario(comentario: IComentario) {
     return new Promise<IComentario>((resolve, reject) => {
       var data = comentario;

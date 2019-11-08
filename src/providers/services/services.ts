@@ -10,10 +10,12 @@ export class ServicesProvider {
 
   constructor(public http: HttpClient) { }
 
+  //Método GET na API do CEP que retorna um endereço pelo CEP enviado
   getEnderecoPorCep(cep: string):any{
     return this.http.get(this.apiCep +cep+'/json/');
   }
 
+  //Método GET na API do Google que retorna o endereço pela coordenada enviada
   getLocation(location: Coordinates){
     return this.http.get(this.apiGeoCode+location.latitude+","+location.longitude+this.key);
   }

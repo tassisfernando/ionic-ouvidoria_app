@@ -15,6 +15,7 @@ export class SecretariaProvider {
 
   constructor(public http: HttpClient) {  }
 
+  //Método GET que retorna todas as secretarias do BD
   getSecretarias() {
     return new Promise<ISecretaria[]>(resolve => {
       this.http.get<ISecretaria[]>(this.apiUrl + '/secretarias').subscribe(data => {

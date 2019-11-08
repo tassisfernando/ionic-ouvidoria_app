@@ -8,13 +8,14 @@ import { IManifestacao } from '../../interfaces/IManifestacao';
 export class StorageProvider {
 
   constructor(public http: HttpClient, private storage: Storage) {
-    console.log('Hello StorageProvider Provider');
   }
 
+  //Registra no storage o vetor de manifestações de acordo com a chave passada, pois pode ser arquivada ou baixada normalmente
   setStorage(chave, manifestacoes: IManifestacao[]){
     this.storage.set(chave, manifestacoes);
   }
 
+  //retorna o que está salvo no storage de acordo com a chave passada
   getStorage(chave){
     return this.storage.get(chave);
   }

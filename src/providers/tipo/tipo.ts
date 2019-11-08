@@ -14,9 +14,9 @@ export class TipoProvider {
   apiUrl = 'https://ouvidoria.alessiojr.com/api';
 
   constructor(public http: HttpClient) {
-    console.log('Hello TipoProvider Provider');
   }
 
+  //Método GET que retorna todos os Tipos do BD
   getTipos() {
     return new Promise<ITipo[]>(resolve => {
       this.http.get<ITipo[]>(this.apiUrl + '/tipos').subscribe(data => {

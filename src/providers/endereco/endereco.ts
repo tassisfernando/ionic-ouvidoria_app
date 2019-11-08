@@ -16,6 +16,7 @@ export class EnderecoProvider {
 
   constructor(public http: HttpClient) { }
 
+  //Método HTTP GET que recupera o endereço no BD a partir da IdUnidade
   getEndereco(idUnidade: number){
     return new Promise<IEndereco>(resolve => {
       this.http.get<IEndereco>(this.apiUrl + '/unidades/endereco/'+idUnidade).subscribe(data => {
@@ -27,6 +28,7 @@ export class EnderecoProvider {
     });
   }
 
+  //Método HTTP retorna uma unidade pelo seu id
   getUnidades(id: number) {
     return new Promise<IUnidade>(resolve => {
       this.http.get<IUnidade>(this.apiUrl + '/unidades/'+id).subscribe(data => {

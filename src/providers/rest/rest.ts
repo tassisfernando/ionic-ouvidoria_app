@@ -5,7 +5,7 @@ import { IAssunto } from '../../interfaces/IAssunto';
 import { IUnidade } from '../../interfaces/IUnidade';
 import { IManifestante } from '../../interfaces/IManifestante';
 
-
+//NÃO ESTOU USANDO ESSE PROVIDER
 @Injectable()
 export class RestProvider {
 
