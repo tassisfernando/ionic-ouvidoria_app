@@ -8,6 +8,7 @@ import { TabsPage } from './../tabs/tabs';
 
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Network } from  '@ionic-native/network';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @Component({
   selector: 'page-home',
@@ -21,8 +22,11 @@ export class HomePage {
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private network: Network,
     public alertCtrl: AlertController,
     public toastCtrl: ToastController,
-    private push: Push) {
+    private push: Push,
+    private localNotifications: LocalNotifications) {
       this.hasConnection = true;
+
+      this.testeNotifications();
 
       this.push.hasPermission().then((res: any) => {
         if (res.isEnabled) {
@@ -51,6 +55,14 @@ export class HomePage {
           this.criarAlert('Falha', 'Permissão negada para enviar push notifications', ['OK']);
         }
       });
+  }
+
+  testeNotifications(){
+    this.localNotifications.schedule({
+      id: 1,
+      text: 'Single ILocalNotification',
+      icon: '../../assets/imgs/brasao.png',
+    });
   }
 
   //método executado quando a página vai ser construída

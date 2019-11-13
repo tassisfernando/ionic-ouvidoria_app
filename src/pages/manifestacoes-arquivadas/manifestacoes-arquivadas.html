@@ -47,7 +47,7 @@
   </ion-list>
   </ion-grid>
 
-  <p *ngIf="!manifestacoes">Não há nenhuma manifestação arquivada.</p>
+  <p *ngIf="!manifestacoes || manifestacoes.length == 0">Não há nenhuma manifestação arquivada.</p>
 
 </ion-content>
 

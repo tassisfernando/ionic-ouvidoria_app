@@ -49,6 +49,7 @@ import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
 import { FileOpener } from "@ionic-native/file-opener";
 import { Push } from '@ionic-native/push';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -126,6 +127,7 @@ import { ComentarioProvider } from '../providers/comentario/comentario';
     // FileUploadOptions, descomentar se der merda
     File,
     Push,
+    LocalNotifications,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
