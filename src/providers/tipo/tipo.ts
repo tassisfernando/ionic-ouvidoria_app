@@ -11,7 +11,8 @@ import { ITipo } from '../../interfaces/ITipo';
 @Injectable()
 export class TipoProvider {
 
-  apiUrl = 'https://ouvidoria.alessiojr.com/api';
+  // apiUrl = 'https://ouvidoria.alessiojr.com/api';
+  apiUrl = 'http://127.0.0.1:8000';
 
   constructor(public http: HttpClient) {
   }

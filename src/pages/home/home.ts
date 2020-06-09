@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController, ToastController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController, ToastController, Platform } from 'ionic-angular';
 
-import {ManifestacaoPage} from '../manifestacao/manifestacao';
 import { UsuarioPage } from './../usuario/usuario';
 import { LocalInfoPage } from './../local-info/local-info';
 import { TabsPage } from './../tabs/tabs';
@@ -20,47 +19,65 @@ export class HomePage {
   hasConnection: boolean;
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private network: Network,
+    private platform: Platform,
     public alertCtrl: AlertController,
     public toastCtrl: ToastController,
     private push: Push,
     private localNotifications: LocalNotifications) {
+
+      /*this.platform.ready().then((ready) => {
+        this.localNotifications.on('click', (notification, state) => {
+          let json = JSON.parse(notification.data);
+
+          let alert = this.criarAlert(notification.title, json.mydata, ['OK']);
+        });
+      });*/
+
+      // this.platform.ready().then((ready) => {
+      //   this.localNotifications.on('click').subscribe((notification) => {
+      //     let json = JSON.parse(notification.data);
+
+      //     this.criarAlert(notification.title, json.mydata, ['OK']);
+      //   });
+      // });
+
       this.hasConnection = true;
 
-      this.testeNotifications();
+      // this.push.hasPermission().then((res: any) => {
+      //   if (res.isEnabled) {
+      //     this.criarAlert('Sucesso', 'Permissão concedida para mandar push notifications', ['OK']);
 
-      this.push.hasPermission().then((res: any) => {
-        if (res.isEnabled) {
-          this.criarAlert('Sucesso', 'Permissão concedida para mandar push notifications', ['OK']);
+      //     const options: PushOptions = {
+      //       android: {},
+      //       ios: {},
+      //       windows: {},
+      //       browser: {
+      //         pushServiceURL: ''
+      //       }
+      //     };
 
-          const options: PushOptions = {
-            android: {},
-            ios: {},
-            windows: {},
-            browser: {
-              pushServiceURL: ''
-            }
-          };
+      //     const pushObject: PushObject = this.push.init(options);
 
-          const pushObject: PushObject = this.push.init(options);
+      //     pushObject.on('notification').subscribe((notification: any) => {
+      //       this.criarAlert(notification.title, notification.message, ['OK']);
+      //     });
 
-          pushObject.on('notification').subscribe((notification: any) => {
-            this.criarAlert(notification.title, notification.message, ['OK']);
-          });
+      //     pushObject.on('registration').subscribe((registration: any) => console.log('Serviço registrado', registration));
 
-          pushObject.on('registration').subscribe((registration: any) => console.log('Serviço registrado', registration));
+      //     pushObject.on('error').subscribe(error => console.error('Erro com o plugin Push', error));
 
-          pushObject.on('error').subscribe(error => console.error('Erro com o plugin Push', error));
-
-        } else {
-          this.criarAlert('Falha', 'Permissão negada para enviar push notifications', ['OK']);
-        }
-      });
+      //   } else {
+      //     this.criarAlert('Falha', 'Permissão negada para enviar push notifications', ['OK']);
+      //   }
+      // });
   }
 
-  testeNotifications(){
+  testeLocalNotifications(){
     this.localNotifications.schedule({
       id: 1,
-      text: 'Single ILocalNotification',
+      title: 'Teste',
+      text: 'Testando Local Notifications',
+      data: { mydata: "Minha mensagem escondida é essa: busquem conhecimento." },
       icon: '../../assets/imgs/brasao.png',
     });
   }
@@ -95,6 +112,7 @@ export class HomePage {
 
   //abre a página 1 do cadastro de manifestação não anônima
   abrirUsuarioPage(){
+    // this.testeLocalNotifications();
     this.navCtrl.push(UsuarioPage);
   }
 

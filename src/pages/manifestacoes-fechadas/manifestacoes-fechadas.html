@@ -10,7 +10,7 @@
   </ion-header>
 
 <ion-content padding>
-    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Buscar..." (ionInput)="getItems($event)"></ion-searchbar>
 
     <ion-grid *ngIf="found == true">
       <ion-row class="header">

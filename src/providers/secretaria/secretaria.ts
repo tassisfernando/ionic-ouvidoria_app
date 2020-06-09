@@ -11,7 +11,8 @@ import { ISecretaria } from '../../interfaces/ISecretaria';
 @Injectable()
 export class SecretariaProvider {
 
-  apiUrl = 'https://ouvidoria.alessiojr.com/api';
+  // apiUrl = 'https://ouvidoria.alessiojr.com/api';
+  apiUrl = 'http://127.0.0.1:8000';
 
   constructor(public http: HttpClient) {  }
 
