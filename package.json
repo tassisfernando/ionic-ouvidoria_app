@@ -35,7 +35,7 @@
     "@ionic-native/splash-screen": "~4.17.0",
     "@ionic-native/status-bar": "~4.17.0",
     "@ionic/storage": "2.2.0",
-    "ajv": "^6.9.1",
+    "ajv": "^6.12.3",
     "ajv-keywords": "^3.4.0",
     "brmasker-ionic-3": "^1.6.3",
     "cordova-android": "8.1.0",
